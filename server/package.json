@@ -1,0 +1,10 @@
+{
+  "name": "job-board-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "eusebiuu",
+  "license": "ISC"
+}
