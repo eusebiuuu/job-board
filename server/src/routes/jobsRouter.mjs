@@ -1,15 +1,16 @@
 import express from 'express'
+import * as jobController from '../controllers/jobsController.mjs';
 
 const router = express.Router();
 
-router.get('/', httpGetAllJobs);
-router.get('/:id', httpGetSingleJob);
-router.post('/', httpAddJob);
-router.patch('/:id', httpEditJob);
-router.delete('/:id', httpDeleteJob);
+router.get('/appliedJobs', jobController.getAppliedJobs);
 
-router.get('/appliedJobs', httpGetAppliedJobs); // add auth middleware
+router.get('/announcements', jobController.getAllAnnouncements);
 
-router.get('/announcements', httpGetAllAnnouncements); // add auth middleware
+router.get('/', jobController.getAllJobs);
+router.get('/:id', jobController.getSingleJob);
+router.post('/', jobController.addJob);
+router.patch('/:id', jobController.editJob);
+router.delete('/:id', jobController.deleteJob);
 
 export { router as jobsRouter };

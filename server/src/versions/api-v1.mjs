@@ -9,6 +9,6 @@ const router = express.Router();
 router.use('/auth', authRouter);
 router.use('/jobs', jobsRouter);
 router.use('/candidates', candidatesRouter);
-router.use('/company', companiesRouter);
+router.use('/companies', companiesRouter);
 
 export { router as version1Router };
