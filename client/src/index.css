@@ -68,6 +68,7 @@ Global Styles
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* border: solid 1px black; */
 }
 body {
   font-family: 'Hind', var(--ff-primary);
@@ -84,12 +85,13 @@ ul {
 }
 a {
   text-decoration: none;
+  color: var(--clr-grey-1);
 }
 img:not(.nav-logo) {
   width: 100%;
   display: block;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   letter-spacing: var(--spacing);
   text-transform: capitalize;
   line-height: 1.25;
@@ -112,7 +114,7 @@ p {
   margin-bottom: 1.25rem;
   color: var(--clr-grey-5);
 }
-@media screen and (min-width: var(--mobile-width)) {
+@media screen and (min-width: 750px) {
   h1 {
     font-size: 4rem;
   }

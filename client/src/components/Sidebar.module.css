@@ -1,0 +1,29 @@
+.sidebar {
+  position: fixed;
+  width: 100vw;
+}
+.link-container {
+  max-width: 100%;
+  background-color: var(--clr-primary-8);
+  transition: var(--transition);
+  padding: 0.5rem;
+  border-top: 2px solid black;
+}
+.link-container:hover {
+  background-color: var(--clr-primary-6);
+}
+.link-container h3 {
+  margin: 0;
+}
+.flex {
+  display: flex;
+  justify-content: space-around;
+  width: fit-content;
+}
+a {
+  display: grid;
+  place-self: center;
+}
+.hide {
+  transform: translate(-100%);
+}
