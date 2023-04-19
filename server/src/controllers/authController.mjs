@@ -30,6 +30,12 @@ const verifyEmail = (req, res) => {
     });
 }
 
+const changeEmail = (req, res) => {
+    return res.status(StatusCodes.OK).json({
+        msg: 'Change email',
+    });
+}
+
 const forgotPassword = (req, res) => {
     return res.status(StatusCodes.OK).json({
         msg: 'Forgot password',
@@ -49,5 +55,6 @@ export {
     forgotPassword,
     resetPassword,
     verifyEmail,
-    showCurrentUser
+    showCurrentUser,
+    changeEmail,
 };

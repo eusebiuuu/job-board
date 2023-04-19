@@ -1,13 +1,11 @@
 import express from 'express'
 import * as candidatesController from '../controllers/candidatesController.mjs'
 
-const router = express.Router();
+const candidatesRouter = express.Router();
 
-router.get('/', candidatesController.getAllCandidates); // company route
+candidatesRouter.get('/:id', candidatesController.getSingleCandidate);
+candidatesRouter.post('/', candidatesController.createCandidate);
+candidatesRouter.patch('/:id', candidatesController.editCandidate);
+candidatesRouter.delete('/:id', candidatesController.deleteCandidate);
 
-router.get('/:id', candidatesController.getSingleCandidate);
-router.post('/', candidatesController.createCandidate);
-router.patch('/:id', candidatesController.editCandidate);
-router.delete('/:id', candidatesController.deleteCandidate);
-
-export { router as candidatesRouter };
+export default candidatesRouter;

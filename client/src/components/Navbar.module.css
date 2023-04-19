@@ -3,7 +3,7 @@
   max-width: 100%;
   background-color: var(--clr-primary-8);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0.5rem;
   /* border-bottom: 2px solid black; */
   /* position: sticky; */
@@ -25,7 +25,6 @@
   place-self: center;
 }
 .link-container h4 {
-  margin-bottom: 0;
   letter-spacing: 0.1rem;
 }
 .link-container a {
@@ -49,8 +48,11 @@
 .sidebar {
   display: none;
 }
-@media only screen and (max-width: 750px) {
-  .links {
+.color {
+  color: var(--clr-grey-2);
+}
+@media only screen and (max-width: 500px) {
+  .link-container {
     display: none;
   }
   .sidebar {

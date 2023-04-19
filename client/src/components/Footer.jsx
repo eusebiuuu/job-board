@@ -31,13 +31,13 @@ function Footer(props) {
         <h5>For recruiters</h5>
         <ul className={styles.list}>
           <li>
-            <Link to='/candidates'>Candidates</Link>
+            <Link to='/company/candidates'>Candidates</Link>
           </li>
           <li>
-            <Link to='/addJob'>Add job</Link>
+            <Link to='/company/addJob'>Add job</Link>
           </li>
           <li>
-            <Link to='/checkout'>Checkout</Link>
+            <Link to='/company/checkout'>Checkout</Link>
           </li>
         </ul>
       </div>

@@ -10,12 +10,12 @@ function Sidebar(props) {
         <h3>Search jobs</h3>
       </div>
     </NavLink>
-    <NavLink to='/candidates'>
+    <NavLink to='/company/candidates'>
       <div className={styles['link-container']}>
         <h3>Candidates</h3>
       </div>
     </NavLink>
-    <NavLink to='/announcements'>
+    <NavLink to='/company/announcements'>
       <div className={styles['link-container']}>
         <h3>Announcements</h3>
       </div>
@@ -28,7 +28,7 @@ function Sidebar(props) {
         </div>
       </div>
     </NavLink>
-    <NavLink to='/profile'>
+    <NavLink to='/company/profile'>
       <div className={styles['link-container']}>
         <div className={styles.flex}>
           <h3>Profile</h3>
@@ -36,12 +36,12 @@ function Sidebar(props) {
         </div>
       </div>
     </NavLink>
-    <NavLink to='/checkout'>
+    <NavLink to='/company/checkout'>
       <div className={styles['link-container']}>
         <h3>Checkout</h3>
       </div>
     </NavLink>
-    <NavLink to='/addJob'>
+    <NavLink to='/company/addJob'>
       <div className={styles['link-container']}>
         <h3>Recruiting?</h3>
       </div>

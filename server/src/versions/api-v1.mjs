@@ -1,14 +1,16 @@
 import express from 'express'
-import { authRouter } from '../routes/authRouter.mjs';
-import { jobsRouter } from '../routes/jobsRouter.mjs';
-import { candidatesRouter } from '../routes/candidatesRouter.mjs';
-import { companiesRouter } from '../routes/companiesRouter.mjs';
+import authRouter from '../routes/authRouter.mjs';
+import jobsRouter from '../routes/jobsRouter.mjs';
+import candidatesRouter from '../routes/candidatesRouter.mjs';
+import companiesRouter from '../routes/companiesRouter.mjs';
+import applicationsRouter from '../routes/applicationsRouter.mjs';
 
-const router = express.Router();
+const version1Router = express.Router();
 
-router.use('/auth', authRouter);
-router.use('/jobs', jobsRouter);
-router.use('/candidates', candidatesRouter);
-router.use('/companies', companiesRouter);
+version1Router.use('/auth', authRouter);
+version1Router.use('/jobs', jobsRouter);
+version1Router.use('/candidates', candidatesRouter);
+version1Router.use('/companies', companiesRouter);
+version1Router.use('/applications', applicationsRouter);
 
-export { router as version1Router };
+export default version1Router;

@@ -53,7 +53,7 @@ Variables
   --ff-primary: Roboto, sans-serif;
   --ff-secondary: Open Sans, sans-serif;
   /* others */
-  --transition: all 0.3s linear;
+  --transition: all 0.1s linear;
   --spacing: 0.25rem;
   --radius: 0.5rem;
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -95,7 +95,7 @@ h1, h2, h3, h4, h5 {
   letter-spacing: var(--spacing);
   text-transform: capitalize;
   line-height: 1.25;
-  margin-bottom: 0.75rem;
+  margin: 0;
   font-family: 'Pilcrow Rounded', var(--ff-secondary);
 }
 h1 {

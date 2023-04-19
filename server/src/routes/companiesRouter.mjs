@@ -1,13 +1,13 @@
 import express from 'express'
 import * as companiesController from '../controllers/companiesController.mjs'
 
-const router = express.Router();
+const companiesRouter = express.Router();
 
-router.get('/:id', companiesController.getSingleCompany);
-router.post('/', companiesController.createCompany);
-router.patch('/:id', companiesController.editCompany);
-router.delete('/:id', companiesController.deleteCompany);
+companiesRouter.get('/:id', companiesController.getSingleCompany);
+companiesRouter.post('/', companiesController.createCompany);
+companiesRouter.patch('/:id', companiesController.editCompany);
+companiesRouter.delete('/:id', companiesController.deleteCompany);
 
-router.post('/checkout', companiesController.checkout);
+companiesRouter.post('/checkout', companiesController.checkout);
 
-export { router as companiesRouter };
+export default companiesRouter;

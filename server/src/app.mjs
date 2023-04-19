@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv'
 dotenv.config();
 import 'express-async-errors'
 import express from 'express'
-import { version1Router } from './versions/api-v1.mjs';
+import version1Router from './versions/api-v1.mjs';
 import morgan from 'morgan'
 import { notFoundMiddleware } from './middlewares/notFound.mjs';
 import { errorHandlerMiddleware } from './middlewares/errorHandler.mjs';

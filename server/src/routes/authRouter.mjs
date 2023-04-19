@@ -1,14 +1,15 @@
 import express from 'express'
 import * as authController from '../controllers/authController.mjs'
 
-const router = express.Router();
+const authRouter = express.Router();
 
-router.get('/showMe', authController.showCurrentUser);
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-router.delete('/logout', authController.logout);
-router.post('/verifyEmail', authController.verifyEmail);
-router.post('/forgotPassword', authController.forgotPassword);
-router.post('/resetPassword', authController.resetPassword);
+authRouter.get('/showMe', authController.showCurrentUser);
+authRouter.post('/register', authController.register);
+authRouter.post('/login', authController.login);
+authRouter.delete('/logout', authController.logout);
+authRouter.post('/verifyEmail', authController.verifyEmail);
+authRouter.post('/changeEmail', authController.changeEmail);
+authRouter.post('/forgotPassword', authController.forgotPassword);
+authRouter.post('/resetPassword', authController.resetPassword);
 
-export { router as authRouter };
+export default authRouter;

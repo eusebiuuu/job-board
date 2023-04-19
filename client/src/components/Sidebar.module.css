@@ -12,9 +12,6 @@
 .link-container:hover {
   background-color: var(--clr-primary-6);
 }
-.link-container h3 {
-  margin: 0;
-}
 .flex {
   display: flex;
   justify-content: space-around;

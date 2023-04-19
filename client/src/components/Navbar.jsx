@@ -1,76 +1,86 @@
 import styles from './Navbar.module.css'
 import logo from '../assets/logo.svg'
 import { NavLink } from 'react-router-dom'
-import { BsFillPersonFill,BsLayoutTextSidebarReverse } from 'react-icons/bs'
-import { IoIosNotificationsOutline } from 'react-icons/io'
+import { BsFillPersonFill } from 'react-icons/bs'
 import { BiLock } from 'react-icons/bi'
-import { Badge, Button } from '@mui/material'
+import { Button, MenuItem } from '@mui/material'
+import { AiOutlineMenu } from 'react-icons/ai'
+import { Menu } from '@mui/material';
+import { useState } from 'react'
+import { CgProfile } from 'react-icons/cg'
 
 function Navbar(props) {
-    return (<nav className={styles.container}>
-        <NavLink to='/'>
-            <div className={styles.logo}>
-                <img src={logo} alt='logo' />
-            </div>
+  const [anchor, setAnchor] = useState(null);
+
+  function handleAnchorChange(event) {
+    setAnchor(event.currentTarget);
+  }
+
+  function handleAnchorClose() {
+    setAnchor(null);
+  }
+
+  return (<nav className={styles.container}>
+    <NavLink to='/'>
+      <div className={styles.logo}>
+        <img src={logo} alt='logo' />
+      </div>
+    </NavLink>
+    <div className={styles['link-container']}>
+      <NavLink to='/jobs'>
+        <h3>Search jobs</h3>
+      </NavLink>
+    </div>
+    <div className={styles['link-container']}>
+      <Button onClick={handleAnchorChange} disableRipple={true}>
+        <h3 className={styles.color}>Profile</h3>
+        <h3 className={styles.color}><CgProfile size={25} /></h3>
+      </Button>
+    </div>
+    <Menu open={Boolean(anchor)} anchorEl={anchor} transitionDuration={100} onClick={handleAnchorClose}>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='/company/profile'>
+          <h4 className={styles.icon}>
+            Account
+            <BsFillPersonFill size={15} />
+          </h4>
         </NavLink>
-        <div className={styles.links}>
-            <div className={styles['link-container']}>
-                <NavLink to='/jobs'>
-                    <h4>Search jobs</h4>
-                </NavLink>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='/company/candidates'>
-                    <h4>Candidates</h4>
-                </NavLink>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='company/announcements'>
-                    <h4>Announcements</h4>
-                </NavLink>
-            </div>
-        </div>
-        <div className={styles.links}>
-            <div className={styles['link-container']}>
-                <div className={styles.header}>
-                    <Badge badgeContent={20} overlap='circular' color='secondary'>
-                        <IoIosNotificationsOutline size={25} />
-                    </Badge>
-                </div>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='/login'>
-                    <h4 className={styles.icon}>
-                        Login
-                        <BiLock size={18} />
-                    </h4>
-                </NavLink>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='/company/profile'>
-                    <h4 className={styles.icon}>
-                        Profile
-                        <BsFillPersonFill size={18} />
-                    </h4>
-                </NavLink>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='/company/checkout'>
-                    <h4>Checkout</h4>
-                </NavLink>
-            </div>
-            <div className={styles['link-container']}>
-                <NavLink to='/company/addJob'>
-                    <h4>Recruiting?</h4>
-                </NavLink>
-            </div>
-        </div>
-        <div className={`${styles['link-container']} ${styles.sidebar}`}>
-            <Button>
-                <BsLayoutTextSidebarReverse size={25} color='#111827' />
-            </Button>
-        </div>
-    </nav>);
+      </MenuItem>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='/company/checkout'>
+          <h4>Checkout</h4>
+        </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='/company/addJob'>
+          <h4>Recruiting?</h4>
+        </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='/login'>
+          <h4 className={styles.icon}>
+            Logout
+            <BiLock size={15} />
+          </h4>
+        </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='/company/candidates'>
+          <h4>Candidates</h4>
+        </NavLink>
+      </MenuItem>
+      <MenuItem onClick={handleAnchorClose}>
+        <NavLink to='company/announcements'>
+          <h4>Announcements</h4>
+        </NavLink>
+      </MenuItem>
+    </Menu>
+    <div className={`${styles['link-container']} ${styles.sidebar}`}>
+      <Button>
+        <h3 className={styles.color}><AiOutlineMenu size={25} /></h3>
+      </Button>
+    </div>
+  </nav>);
 }
 
 export default Navbar;
