@@ -1,0 +1,33 @@
+.container {
+  max-width: 700px;
+  width: 90%;
+  margin: auto;
+}
+.search {
+  max-width: 500px;
+  width: 80%;
+  margin: auto;
+}
+.search input {
+  width: 100%;
+}
+.jobCard {
+  background-color: var(--clr-primary-9);
+  border-radius: 30px;
+  padding: 1em;
+  margin: 2em auto;
+  max-width: 500px;
+  width: 100%;
+}
+.link {
+  border: 2px solid var(--clr-grey-1);
+  width: fit-content;
+}
+.link a {
+  transition: var(--transition);
+  padding: 0.5em 1em;
+}
+.link a:hover {
+  color: var(--clr-primary-9);
+  background-color: var(--clr-grey-1);
+}

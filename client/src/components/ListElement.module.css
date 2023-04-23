@@ -1,0 +1,17 @@
+.active:hover, .normal:hover {
+  box-shadow: none;
+}
+.active, .normal {
+  padding: 10px 0;
+  text-transform: capitalize;
+  width: 100%;
+  height: 50px;
+  background-color: var(--clr-white);
+  margin: 5px;
+  letter-spacing: normal;
+  border: 1px solid var(--clr-grey-1);
+}
+.active {
+  background-color: var(--clr-grey-4);
+  color: var(--clr-grey-10);
+}

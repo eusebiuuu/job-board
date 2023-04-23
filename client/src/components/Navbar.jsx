@@ -8,6 +8,7 @@ import { AiOutlineMenu } from 'react-icons/ai'
 import { Menu } from '@mui/material';
 import { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
+import { TbReportSearch } from 'react-icons/tb'
 
 function Navbar(props) {
   const [anchor, setAnchor] = useState(null);
@@ -28,14 +29,19 @@ function Navbar(props) {
     </NavLink>
     <div className={styles['link-container']}>
       <NavLink to='/jobs'>
-        <h3>Search jobs</h3>
+        <div>
+          <div><h3>Search jobs</h3></div>
+          <div><TbReportSearch size={25} /></div>
+        </div>
       </NavLink>
     </div>
     <div className={styles['link-container']}>
-      <Button onClick={handleAnchorChange} disableRipple={true}>
-        <h3 className={styles.color}>Profile</h3>
-        <h3 className={styles.color}><CgProfile size={25} /></h3>
-      </Button>
+      <button onClick={handleAnchorChange}>
+        <div>
+          <div><h3>Profile</h3></div>
+          <div><CgProfile size={25} /></div>
+        </div>
+      </button>
     </div>
     <Menu open={Boolean(anchor)} anchorEl={anchor} transitionDuration={100} onClick={handleAnchorClose}>
       <MenuItem onClick={handleAnchorClose}>

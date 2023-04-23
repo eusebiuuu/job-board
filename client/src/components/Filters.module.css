@@ -1,0 +1,66 @@
+.container {
+  background-color: var(--clr-grey-8);
+  width: 100%;
+  margin: 2em auto;
+  border-radius: 30px;
+  padding: 3em;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  gap: 10px;
+}
+.grid h4 {
+  margin-bottom: 1em;
+}
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+.btn {
+  padding: 5px 10px;
+  border: 2px solid var(--clr-grey-1);
+  margin-left: 1em;
+  margin-top: 1em;
+}
+.city {
+  background-color: var(--clr-grey-3);
+  color: var(--clr-grey-10);
+  border-radius: 30px;
+  padding: 5px 10px;
+  padding-bottom: 0;
+  margin: 10px;
+}
+.city button {
+  color: var(--clr-grey-10);
+}
+.city button:hover {
+  box-shadow: none;
+}
+.cityFlex {
+  display: flex;
+  justify-content: space-around;
+}
+form {
+  margin: 0 10px;
+}
+.salary-input {
+  max-width: 200px;
+  width: 100%;
+  margin-left: 1em;
+}
+.filterBtn {
+  border: 2px solid var(--clr-grey-1);
+  margin: 1em;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+@media screen and (max-width: 550px) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr) auto;
+  }
+}

@@ -1,0 +1,44 @@
+.container {
+  margin: 2em 10vw;
+}
+.container > h2 {
+  margin-bottom: 1em;
+}
+.details {
+  position: relative;
+  background-color: var(--clr-grey-9);
+  margin: 2em 0;
+  padding: 1em;
+  border-radius: 30px;
+}
+.flexBtns {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.btn1, .btn2 {
+  border: 2px solid var(--clr-grey-1);
+  padding: 0.5em 1em;
+  margin: 0.5em;
+}
+.btn2 {
+  text-transform: capitalize;
+  letter-spacing: 0.2em;
+  font-weight: bold;
+}
+.header {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+}
+.image img {
+  width: 7em;
+  height: 7em;
+  border: 2px solid var(--clr-grey-1);
+}
+.list {
+  list-style-position: inside;
+  margin-bottom: 1em;
+}
+.list li::marker {
+  content: "⇒ ";
+}

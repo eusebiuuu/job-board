@@ -1,9 +1,8 @@
 .container {
-  background-color: var(--clr-primary-8);
+  background-color: var(--clr-grey-8);
   /* width: 100vw; */
   max-width: 100%;
   padding: 0.3em;
-  margin-top: 3em;
 }
 .grid-container {
   display: grid;
@@ -47,6 +46,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
+    row-gap: 2em;
   }
   .icons-container {
     display: none;

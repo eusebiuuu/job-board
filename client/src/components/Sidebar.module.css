@@ -4,7 +4,7 @@
 }
 .link-container {
   max-width: 100%;
-  background-color: var(--clr-primary-8);
+  background-color: var(--clr-grey-8);
   transition: var(--transition);
   padding: 0.5rem;
   border-top: 2px solid black;
@@ -22,5 +22,5 @@ a {
   place-self: center;
 }
 .hide {
-  transform: translate(-100%);
+  transform: translate(-150%);
 }

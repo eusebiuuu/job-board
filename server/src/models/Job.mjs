@@ -49,9 +49,12 @@ const JobSchema = new mongoose.Schema({
       return experience.includes(val.toLowerCase());
     }, 'Please provide a valid experience']
   },
-  requirements: {
-    type: String,
+  mustHave: {
+    type: [String],
     required: true,
+  },
+  goodToHave: {
+    type: [String],
   },
   companyID: {
     type: mongoose.Types.ObjectId,

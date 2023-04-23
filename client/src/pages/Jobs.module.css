@@ -1,0 +1,21 @@
+.searchbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3em;
+}
+.input {
+  max-width: 300px;
+  width: 90vw;
+}
+.title {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.jobs {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  margin: auto;
+}

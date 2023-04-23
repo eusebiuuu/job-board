@@ -1,12 +1,10 @@
 .container {
   width: 100vw;
   max-width: 100%;
-  background-color: var(--clr-primary-8);
+  background-color: var(--clr-grey-8);
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
-  /* border-bottom: 2px solid black; */
-  /* position: sticky; */
 }
 .logo {
   width: 2rem;
@@ -24,16 +22,15 @@
   display: grid;
   place-self: center;
 }
-.link-container h4 {
-  letter-spacing: 0.1rem;
-}
-.link-container a {
+.link-container a div {
   display: grid;
   place-self: center;
+  grid-template-columns: auto auto;
 }
-.link-container div {
+.link-container button div {
   display: grid;
   place-self: center;
+  grid-template-columns: auto auto;
 }
 .icon {
   display: flex;
@@ -48,8 +45,8 @@
 .sidebar {
   display: none;
 }
-.color {
-  color: var(--clr-grey-2);
+.link-container button:hover {
+  box-shadow: none;
 }
 @media only screen and (max-width: 500px) {
   .link-container {

@@ -1,0 +1,34 @@
+.form {
+  background-color: var(--clr-grey-9);
+  padding: 1em 3em;
+  margin: 0;
+  margin-bottom: 3em;
+}
+.input {
+  width: 100%;
+  margin: 1em 0;
+}
+.input div {
+  background-color: var(--clr-white);
+  width: 100%;
+}
+.upload {
+  padding: 0.5em 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+}
+::-webkit-file-upload-button {
+  padding: 0.5em 1em;
+  background-color: var(--clr-white);
+  border: none;
+}
+.btn {
+  border: 2px solid var(--clr-grey-1);
+  padding: 0.5em 1em;
+  margin: 1em 0;
+}
+.msg {
+  font-weight: bold;
+  margin: 0.5em 0;
+}

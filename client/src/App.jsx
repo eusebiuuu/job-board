@@ -18,9 +18,11 @@ import Register from './pages/Register';
 import FAQ from './pages/FAQ';
 import AddJob from './pages/AddJob';
 import CompanyProfile from './pages/CompanyProfile';
+import styles from './App.module.css'
 
 function App() {
-  return (<BrowserRouter>
+  return (<div className={styles.container}>
+  <BrowserRouter>
     <Navbar />
     <Sidebar />
     <Routes>
@@ -29,11 +31,11 @@ function App() {
       <Route path='jobs/:id' element={<SingleJob />} />
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />} />
+      <Route path='candidates/:id' element={<Candidates />} />
       <Route path='company' element={<Company />}>
-        <Route index element={<CompanyProfile />} />
+        <Route path='profile' element={<CompanyProfile />} />
         <Route path='addJob' element={<AddJob />} />
         <Route path='checkout' element={<Checkout />} />
-        <Route path='candidates' element={<Candidates />} />
         <Route path='announcements' element={<Announcements />} />
         <Route path='*' element={<NotFound />} />
       </Route>
@@ -46,7 +48,8 @@ function App() {
       <Route path='*' element={<NotFound />} />
     </Routes>
     <Footer />
-  </BrowserRouter>);
+  </BrowserRouter>
+</div>);
 }
 
 export default App;

@@ -88,7 +88,7 @@ function Footer(props) {
     <div className={styles.credits}>
       <div>© 2023 | All Rights Reserved.</div>
       <div>Project built by <span>Rîmboi Eusebiu</span></div>
-      <div>Designs created with love by <span>thecreation.design</span></div>
+      <div>Designs created with the help of <span>thecreation.design</span></div>
     </div>
   </div>)
 }
