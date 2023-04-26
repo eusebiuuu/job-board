@@ -1,0 +1,81 @@
+.form {
+  width: 90vw;
+  max-width: 800px;
+  margin: auto;
+}
+.content {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  margin: 2em 0;
+}
+.content > div {
+  width: 100%;
+}
+.content div h3 {
+  margin-top: 0.25em;
+}
+.content div input {
+  width: 100%;
+  background-color: var(--clr-primary-9);
+  border: 0;
+  border-radius: 0;
+}
+.list {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+.btn {
+  padding: 0.5em 1em;
+  margin: 0.5em 1em;
+  border: 2px solid var(--clr-grey-1);
+}
+.active {
+  padding: 0.5em 1em;
+  margin: 0.5em 1em;
+  border: 2px solid transparent;
+  background-color: var(--clr-grey-1);
+  color: var(--clr-white);
+}
+.active:hover, .btn:hover {
+  box-shadow: none;
+}
+.singleList select {
+  padding: 0.5em 1em;
+  width: 100%;
+  background-color: var(--clr-primary-9);
+  text-transform: capitalize;
+  font-size: 1em;
+  border: 0;
+}
+.singleList select:focus {
+  outline: none;
+}
+.form textarea {
+  resize: none;
+  width: 100%;
+  margin: 2em 0;
+  background-color: var(--clr-primary-9);
+}
+.form textarea:focus {
+  outline: none;
+}
+.specialBtn {
+  display: flex;
+  justify-content: space-around;
+}
+.specialBtn button {
+  margin: 2em;
+  padding: 1em 2em;
+  border: 2px solid var(--clr-red-light);
+  box-shadow: 8px 8px 2px rgba(0, 0, 0, 0.2);
+  color: var(--clr-red-light);
+  background-color: var(--clr-white);
+}
+.specialBtn button:hover {
+  color: var(--clr-white);
+  border: 2px solid var(--clr-red-light);
+  background-color: var(--clr-red-light);
+}
+.specialBtn button:active {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}

@@ -12,7 +12,7 @@ export default function Jobs(props) {
     setKeywords(event.target.value);
   }
 
-  return (<div>
+  return (<div className={styles.container}>
     <div className={styles.searchbar}>
       <input className={styles.input} onChange={handleKeywordChange} value={keywords} placeholder={'Search jobs'} />
     </div>
@@ -21,14 +21,14 @@ export default function Jobs(props) {
       <h2>Found jobs</h2>
     </div>
     <div className={styles.jobs}>
-      <JobCard content={content} title={'Web developer'} company={'Google'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Web developer'} company={'Google'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
+      <JobCard content={content} apply title={'Machine learning engineer'} company={'Meta'} id={2924734} />
     </div>
   </div>)
 }

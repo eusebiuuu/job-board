@@ -40,7 +40,7 @@ function App() {
         <Route path='*' element={<NotFound />} />
       </Route>
       <Route path='candidate' element={<Candidate />}>
-        <Route index element={<CandidateProfile />} />
+        <Route path='profile' element={<CandidateProfile />} />
         <Route path='appliedJobs' element={<AppliedJobs />} />
         <Route path='*' element={<NotFound />} />
       </Route>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { experience, indexes, jobTypes, locations } from '../utils/filters'
 import styles from './Filters.module.css'
 import ListElement from './ListElement'
-import { TiDeleteOutline } from 'react-icons/ti'
+import Chips from './Chips'
 
 const initFilters = [false, false, false, false, false, false, false, false, false];
 
@@ -10,11 +10,9 @@ export default function Filters(props) {
   const { show } = props;
   const [filters, setFilters] = useState(initFilters);
   const [cities, setCities] = useState([]);
-  const [city, setCity] = useState('');
   const [salary, setSalary] = useState('');
 
   function handleFiltersClear() {
-    setCity('');
     setCities([]);
     setSalary('');
     setFilters(initFilters);
@@ -29,39 +27,6 @@ export default function Filters(props) {
         return elem;
       });
     });
-  }
-
-  function handleCityAdd(event) {
-    event.preventDefault();
-    setCity('');
-    const exist = cities.find(curCity => {
-      if (city.toLowerCase() === curCity.toLowerCase()) {
-        return city;
-      }
-      return null;
-    });
-    setCities((cities) => {
-      if (!exist) {
-        return [...cities, city];
-      }
-      return cities;
-    });
-  }
-
-  function handleCityDelete(val) {
-    setCities(cities => {
-      const curIdx = cities.indexOf(val);
-      return cities.filter((elem, idx) => {
-        if (curIdx !== idx) {
-          return elem;
-        }
-        return null;
-      })
-    })
-  }
-
-  function handleCityChange(event) {
-    setCity(event.target.value);
   }
 
   function handleSalaryChange(event) {
@@ -96,22 +61,7 @@ export default function Filters(props) {
         <input className={styles['salary-input']} placeholder='Salary' onChange={handleSalaryChange} value={salary} type='number' />
       </div>
     </div>
-    <div className={styles.list}>
-      {cities.map((elem, idx) => {
-        return <div key={idx} className={styles.city}>
-          <div className={styles.cityFlex}>
-            <button onClick={() => handleCityDelete(elem)}>
-              <TiDeleteOutline size={25} />
-            </button>
-            <div>{elem}</div>
-          </div>
-        </div>
-      })}
-      <form onSubmit={handleCityAdd}>
-        <input required onChange={handleCityChange} value={city} placeholder={'City'} />
-        <button className={styles.btn} type='submit'>Add city</button>
-      </form>
-    </div>
+    <Chips placeholder='City' onChange={setCities} value={cities} />
     {show
     ? <div>
       <button className={styles.filterBtn}>Save filters</button>

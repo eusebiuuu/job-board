@@ -3,7 +3,7 @@ import styles from './JobCard.module.css'
 import logo from '../assets/logo.svg'
 
 export default function JobCard(props) {
-  const { title, company, content, id } = props; // imgLink etc.
+  const { title, company, content, id, apply } = props; // imgLink etc.
   return <div className={styles.container}>
     <div className={styles.header}>
       <div>
@@ -15,8 +15,8 @@ export default function JobCard(props) {
       </div>
     </div>
     <p>{content.substring(0, 150)}&hellip;</p>
-    <Link to={`${id}`}>
-      Apply now
-    </Link>
+    {apply
+      ? <Link to={`${id}`}>Apply now</Link>
+      : <Link to={`${id}`}>More info</Link>}
   </div>
 }

@@ -1,0 +1,27 @@
+.pages {
+  display: flex;
+  justify-content: space-around;
+}
+.activeLink {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.link {
+  text-transform: uppercase;
+  width: 100%;
+  text-align: center;
+}
+.link a {
+  transition: var(--transition);
+  padding: 1em 1em;
+}
+.link a:hover {
+  color: var(--clr-grey-10);
+  background-color: var(--clr-grey-1);
+}
+@media screen and (max-width: 500px) {
+  .pages {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+  }
+}

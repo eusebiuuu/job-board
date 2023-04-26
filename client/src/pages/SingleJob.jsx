@@ -7,11 +7,13 @@ const title = 'Web developer';
 const company = 'Amazon';
 const aboutUs = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu tellus pretium laoreet amet. Nulla duis mi elit amet. Tempor est cursus tellus tristique. Turpis ultrices ut et ut duis aliquam egestas felis duis. At montes, id proin consectetur eu cras id. Nullam placerat accumsan eu pretium. Turpis pharetra metus, feugiat enim diam odio mauris. Non quis aliquam nisl viverra nunc, tortor est nulla.';
 const description = 'Ante justo, vitae fermentum varius risus curabitur. Orci nisi, arcu vestibulum ultrices suspendisse gravida egestas. At amet turpis velit et malesuada sit duis nunc. Mauris vestibulum, eget sit mauris mollis dolor eget. Interdum netus eget nullam sem id purus. Ornare ornare tellus sed blandit dolor. Quis at tristique integer urna dignissim elit purus lectus sagittis. Porttitor lacus, ut morbi diam et mauris, quam. At malesuada tristique amet egestas dapibus nec purus amet. Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam nec, viverra. Tempus, elementum interdum nunc pulvinar dui.'
-const mustHave = ['iuhfui ewifjwrui', 'iuhifh ijfwru ewf', 'iuwehu idjefwhu dijwe'];
-const goodToHave = ['iuhfui ewifjwrui', 'iuhifh ijfwru ewf', 'iuwehu idjefwhu dijwe'];
 const benefits = ['iuhfui ewifjwrui', 'iuhifh ijfwru ewf', 'iuwehu idjefwhu dijwe', 'odwehoeh 9eiwd edh', 'deidweuh'];
 const cities = ['Vaslui', 'idjwuif', 'Barlad', 'Iasi', 'odkwejf9e iwedj', 'dwjewd weiejfuref9 9ef'];
 const salary = 2000;
+const requirements = `Lectus sagittis. Porttitor lacus, ut morbi diam et mauris, quam. At malesuada tristique amet egestas dapibus nec purus amet.
+->Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne
+->Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne
+- Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne`
 const location = 'Office';
 const experience = 'At least 2 years';
 const jobTypes = ['part-time', 'intern'];
@@ -47,17 +49,7 @@ export default function SingleJob() {
       <p>{description}</p>
       <h2>Requirements</h2>
       <br />
-      <ul className={styles.list}>
-        <h3>Must have</h3>
-        {mustHave.map(elem => {
-          return <li key={nanoid()}>{elem}</li>
-        })}
-        <br />
-        <h3>Good to have</h3>
-        {goodToHave.map(elem => {
-          return <li key={nanoid()}>{elem}</li>
-        })}
-      </ul>
+      <div className={styles.req}>{requirements}</div>
       <ul className={styles.list}>
         <h2>Benefits</h2>
         {benefits.map(elem => {

@@ -48,10 +48,10 @@
   padding: 0.5em 1em;
   border: 2px solid var(--clr-grey-1);
 }
-.aboutUs {
+.text {
   margin: 2em 0;
 }
-.aboutUs textarea {
+.text textarea {
   width: 100%;
   resize: none;
   margin-top: 2em;
@@ -87,6 +87,9 @@
 }
 .delete button:active {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+.abilities > div {
+  margin-bottom: 1em;
 }
 
 @media screen and (max-width: 500px) {

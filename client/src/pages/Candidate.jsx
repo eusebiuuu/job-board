@@ -1,7 +1,23 @@
+import { NavLink, Outlet } from 'react-router-dom';
+import styles from './Candidate.module.css'
 
 export default function Candidate(props) {
-  // Check https://mui-treasury.com/styles/tabs/ for tabs with content
   return (<div>
-    <h1>Candidate page</h1>
+    <nav className={styles.pages}>
+      <div className={styles.link}>
+        <NavLink className={({ isActive }) => {
+          return isActive ? styles.activeLink : '';
+        }} to='profile'>Profile</NavLink>
+      </div>
+      <div className={styles.link}>
+        <NavLink className={({ isActive }) => {
+          return isActive ? styles.activeLink : '';
+        }} to='appliedJobs'>Applied jobs</NavLink>
+      </div>
+    </nav>
+    <hr />
+    <div className={styles.content}>
+      <Outlet />
+    </div>
   </div>)
 }
