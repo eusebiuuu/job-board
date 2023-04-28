@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+const mongoose = require('mongoose');
 
 const ApplicationSchema = new mongoose.Schema({
   candidateID: {
@@ -26,4 +26,4 @@ ApplicationSchema.index({
 
 const Application = mongoose.model('Application', ApplicationSchema);
 
-export default Application;
+module.exports = Application;

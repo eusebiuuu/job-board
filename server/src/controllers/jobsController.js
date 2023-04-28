@@ -1,9 +1,9 @@
-import { StatusCodes } from 'http-status-codes'
-import Job from '../models/Job.mjs';
-import CustomAPIError from '../utils/customError.mjs';
-import Application from '../models/Application.mjs';
-import getIDs from '../utils/getIDs.mjs';
-import Candidate from '../models/Candidate.mjs';
+const { StatusCodes } = require('http-status-codes');
+const Job = require('../models/Job.js');
+const CustomAPIError = require('../utils/customError.js');
+const Application = require('../models/Application.js');
+const getIDs = require('../utils/getIDs.js');
+const Candidate = require('../models/Candidate.js');
 
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find();
@@ -102,7 +102,7 @@ const getAllCandidates = async (req, res) => {
   });
 }
 
-export {
+module.exports = {
   addJob,
   getAllAnnouncements,
   getAllJobs,

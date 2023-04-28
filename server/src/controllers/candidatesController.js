@@ -1,9 +1,9 @@
-import { StatusCodes } from 'http-status-codes'
-import Candidate from '../models/Candidate.mjs';
-import Application from '../models/Application.mjs';
-import Filter from '../models/Filter.mjs';
-import Review from '../models/Review.mjs';
-import CustomAPIError from '../utils/customError.mjs';
+const { StatusCodes } = require('http-status-codes');
+const Candidate = require('../models/Candidate.js');
+const Application = require('../models/Application.js');
+const Filter = require('../models/Filter.js');
+const Review = require('../models/Review.js');
+const CustomAPIError = require('../utils/customError.js');
 
 const getSingleCandidate = async (req, res) => {
     const candidateID = req.params.id;
@@ -60,7 +60,7 @@ const createCandidate = async (req, res) => {
     });
 }
 
-export {
+module.exports = {
     getSingleCandidate,
     createCandidate,
     editCandidate,

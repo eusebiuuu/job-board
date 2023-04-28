@@ -1,5 +1,6 @@
-import mongoose from 'mongoose'
-import { experience, jobTypes, locations } from '../utils/choices.mjs';
+const mongoose = require('mongoose');
+const validator = require('validator');
+const { experience, jobTypes, locations } = require('../utils/choices.js');
 
 const FilterSchema = new mongoose.Schema({
   experience: {
@@ -45,4 +46,4 @@ const FilterSchema = new mongoose.Schema({
 
 const Filter = mongoose.model('Filter', FilterSchema);
 
-export default Filter;
+module.exports = Filter;

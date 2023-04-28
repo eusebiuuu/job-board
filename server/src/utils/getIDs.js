@@ -1,5 +1,5 @@
 
-export default function getIDs(obj, field) {
+module.exports = function getIDs(obj, field) {
   const ans = [];
   obj.map(elem => {
     if (elem[field]) {

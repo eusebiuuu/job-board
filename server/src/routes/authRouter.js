@@ -1,5 +1,5 @@
-import express from 'express'
-import * as authController from '../controllers/authController.mjs'
+const express = require('express');
+const authController = require('../controllers/authController.js');
 
 const authRouter = express.Router();
 
@@ -12,4 +12,4 @@ authRouter.post('/changeEmail', authController.changeEmail);
 authRouter.post('/forgotPassword', authController.forgotPassword);
 authRouter.post('/resetPassword', authController.resetPassword);
 
-export default authRouter;
+module.exports = authRouter;

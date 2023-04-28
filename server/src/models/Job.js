@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { experience, jobTypes, locations } from "../utils/choices.mjs";
+const mongoose = require('mongoose');
+const { experience, jobTypes, locations } = require("../utils/choices.js");
 
 const JobSchema = new mongoose.Schema({
   title: {
@@ -65,4 +65,4 @@ const JobSchema = new mongoose.Schema({
 
 const Job = mongoose.model('Job', JobSchema);
 
-export default Job;
+module.exports = Job;

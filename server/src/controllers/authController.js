@@ -1,4 +1,4 @@
-import { StatusCodes } from "http-status-codes";
+const { StatusCodes } = require("http-status-codes");
 
 const register = (req, res) => {
     return res.status(StatusCodes.CREATED).json({
@@ -48,7 +48,7 @@ const resetPassword = (req, res) => {
     });
 }
 
-export {
+module.exports = {
     login,
     logout,
     register,

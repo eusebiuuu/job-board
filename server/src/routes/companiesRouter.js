@@ -1,5 +1,5 @@
-import express from 'express'
-import * as companiesController from '../controllers/companiesController.mjs'
+const express = require('express');
+const companiesController = require('../controllers/companiesController.js');
 
 const companiesRouter = express.Router();
 
@@ -10,4 +10,4 @@ companiesRouter.delete('/:id', companiesController.deleteCompany);
 
 companiesRouter.post('/checkout', companiesController.checkout);
 
-export default companiesRouter;
+module.exports = companiesRouter;

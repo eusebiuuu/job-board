@@ -1,5 +1,5 @@
-import express from 'express'
-import * as candidatesController from '../controllers/candidatesController.mjs'
+const express = require('express');
+const candidatesController = require('../controllers/candidatesController.js');
 
 const candidatesRouter = express.Router();
 
@@ -8,4 +8,4 @@ candidatesRouter.post('/', candidatesController.createCandidate);
 candidatesRouter.patch('/:id', candidatesController.editCandidate);
 candidatesRouter.delete('/:id', candidatesController.deleteCandidate);
 
-export default candidatesRouter;
+module.exports = candidatesRouter;

@@ -1,7 +1,7 @@
-import { StatusCodes } from 'http-status-codes'
-import Application from '../models/Application.mjs';
-import Job from '../models/Job.mjs';
-import getIDs from '../utils/getIDs.mjs';
+const { StatusCodes } = require('http-status-codes')
+const Application = require('../models/Application.js')
+const Job = require('../models/Job.js')
+const getIDs = require('../utils/getIDs.js')
 
 const getApplications = async (req, res) => {
   // candidate auth
@@ -68,7 +68,7 @@ const deleteApplication = async (req, res) => {
   });
 }
 
-export {
+module.exports = {
   getApplications,
   createApplication,
   hideApplication,

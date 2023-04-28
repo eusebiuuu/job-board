@@ -1,5 +1,5 @@
-import express from 'express'
-import * as jobController from '../controllers/jobsController.mjs';
+const express = require('express')
+const jobController = require('../controllers/jobsController.js');
 
 const jobsRouter = express.Router();
 
@@ -11,4 +11,4 @@ jobsRouter.post('/', jobController.addJob);
 jobsRouter.patch('/:id', jobController.editJob);
 jobsRouter.delete('/:id', jobController.deleteJob);
 
-export default jobsRouter;
+module.exports = jobsRouter;

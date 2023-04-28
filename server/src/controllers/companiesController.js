@@ -1,8 +1,8 @@
-import { StatusCodes } from 'http-status-codes';
-import Company from '../models/Company.mjs';
-import Job from '../models/Job.mjs';
-import Review from '../models/Review.mjs';
-import CustomAPIError from '../utils/customError.mjs';
+const { StatusCodes } = require('http-status-codes');
+const Company = require('../models/Company.js');
+const Job = require('../models/Job.js');
+const Review = require('../models/Review.js');
+const CustomAPIError = require('../utils/customError.js');
 
 const checkout = (req, res) => {
   return res.status(StatusCodes.OK).json({
@@ -66,7 +66,7 @@ const createCompany = async (req, res) => {
   });
 }
 
-export {
+module.exports = {
   createCompany,
   getSingleCompany,
   checkout,

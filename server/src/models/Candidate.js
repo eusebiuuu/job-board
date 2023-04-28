@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import validator from 'validator';
+const mongoose = require('mongoose');
+const validator = require('validator');
 
 const CandidateSchema = new mongoose.Schema({
   firstName: {
@@ -55,4 +55,4 @@ const CandidateSchema = new mongoose.Schema({
 
 const Candidate = mongoose.model('Candidate', CandidateSchema);
 
-export default Candidate;
+module.exports = Candidate;

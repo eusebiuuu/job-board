@@ -1,5 +1,5 @@
-import express from 'express'
-import * as applicationsController from '../controllers/applicationsController.mjs'
+const express = require('express');
+const applicationsController = require('../controllers/applicationsController.js');
 
 const applicationsRouter = express.Router();
 
@@ -8,4 +8,4 @@ applicationsRouter.post('/:id', applicationsController.createApplication);
 applicationsRouter.patch('/:jobID/:candidateID', applicationsController.hideApplication);
 applicationsRouter.delete('/:id', applicationsController.deleteApplication);
 
-export default applicationsRouter;
+module.exports = applicationsRouter;
