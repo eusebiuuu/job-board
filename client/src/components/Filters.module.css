@@ -3,7 +3,7 @@
   width: 100%;
   margin: 2em auto;
   border-radius: 30px;
-  padding: 3em;
+  padding: 2em;
 }
 .grid {
   display: grid;
@@ -49,13 +49,24 @@ form {
 .salary-input {
   max-width: 200px;
   width: 100%;
-  margin-left: 1em;
+  margin: 0 1em;
 }
 .filterBtn {
   border: 2px solid var(--clr-grey-1);
   margin: 1em;
   padding: 0.5em 1em;
   border-radius: 20px;
+}
+.searchbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 3em;
+  padding-bottom: 2em;
+}
+.input {
+  max-width: 300px;
+  width: 90vw;
 }
 
 @media screen and (max-width: 550px) {

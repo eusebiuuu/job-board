@@ -18,7 +18,7 @@ const getSingleCandidate = async (req, res) => {
 
 const editCandidate = async (req, res) => {
     // auth candidate
-    const candidateID = '643fc73b3e42965392bffdb7';
+    const candidateID = '64510e0c42e7a954c7ae24e5';
     const curCandidateID = req.params.id;
     if (candidateID !== curCandidateID) {
         throw new CustomAPIError('You are not allowed to modify other candidates', StatusCodes.FORBIDDEN);
@@ -36,7 +36,7 @@ const editCandidate = async (req, res) => {
 
 const deleteCandidate = async (req, res) => {
     // auth candidate
-    const candidateID = '643fc73b3e42965392bffdb7';
+    const candidateID = '64510e0c42e7a954c7ae24e5';
     const curCandidateID = req.params.id;
     if (candidateID !== curCandidateID) {
         throw new CustomAPIError('You are not allowed to modify other candidates', StatusCodes.FORBIDDEN);

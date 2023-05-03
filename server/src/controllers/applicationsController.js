@@ -2,6 +2,7 @@ const { StatusCodes } = require('http-status-codes')
 const Application = require('../models/Application.js')
 const Job = require('../models/Job.js')
 const getIDs = require('../utils/getIDs.js')
+const CustomAPIError = require('../utils/customError.js')
 
 const getApplications = async (req, res) => {
   // candidate auth

@@ -1,11 +1,12 @@
 .container {
-  margin: 3em 5vw;
+  margin: 3em auto;
+  max-width: 600px;
+  width: 90vw;
 }
-.searchbar {
+.flex {
   width: 100%;
   display: flex;
-  justify-content: center;
-  padding: 1em 3em;
+  justify-content: space-around;
 }
 .input {
   max-width: 300px;

@@ -79,6 +79,9 @@ body {
   line-height: 1.5;
   font-size: 1rem;
 }
+form {
+  margin: 0;
+}
 ul {
   list-style-type: none;
 }

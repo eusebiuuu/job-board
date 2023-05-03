@@ -1,50 +1,38 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import Filters from '../components/Filters'
 import styles from './Announcements.module.css'
 import { Link } from 'react-router-dom';
-
-const jobTitle = 'Web developer';
-const description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum vitae dictumst sit vitae, mi imperdiet sit. Lectus eleifend aliquam nibh mauris, pretium. Lectus magnis lorem massa urna felis porta.'
+import { clearFilters, getAllAnnouncements } from '../redux/jobs/jobsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from 'nanoid';
+import Loader from '../components/Loader';
 
 export default function Announcements(props) {
-  const [title, setTitle] = useState('');
+  const dispatch = useDispatch();
+  const { isLoading, filteredJobs } = useSelector((state) => state.jobs);
 
-  function handleTitleChange(event) {
-    setTitle(event.target.value);
-  }
+  useEffect(() => {
+    dispatch(clearFilters());
+    dispatch(getAllAnnouncements());
+    // eslint-disable-next-line
+  }, []);
 
   return (<div className={styles.container}>
     <Filters show={false} />
-    <div className={styles.search}>
-      <input placeholder='Search jobs' onChange={handleTitleChange} value={title} />
-    </div>
-    <div className={styles.jobCard}>
-      <h3>{jobTitle}</h3>
-      <p>{description}</p>
-      <div className={styles.link}>
-        <Link to='/jobs/:id'>More info</Link>
-      </div>
-    </div>
-    <div className={styles.jobCard}>
-      <h3>{jobTitle}</h3>
-      <p>{description}</p>
-      <div className={styles.link}>
-        <Link to='/jobs/:id'>More info</Link>
-      </div>
-    </div>
-    <div className={styles.jobCard}>
-      <h3>{jobTitle}</h3>
-      <p>{description}</p>
-      <div className={styles.link}>
-        <Link to='/jobs/:id'>More info</Link>
-      </div>
-    </div>
-    <div className={styles.jobCard}>
-      <h3>{jobTitle}</h3>
-      <p>{description}</p>
-      <div className={styles.link}>
-        <Link to='/jobs/:id'>More info</Link>
-      </div>
-    </div>
+    {isLoading || !filteredJobs
+    ? <Loader />
+    : <>{filteredJobs.length === 0
+      ? <div className={styles.flex}><h2>No announcements found...</h2></div>
+      : <>{filteredJobs.map(job => {
+          return <div key={nanoid()} className={styles.jobCard}>
+            <h3>{job.title}</h3>
+            <p>{job.description.substring(0, 150)}&hellip;</p>
+            <div className={styles.link}>
+              <Link to={`/jobs/${job._id}`}>More info</Link>
+            </div>
+          </div>
+        })}</>
+      }</>
+    }
   </div>)
 }

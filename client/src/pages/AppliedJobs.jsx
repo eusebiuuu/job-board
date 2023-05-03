@@ -1,31 +1,30 @@
-import { useState } from 'react';
 import styles from './AppliedJobs.module.css'
 import JobCard from '../components/JobCard';
-import Filters from '../components/Filters';
-
-const content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum vitae dictumst sit vitae, mi imperdiet sit. Lectus eleifend aliquam nibh mauris, pretium. Lectus magnis lorem massa urna felis porta.';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import Loader from '../components/Loader';
+import { getAppliedJobs } from '../redux/application/applicationSlice';
 
 export default function AppliedJobs(props) {
-  const [keywords, setKeywords] = useState('');
+  const dispatch = useDispatch();
+  const { isLoading, jobs } = useSelector((state) => state.applications);
 
-  function handleKeywordChange(event) {
-    setKeywords(event.target.value);
-  }
+  useEffect(() => {
+    dispatch(getAppliedJobs());
+    // eslint-disable-next-line
+  }, []);
 
   return (<div className={styles.container}>
-    <div className={styles.searchbar}>
-      <input className={styles.input} onChange={handleKeywordChange} value={keywords} placeholder={'Search jobs'} />
-    </div>
-    <Filters show={false} />
-    <div className={styles.jobs}>
-      <JobCard content={content} title={'Web developer'} company={'Google'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-      <JobCard content={content} title={'Machine learning engineer'} company={'Meta'} id={2924734} />
-    </div>
+    {isLoading || !jobs
+      ? <Loader />
+      : <>{jobs.length === 0
+        ? <div className={styles.flex}><h2>No jobs found...</h2></div>
+        : <div>
+          {jobs.map(job => {
+            return <JobCard job={job} />
+          })}
+        </div>
+      }</>
+    }
   </div>)
 }

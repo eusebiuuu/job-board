@@ -26,9 +26,6 @@
   display: flex;
   justify-content: space-around;
 }
-.form {
-  display: block;
-}
 .form input {
   margin-right: 1em;
 }

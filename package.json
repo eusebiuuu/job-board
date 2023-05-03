@@ -4,7 +4,8 @@
   "description": "Job board project",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "npm test --prefix client && npm test --prefix server",
+    "start": "npm start --prefix server & npm start --prefix client"
   },
   "repository": {
     "type": "git",

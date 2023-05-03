@@ -1,73 +1,63 @@
-import { useState } from 'react'
-import { experience, indexes, jobTypes, locations } from '../utils/filters'
+import { allExperiences, allJobTypes, allLocations } from '../utils/filters'
 import styles from './Filters.module.css'
 import ListElement from './ListElement'
 import Chips from './Chips'
+import { useDispatch, useSelector } from 'react-redux'
+import { changeCities, changeExperiences, changeJobTypes, changeKeywords, changeLocations, changeMinSalary, clearFilters, filterJobs } from '../redux/jobs/jobsSlice'
+import { nanoid } from 'nanoid'
+import { useEffect } from 'react'
 
-const initFilters = [false, false, false, false, false, false, false, false, false];
 
 export default function Filters(props) {
   const { show } = props;
-  const [filters, setFilters] = useState(initFilters);
-  const [cities, setCities] = useState([]);
-  const [salary, setSalary] = useState('');
+  const dispatch = useDispatch();
+  const { experiences, minSalary, locations, keywords, jobTypes, cities } = useSelector((state) => state.jobs);
 
-  function handleFiltersClear() {
-    setCities([]);
-    setSalary('');
-    setFilters(initFilters);
-  }
-
-  function handleValueChange(prop) {
-    setFilters(prev => {
-      return prev.map((elem, idx) => {
-        if (idx === indexes.indexOf(prop)) {
-          return !elem;
-        }
-        return elem;
-      });
-    });
-  }
-
-  function handleSalaryChange(event) {
-    setSalary(event.target.value);
-  }
+  useEffect(() => {
+    dispatch(filterJobs());
+    // eslint-disable-next-line
+  }, [minSalary, experiences, locations, keywords, jobTypes, cities]);
 
   return <div className={styles.container}>
+    <div className={styles.searchbar}>
+      <input className={styles.input} onChange={(e) => dispatch(changeKeywords(e.target.value))}
+        value={keywords} placeholder={'Search jobs'} />
+    </div>
     <div className={styles.grid}>
       <div className={styles.item}>
         <h4>Experience</h4>
-        {experience.map(elem => {
-          return <ListElement key={indexes.indexOf(elem)} text={elem}
-            value={filters[indexes.indexOf(elem)]} onValueChange={handleValueChange} />
+        {allExperiences.map(elem => {
+          return <ListElement key={nanoid()} text={elem} value={experiences}
+            onValueChange={() => dispatch(changeExperiences(elem))} />
         })}
       </div>
       <div className={styles.item}>
         <h4>Job type</h4>
-        {jobTypes.map(elem => {
-          return <ListElement key={indexes.indexOf(elem)} text={elem}
-            value={filters[indexes.indexOf(elem)]} onValueChange={handleValueChange} />
+        {allJobTypes.map(elem => {
+          return <ListElement key={nanoid()} text={elem} value={jobTypes}
+            onValueChange={() => dispatch(changeJobTypes(elem))} />
         })}
       </div>
       <div className={styles.item}>
         <h4>Location</h4>
-        {locations.map(elem => {
-          return <ListElement key={indexes.indexOf(elem)} text={elem}
-            value={filters[indexes.indexOf(elem)]} onValueChange={handleValueChange} />
+        {allLocations.map(elem => {
+          return <ListElement key={nanoid()} text={elem} value={locations}
+            onValueChange={() => dispatch(changeLocations(elem))} />
         })}
       </div>
       <div className={styles.salary}>
         <h4>Minimum salary ($)</h4>
-        <input className={styles['salary-input']} placeholder='Salary' onChange={handleSalaryChange} value={salary} type='number' />
+        <input className={styles['salary-input']} placeholder='Salary' step={500}
+          onChange={(e) => dispatch(changeMinSalary(e.target.value))} value={minSalary} type='number' />
       </div>
     </div>
-    <Chips placeholder='City' onChange={setCities} value={cities} />
-    {show
-    ? <div>
-      <button className={styles.filterBtn}>Save filters</button>
-      <button className={styles.filterBtn} onClick={handleFiltersClear}>Clear filters</button>
+    <Chips placeholder='City' withRedux onChange={changeCities} value={cities} />
+    <div>
+      {show
+        ? <button className={styles.filterBtn}>Save filters</button>
+        : null
+      }
+      <button className={styles.filterBtn} onClick={() => dispatch(clearFilters())}>Clear filters</button>
     </div>
-    : null
-    }
   </div>
 }

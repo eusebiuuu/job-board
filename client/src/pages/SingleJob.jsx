@@ -1,79 +1,92 @@
 import styles from './SingleJob.module.css'
 import logo from '../assets/logo.svg'
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid'
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteJob, getSingleJob } from '../redux/job/jobSlice';
+import Loader from '../components/Loader';
+import { useEffect } from 'react';
 
-const title = 'Web developer';
-const company = 'Amazon';
-const aboutUs = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu tellus pretium laoreet amet. Nulla duis mi elit amet. Tempor est cursus tellus tristique. Turpis ultrices ut et ut duis aliquam egestas felis duis. At montes, id proin consectetur eu cras id. Nullam placerat accumsan eu pretium. Turpis pharetra metus, feugiat enim diam odio mauris. Non quis aliquam nisl viverra nunc, tortor est nulla.';
-const description = 'Ante justo, vitae fermentum varius risus curabitur. Orci nisi, arcu vestibulum ultrices suspendisse gravida egestas. At amet turpis velit et malesuada sit duis nunc. Mauris vestibulum, eget sit mauris mollis dolor eget. Interdum netus eget nullam sem id purus. Ornare ornare tellus sed blandit dolor. Quis at tristique integer urna dignissim elit purus lectus sagittis. Porttitor lacus, ut morbi diam et mauris, quam. At malesuada tristique amet egestas dapibus nec purus amet. Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam nec, viverra. Tempus, elementum interdum nunc pulvinar dui.'
-const benefits = ['iuhfui ewifjwrui', 'iuhifh ijfwru ewf', 'iuwehu idjefwhu dijwe', 'odwehoeh 9eiwd edh', 'deidweuh'];
-const cities = ['Vaslui', 'idjwuif', 'Barlad', 'Iasi', 'odkwejf9e iwedj', 'dwjewd weiejfuref9 9ef'];
-const salary = 2000;
-const requirements = `Lectus sagittis. Porttitor lacus, ut morbi diam et mauris, quam. At malesuada tristique amet egestas dapibus nec purus amet.
-->Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne
-->Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne
-- Diam nec cum penatibus tellus elementum egestas consectetur. Suspendisse et quam lorem morbi facilisi ante at proin diam. Quis pellentesque quam ne`
-const location = 'Office';
-const experience = 'At least 2 years';
-const jobTypes = ['part-time', 'intern'];
+export default function SingleJob(props) {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { job, isLoading } = useSelector(state => state.job);
 
-export default function SingleJob() {
-  const params = useParams();
-  const id = params.id;
-  console.log(id);
+  useEffect(() => {
+    dispatch(getSingleJob(id));
+  }, []);
+
+  async function handleJobDelete() {
+    await dispatch(deleteJob(id));
+    navigate('/jobs');
+  }
+
   return (<div className={styles.container}>
-    <h2>Job details</h2>
-    <div className={styles.flexBtns}>
-      <button className={styles.btn1}>Cancel application</button>
-      <div>
-        <button className={styles.btn2}>Edit</button>
-        <button className={styles.btn2}>Delete</button>
-        <button className={styles.btn2}>Candidates</button>
-      </div>
-    </div>
-    <div className={styles.details}>
-      <p>Posted x days / hours ago</p>
-      <div className={styles.header}>
-        <div>
-          <h2>{title}</h2>
-          <h3>{company}</h3>
+    {isLoading || !job
+    ? <Loader />
+    : <>
+        <h2>Job details</h2>
+        <div className={styles.flexBtns}>
+          <button className={styles.btn1}>Cancel application</button>
+          <div>
+            <button className={styles.btn2}>
+              <Link to={`/editJob/${id}`}>Edit job</Link>
+            </button>
+            <button className={styles.btn2} onClick={handleJobDelete}>
+              Delete job
+            </button>
+            <button className={styles.btn2}>
+              <Link to={`/candidates/${job._id}`}>Candidates</Link>
+            </button>
+          </div>
         </div>
-        <div className={styles.image}>
-          <img src={logo} alt='Company logo' />
+        <div className={styles.details}>
+          <p>Posted at {job.createdAt}</p>
+          <div className={styles.header}>
+            <div>
+              <h2>{job.title}</h2>
+              <h3>Company</h3>
+            </div>
+            <div className={styles.image}>
+              <img src={logo} alt='Company logo' />
+            </div>
+          </div>
+          <h2>Description</h2>
+          <p>{job.description}</p>
+          <h2>Requirements</h2>
+          <br />
+          <div className={styles.req}>{job.requirements}</div>
+          <ul className={styles.list}>
+            <h2>Benefits</h2>
+            {job.benefits.map(elem => {
+              return <li key={nanoid()}>{elem}</li>
+            })}
+          </ul>
+          <h2>Minimum salary: 
+            {Number(job.minSalary)
+            ? ` ${Number(job.minSalary)}$`
+            : ' Unspecified'
+          }</h2>
+          <br />
+          <ul className={styles.list}>
+            <h2>Cities</h2>
+            {job.cities.map(elem => {
+              return <li key={nanoid()}>{elem}</li>
+            })}
+          </ul>
+          <h2>Location: {job.location}</h2>
+          <br />
+          <h2>Experience: {job.experience}</h2>
+          <br />
+          <ul className={styles.list}>
+            <h2>Job type</h2>
+            {job.jobTypes.map(elem => {
+              return <li key={nanoid()}>{elem}</li>
+            })}
+          </ul>
         </div>
-      </div>
-      <h2>About us</h2>
-      <p>{aboutUs}</p>
-      <h2>Description</h2>
-      <p>{description}</p>
-      <h2>Requirements</h2>
-      <br />
-      <div className={styles.req}>{requirements}</div>
-      <ul className={styles.list}>
-        <h2>Benefits</h2>
-        {benefits.map(elem => {
-          return <li key={nanoid()}>{elem}</li>
-        })}
-      </ul>
-      <h2>Minimum salary: {salary ?? 'Unspecified'}{salary ? '$' : ''}</h2>
-      <br />
-      <ul className={styles.list}>
-        <h2>Cities</h2>
-        {cities.map(elem => {
-          return <li key={nanoid()}>{elem}</li>
-        })}
-      </ul>
-      <h2>Location: {location}</h2>
-      <br />
-      <h2>Experience: {experience}</h2>
-      <br />
-      <ul className={styles.list}>
-        <h2>Job type</h2>
-        {jobTypes.map(elem => {
-          return <li key={nanoid()}>{elem}</li>
-        })}
-      </ul>
-    </div>
+      </>
+    }
   </div>)
 }

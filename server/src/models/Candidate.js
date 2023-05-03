@@ -47,6 +47,7 @@ const CandidateSchema = new mongoose.Schema({
   },
   birthday: {
     type: Date,
+    default: Date.now()
   },
   aboutMe: {
     type: String,

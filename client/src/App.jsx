@@ -32,8 +32,9 @@ function App() {
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />} />
       <Route path='candidates/:id' element={<Candidates />} />
+      <Route path='editJob/:id' element={<AddJob />} />
       <Route path='company' element={<Company />}>
-        <Route path='profile' element={<CompanyProfile />} />
+        <Route path='profile/:id' element={<CompanyProfile />} />
         <Route path='addJob' element={<AddJob />} />
         <Route path='checkout' element={<Checkout />} />
         <Route path='announcements' element={<Announcements />} />
@@ -44,6 +45,8 @@ function App() {
         <Route path='appliedJobs' element={<AppliedJobs />} />
         <Route path='*' element={<NotFound />} />
       </Route>
+      <Route path='candidate/profile/:id' element={<CandidateProfile />} />
+      <Route path='company/profile/:id' element={<CompanyProfile />} />
       <Route path='faq' element={<FAQ />} />
       <Route path='*' element={<NotFound />} />
     </Routes>

@@ -13,13 +13,13 @@ const JobSchema = new mongoose.Schema({
     required: [true, 'Description field must be provided'],
   },
   minSalary: {
-    type: Number,
-    required: [true, 'Minimum salary must be provided'],
+    type: String,
+    default: '',
   },
   benefits: {
     type: [String],
   },
-  jobType: {
+  jobTypes: {
     type: [String],
     default: ['full-time'],
     validate: [(val) => {
@@ -32,7 +32,7 @@ const JobSchema = new mongoose.Schema({
       return valid;
     }, 'Please provide valid job types']
   },
-  city: {
+  cities: {
     type: [String],
   },
   location: {
@@ -50,7 +50,7 @@ const JobSchema = new mongoose.Schema({
     }, 'Please provide a valid experience']
   },
   requirements: {
-    type: [String],
+    type: String,
     required: true,
   },
   companyID: {

@@ -6,6 +6,7 @@ const getIDs = require('../utils/getIDs.js');
 const Candidate = require('../models/Candidate.js');
 
 const getAllJobs = async (req, res) => {
+  // return only not applied jobs if user is a candidate
   const jobs = await Job.find();
   return res.status(StatusCodes.OK).json({
     jobs,
