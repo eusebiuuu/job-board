@@ -9,7 +9,7 @@ export const editCandidateThunk = async (candidateID, thunkAPI) => {
     return response.data;
   } catch (err) {
     console.log(err);
-    return thunkAPI.rejectWithValue('something went wrong');
+    return thunkAPI.rejectWithValue(err.response.data);
   }
 }
 
@@ -21,7 +21,7 @@ export const getSingleCandidateThunk = async (candidateID, thunkAPI) => {
       return response.data;
     } catch (err) {
       console.log(err);
-      return thunkAPI.rejectWithValue('something went wrong');
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   } else {
     //
@@ -35,6 +35,6 @@ export const getCandidatesThunk = async (jobID, thunkAPI) => {
     return response.data;
   } catch (err) {
     console.log(err);
-    return thunkAPI.rejectWithValue('something went wrong');
+    return thunkAPI.rejectWithValue(err.response.data);
   }
 }

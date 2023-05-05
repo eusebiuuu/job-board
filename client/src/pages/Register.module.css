@@ -7,12 +7,11 @@
   margin-bottom: 1.5em;
 }
 .btns button {
-  /* border: 2px solid var(--clr-grey-1); */
   padding: 1em 1.5em;
 }
 .btns button:hover {
   box-shadow: none;
 }
 .active {
-  background-color: var(--clr-grey-9);
+  background-color: var(--clr-secondary-6);
 }

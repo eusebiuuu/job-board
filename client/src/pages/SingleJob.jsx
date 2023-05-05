@@ -7,7 +7,7 @@ import { deleteJob, getSingleJob } from '../redux/job/jobSlice';
 import Loader from '../components/Loader';
 import { useEffect } from 'react';
 
-export default function SingleJob(props) {
+export default function SingleJob() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -53,10 +53,10 @@ export default function SingleJob(props) {
             </div>
           </div>
           <h2>Description</h2>
-          <p>{job.description}</p>
+          <div>{job.description}</div>
           <h2>Requirements</h2>
           <br />
-          <div className={styles.req}>{job.requirements}</div>
+          <div>{job.requirements}</div>
           <ul className={styles.list}>
             <h2>Benefits</h2>
             {job.benefits.map(elem => {

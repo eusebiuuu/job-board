@@ -36,6 +36,7 @@ const editCompany = async (req, res) => {
   });
   return res.status(StatusCodes.OK).json({
     company: editedCompany,
+    msg: 'Company edited successfully',
   });
 }
 
@@ -63,6 +64,7 @@ const createCompany = async (req, res) => {
   const createdCompany = await Company.create(curCompany);
   return res.status(StatusCodes.CREATED).json({
     company: createdCompany,
+    msg: 'Company created successfully',
   });
 }
 

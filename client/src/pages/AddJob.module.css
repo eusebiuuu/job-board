@@ -34,7 +34,7 @@
   margin: 0.5em 1em;
   border: 2px solid transparent;
   background-color: var(--clr-grey-1);
-  color: var(--clr-white);
+  color: var(--clr-grey-10);
 }
 .active:hover, .btn:hover {
   box-shadow: none;
@@ -55,6 +55,7 @@
   width: 100%;
   margin: 2em 0;
   background-color: var(--clr-primary-9);
+  white-space: pre-wrap;
 }
 .form textarea:focus {
   outline: none;

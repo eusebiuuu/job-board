@@ -42,6 +42,3 @@
 .list li::marker {
   content: "⇒ ";
 }
-.req {
-  white-space: pre-wrap;
-}

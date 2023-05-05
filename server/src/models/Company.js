@@ -5,6 +5,7 @@ const CompanySchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'Please provide the name'],
+    unique: [true, 'There is already a company with this name. Please change it']
   },
   verified: {
     type: Boolean,

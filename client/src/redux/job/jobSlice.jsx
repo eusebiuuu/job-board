@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createJobThunk, deleteJobThunk, editJobThunk, getSingleJobThunk } from "./jobThunk";
+import { toast } from "react-toastify";
 
 const initialState = {
-  isLoading: false,
-  isError: false,
+  isLoading: true,
   title: '',
   description: '',
   benefits: [],
@@ -28,8 +28,8 @@ const jobSlice = createSlice({
   name: 'job',
   initialState,
   reducers: {
-    clearFields: (state) => {
-      return { ...initialState };
+    clearFields: (state, { payload }) => {
+      return { ...initialState, isLoading: payload };
     },
     changeExperience: (state, action) => {
       state.experience = action.payload;
@@ -73,72 +73,50 @@ const jobSlice = createSlice({
     builder
       .addCase(addJob.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(addJob.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(addJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isError = false;
         state.job = action.payload.job;
-        // console.log(state.job);
+        toast.success(action.payload.msg);
       })
       .addCase(getSingleJob.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(getSingleJob.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(getSingleJob.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.isError = false;
         const curJob = action.payload.job;
-        state.job = curJob;
-        state.experience = curJob.experience;
-        state.location = curJob.location;
-        state.jobTypes = curJob.jobTypes;
-        state.cities = curJob.cities;
-        state.benefits = curJob.benefits;
-        state.description = curJob.description;
-        state.title = curJob.title;
-        state.minSalary = curJob.minSalary;
-        state.requirements = curJob.requirements;
-        console.log(action.payload);
+        // console.log(curJob);
+        return { ...initialState, ...curJob, job: curJob, isLoading: false };
       })
       .addCase(editJob.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(editJob.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(editJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isError = false;
         state.job = action.payload.job;
-        // console.log(action.payload);
+        toast.success(action.payload.msg);
       })
       .addCase(deleteJob.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(deleteJob.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(deleteJob.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isError = false;
-        console.log(action.payload);
+        toast.success(action.payload.msg);
       })
   }
 });

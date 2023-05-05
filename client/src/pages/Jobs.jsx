@@ -17,12 +17,10 @@ export default function Jobs() {
   }, []);
 
   return (<div className={styles.container}>
-    {!filteredJobs ? null : <Filters show={true} />}
     {isLoading || !filteredJobs
-      ? <div className={styles.loader}>
-          <Loader />
-        </div>
+      ? <Loader />
       : <>
+          <Filters show={true} />
           <div className={styles.title}>
           {filteredJobs.length !== 0
             ? <h2>Found jobs</h2>

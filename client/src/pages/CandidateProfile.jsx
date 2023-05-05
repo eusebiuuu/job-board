@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Chips from '../components/Chips';
 import logo from '../assets/logo.svg'
 import styles from './CandidateProfile.module.css'
+import { TextField } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeAbilities, changeAboutMe, changeBirthday, changeEducation, changeEmail, changeExperience, changeFirstName, changeLastName, changePassword, changePhone, editCandidate, getSingleCandidate } from '../redux/candidate/candidateSlice';
 import { useParams } from 'react-router-dom';
@@ -11,7 +12,7 @@ export default function CandidateProfile() {
   const { id } = useParams();
   const personal = !Boolean(id);
   const { firstName, lastName, email, password, phone, birthday, abilities, 
-    aboutMe, experience, education, image } = useSelector(state => state.candidate);
+    aboutMe, experience, education, isLoading } = useSelector(state => state.candidate);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function CandidateProfile() {
   }
 
   return (<>
-    {!firstName
+    {isLoading || !firstName
     ? <Loader />
     : <div className={styles.container}>
       <h3>Personal data</h3>
@@ -46,16 +47,16 @@ export default function CandidateProfile() {
         </div>
         <div>
           <div className={styles.input}>
-            <input placeholder='First name' value={firstName} required 
+            <TextField label='First name' value={firstName} required 
               onChange={(e) => dispatch(changeFirstName(e.target.value))} />
           </div>
           <div className={styles.input}>
-            <input placeholder='Last name' value={lastName} required 
+            <TextField label='Last name' value={lastName} required 
               onChange={(e) => dispatch(changeLastName(e.target.value))} />
           </div>
           <div className={styles.input}>
             <div>
-              <input type='email' required disabled label='Email' value={email} 
+              <TextField type='email' required disabled label='Email' value={email} 
                 onChange={(e) => dispatch(changeEmail(e.target.value))} />
             </div>
             <div>
@@ -65,7 +66,7 @@ export default function CandidateProfile() {
             </div>
           </div>
           <div className={styles.input}>
-            <input disabled type='password' required placeholder='Password' value={password}
+            <TextField disabled type='password' required label='Password' value={password}
               onChange={(e) => dispatch(changePassword(e.target.value))} />
             <div>
               <button className={styles.change}>
@@ -74,10 +75,10 @@ export default function CandidateProfile() {
             </div>
           </div>
           <div className={styles.input}>
-            <input placeholder='Phone' value={phone} onChange={(e) => dispatch(changePhone(e.target.value))} />
+            <TextField label='Phone' value={phone} onChange={(e) => dispatch(changePhone(e.target.value))} />
           </div>
           <div className={styles.input}>
-            <input placeholder='Birthday' value={birthday} onChange={(e) => dispatch(changeBirthday(e.target.value))} />
+            <TextField label='Birthday' value={birthday} onChange={(e) => dispatch(changeBirthday(e.target.value))} />
           </div>
         </div>
       </div>

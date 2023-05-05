@@ -35,7 +35,7 @@ export default function CompanyRegister(props) {
 
   return (<form className={styles.form} onSubmit={handleSubmitForm}>
     <div className={styles.input}><TextField label='Name' value={name} required onChange=  {handleNameChange} /></div>
-    <div className={styles.input}><TextField type='email' required label='Email' value={email} onChange=  {handleEmailChange} /></div>
+    <div className={styles.input}><TextField type='email' required label='Email' value={email} onChange={handleEmailChange} /></div>
     <div className={styles.input}><TextField type='password' required label='Password' value={password} onChange=  {handlePasswordChange} /></div>
     <div className={styles.input}><TextField label='Phone' value={phone} onChange= {handlePhoneChange} /></div>
     <div className={styles.input}><TextField label='Headquarter' value={headquarter} onChange= {handleHeadquarterChange} /></div>

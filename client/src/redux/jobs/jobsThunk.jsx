@@ -6,8 +6,7 @@ export const getAllJobsThunk = async (_, thunkAPI) => {
     console.log(resp);
     return resp.data;
   } catch (err) {
-    console.log(err);
-    return thunkAPI.rejectWithValue('something went wrong');
+    return thunkAPI.rejectWithValue(err.response.data);
   }
 };
 
@@ -17,8 +16,7 @@ export const getAllAnnouncementsThunk = async (_, thunkAPI) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log(err);
-    return thunkAPI.rejectWithValue('something went wrong');
+    return thunkAPI.rejectWithValue(err.response.data);
   }
 }
 

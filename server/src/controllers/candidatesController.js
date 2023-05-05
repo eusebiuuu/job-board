@@ -31,6 +31,7 @@ const editCandidate = async (req, res) => {
     });
     return res.status(StatusCodes.OK).json({
         candidate: editedCandidate,
+        msg: 'Candidate edited successfully',
     });
 }
 
@@ -57,6 +58,7 @@ const createCandidate = async (req, res) => {
     const createdCandidate = await Candidate.create(curCandidate);
     return res.status(StatusCodes.OK).json({
         candidate: createdCandidate,
+        msg: 'Candidate created successfully',
     });
 }
 

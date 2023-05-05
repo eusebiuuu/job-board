@@ -57,7 +57,6 @@ const JobSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: 'Company',
     required: true,
-    select: true,
   }
 }, {
   timestamps: true,

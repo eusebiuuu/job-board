@@ -17,6 +17,7 @@ const getApplications = async (req, res) => {
 
 const createApplication = async (req, res) => {
   // auth candidate
+  // check already applied
   const candidateID = '6440093501b470f9983c348f';
   const jobID = req.params.id;
   const job = await Job.findOne({ _id: jobID });
@@ -28,7 +29,8 @@ const createApplication = async (req, res) => {
     jobID,
   });
   return res.status(StatusCodes.CREATED).json({
-    application
+    application,
+    msg: 'Applied to job successfully',
   });
 }
 
@@ -52,6 +54,7 @@ const hideApplication = async (req, res) => {
   await application.save();
   return res.status(StatusCodes.OK).json({
     application,
+    msg: 'Application hidden successfully',
   });
 }
 

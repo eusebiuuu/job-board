@@ -1,5 +1,5 @@
 .form {
-  background-color: var(--clr-grey-9);
+  background-color: var(--clr-secondary-6);
   padding: 1em 3em;
   margin: 0;
   margin-bottom: 3em;
@@ -10,7 +10,7 @@
   border: 0;
 }
 .input div {
-  background-color: var(--clr-white);
+  background-color: #fff;
   width: 100%;
 }
 .upload {
@@ -21,7 +21,7 @@
 }
 ::-webkit-file-upload-button {
   padding: 0.5em 1em;
-  background-color: var(--clr-white);
+  background-color: #fff;
   border: none;
 }
 .btn {

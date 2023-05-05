@@ -19,9 +19,25 @@ import FAQ from './pages/FAQ';
 import AddJob from './pages/AddJob';
 import CompanyProfile from './pages/CompanyProfile';
 import styles from './App.module.css'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useThemeContext } from './context/theme';
 
 function App() {
-  return (<div className={styles.container}>
+  const { theme } = useThemeContext();
+  return (<div className={`${styles.container} ${theme ? '' : 'dark'}`}>
+  <ToastContainer
+    position="bottom-right"
+    autoClose={3000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="light"
+  />
   <BrowserRouter>
     <Navbar />
     <Sidebar />
@@ -34,7 +50,7 @@ function App() {
       <Route path='candidates/:id' element={<Candidates />} />
       <Route path='editJob/:id' element={<AddJob />} />
       <Route path='company' element={<Company />}>
-        <Route path='profile/:id' element={<CompanyProfile />} />
+        <Route path='profile' element={<CompanyProfile />} />
         <Route path='addJob' element={<AddJob />} />
         <Route path='checkout' element={<Checkout />} />
         <Route path='announcements' element={<Announcements />} />

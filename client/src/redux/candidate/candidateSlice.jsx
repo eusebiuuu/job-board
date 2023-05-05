@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { editCandidateThunk, getCandidatesThunk, getSingleCandidateThunk } from "./candidateThunk";
+import { toast } from "react-toastify";
 
 const initialState = {
-  isLoading: false,
-  isError: false,
+  isLoading: true,
   firstName: '',
   lastName: '',
   email: '',
@@ -66,42 +66,34 @@ const candidateSlice = createSlice({
     builder
       .addCase(editCandidate.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(editCandidate.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload);
       })
       .addCase(editCandidate.fulfilled, (state, { payload }) => {
-        return { isLoading: false, isError: false, ...payload.candidate};
-        // console.log(state.candidate);
+        toast.success(payload.msg);
+        return { isLoading: false, ...payload.candidate };
       })
       .addCase(getSingleCandidate.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(getSingleCandidate.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(getSingleCandidate.fulfilled, (state, { payload }) => {
-        return { ...initialState, isLoading: false, isError: false, ...payload.candidate };
+        return { ...initialState, isLoading: false, ...payload.candidate };
       })
       .addCase(getCandidates.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(getCandidates.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(getCandidates.fulfilled, (state, { payload }) => {
-        console.log(payload.candidates);
-        return { isLoading: false, isError: false, candidates: payload.candidates };
-        // console.log(state.candidate);
+        return { isLoading: false, candidates: payload.candidates };
       })
   }
 })

@@ -43,6 +43,7 @@ const editJob = async (req, res) => {
   });
   return res.status(StatusCodes.OK).json({
     job: editedJob,
+    msg: 'Job edited successfully',
   });
 }
 
@@ -72,6 +73,7 @@ const addJob = async (req, res) => {
   const createdJob = await Job.create(curJob);
   return res.status(StatusCodes.CREATED).json({
     job: createdJob,
+    msg: 'Job created successfully',
   });
 }
 

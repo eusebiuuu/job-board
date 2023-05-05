@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllAnnouncementsThunk, getAllJobsThunk } from "./jobsThunk";
+import { toast } from "react-toastify";
 
 const initialState = {
   jobs: null,
   filteredJobs: null,
-  isLoading: false,
-  isError: false,
+  isLoading: true,
   experiences: [],
   locations: [],
   cities: [],
@@ -116,31 +116,26 @@ const jobsSlice = createSlice({
     builder
       .addCase(getAllJobs.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(getAllJobs.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
+        toast.error(action.payload.msg);
       })
       .addCase(getAllJobs.fulfilled, (state, action) => {
+        console.log(action);
         state.isLoading = false;
-        state.isError = false;
         state.jobs = action.payload.jobs;
         state.filteredJobs = action.payload.jobs;
       })
       .addCase(getAllAnnouncements.pending, (state) => {
         state.isLoading = true;
-        state.isError = false;
       })
       .addCase(getAllAnnouncements.rejected, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
-        state.isError = true;
+        toast.error(action.payload.msg);
       })
       .addCase(getAllAnnouncements.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.isLoading = false;
-        state.isError = false;
         state.jobs = action.payload.announcements;
       })
   }

@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getAppliedJobsThunk } from "./applicationThunk";
+import { toast } from "react-toastify";
 
 const initialState = {
   jobs: [],
   isLoading: false,
-  isError: false,
   page: 1,
 }
 
@@ -19,16 +19,13 @@ const applicationSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAppliedJobs.pending, (state) => {
-        state.isError = false;
         state.isLoading = true;
       })
       .addCase(getAppliedJobs.rejected, (state, action) => {
-        state.isError = true;
         state.isLoading = false;
-        console.log(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(getAppliedJobs.fulfilled, (state, action) => {
-        state.isError = false;
         state.isLoading = false;
         state.jobs = action.payload.jobs;
         console.log(action.payload);

@@ -10,17 +10,16 @@ import { nanoid } from 'nanoid';
 export default function Candidates() {
   const { id: jobID } = useParams();
   const dispatch = useDispatch();
-  const { candidates } = useSelector(state => state.candidate);
+  const { candidates, isLoading } = useSelector(state => state.candidate);
 
   useEffect(() => {
     (async () => {
       await dispatch(getCandidates(jobID));
     })();
-    console.log(candidates);
   }, []);
 
   return (<div className={styles.container}>
-    {!candidates
+    {isLoading || !candidates
     ? <Loader />
     : <>{candidates.map(candidate => {
         return <div className={styles.candidate} key={nanoid()}>

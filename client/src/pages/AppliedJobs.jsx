@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import Loader from '../components/Loader';
 import { getAppliedJobs } from '../redux/application/applicationSlice';
 
-export default function AppliedJobs(props) {
+export default function AppliedJobs() {
   const dispatch = useDispatch();
   const { isLoading, jobs } = useSelector((state) => state.applications);
 

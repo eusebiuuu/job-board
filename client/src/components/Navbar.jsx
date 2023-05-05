@@ -3,15 +3,17 @@ import logo from '../assets/logo.svg'
 import { NavLink } from 'react-router-dom'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { BiLock } from 'react-icons/bi'
-import { Button, MenuItem } from '@mui/material'
+import { Button, MenuItem, Switch } from '@mui/material'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { Menu } from '@mui/material';
 import { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { TbReportSearch } from 'react-icons/tb'
+import { useThemeContext } from '../context/theme'
 
 function Navbar(props) {
   const [anchor, setAnchor] = useState(null);
+  const { onThemeToggle } = useThemeContext();
 
   function handleAnchorChange(event) {
     setAnchor(event.currentTarget);
@@ -27,6 +29,9 @@ function Navbar(props) {
         <img src={logo} alt='logo' />
       </div>
     </NavLink>
+    <div>
+      <Switch onClick={onThemeToggle} color='error' />
+    </div>
     <div className={styles['link-container']}>
       <NavLink to='/jobs'>
         <div>
