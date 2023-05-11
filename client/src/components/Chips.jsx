@@ -67,13 +67,13 @@ export default function Chips(props) {
     </div>
   })}
   <div className={styles.form}>
-    <input onChange={handleObjectChange} type='text' value={object} placeholder={placeholder} onKeyDown={e => {
+    <input id={`input${placeholder}`} onChange={handleObjectChange} type='text' value={object} placeholder={placeholder} onKeyDown={e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         handleObjectAdd();
       }
     }} />
-    <button className={styles.btn} onClick={handleObjectAdd}>Add {placeholder}</button>
+    <button id={`add${placeholder}`} className={styles.btn} onClick={handleObjectAdd}>Add {placeholder}</button>
   </div>
 </div>
 }

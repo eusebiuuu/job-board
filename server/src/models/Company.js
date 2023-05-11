@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const CompanySchema = new mongoose.Schema({
   name: {
@@ -8,8 +9,8 @@ const CompanySchema = new mongoose.Schema({
     unique: [true, 'There is already a company with this name. Please change it']
   },
   verified: {
-    type: Boolean,
-    required: true,
+    type: Date,
+    default: null,
   },
   password: {
     type: String,
@@ -26,13 +27,19 @@ const CompanySchema = new mongoose.Schema({
       message: 'Please provide a valid email',
     }
   },
+  tempEmail: {
+    type: String,
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide a valid email',
+    }
+  },
   logo: {
     type: String,
     default: 'assets/default-logo.jpg',
   },
   aboutUs: {
     type: String,
-    required: true,
     maxLength: [1000, 'The description can be maximum 1000 characters'],
   },
   phone: {
@@ -40,17 +47,38 @@ const CompanySchema = new mongoose.Schema({
   },
   mainHeadquarter: {
     type: String,
-    required: true,
   },
   subscriptionExpiration: {
     type: Date,
-    required: true,
+    default: new Date(Date.now()),
   },
   availablePosts: {
     type: Number,
-    required: true,
+    default: 0,
   },
+  verificationToken: {
+    type: String,
+  },
+  passwordToken: {
+    type: String,
+  },
+  passwordTokenExpirationDate: {
+    type: Date,
+  }
 });
+
+CompanySchema.pre('save', async function () {
+  // console.log(this.modifiedPaths());
+  // console.log(this.isModified('name'));
+  if (!this.isModified('password')) return;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+CompanySchema.methods.comparePassword = async function (curPassword) {
+  const isMatch = await bcrypt.compare(curPassword, this.password);
+  return isMatch;
+};
 
 const Company = mongoose.model('Company', CompanySchema);
 

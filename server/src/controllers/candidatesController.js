@@ -4,6 +4,7 @@ const Application = require('../models/Application.js');
 const Filter = require('../models/Filter.js');
 const Review = require('../models/Review.js');
 const CustomAPIError = require('../utils/customError.js');
+const Token = require('../models/Token.js');
 
 const getSingleCandidate = async (req, res) => {
     const candidateID = req.params.id;
@@ -17,8 +18,7 @@ const getSingleCandidate = async (req, res) => {
 }
 
 const editCandidate = async (req, res) => {
-    // auth candidate
-    const candidateID = '64510e0c42e7a954c7ae24e5';
+    const candidateID = req.userInfo.userID;
     const curCandidateID = req.params.id;
     if (candidateID !== curCandidateID) {
         throw new CustomAPIError('You are not allowed to modify other candidates', StatusCodes.FORBIDDEN);
@@ -36,35 +36,37 @@ const editCandidate = async (req, res) => {
 }
 
 const deleteCandidate = async (req, res) => {
-    // auth candidate
-    const candidateID = '64510e0c42e7a954c7ae24e5';
+    const candidateID = req.userInfo.userID;
     const curCandidateID = req.params.id;
     if (candidateID !== curCandidateID) {
-        throw new CustomAPIError('You are not allowed to modify other candidates', StatusCodes.FORBIDDEN);
+        throw new CustomAPIError('You are not allowed to delete other candidates', StatusCodes.FORBIDDEN);
     }
     const candidate = await Candidate.findOne({ _id: candidateID });
+    if (!candidate) {
+        throw new CustomAPIError('Profile already deleted', StatusCodes.FORBIDDEN);
+    }
     await Application.deleteMany({ candidateID });
     await Filter.deleteMany({ candidateID });
     await Review.deleteMany({ candidateID });
+    await Token.deleteOne({
+        userID: req.userInfo.userID,
+    });
+    res.cookie('accessToken', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+    });
+    res.cookie('refreshToken', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now()),
+    });
     await candidate.remove();
     return res.status(StatusCodes.OK).json({
         msg: 'Candidate deleted successfully',
     });
 }
 
-const createCandidate = async (req, res) => {
-    const curCandidate = req.body.candidate;
-    curCandidate.verified = false;
-    const createdCandidate = await Candidate.create(curCandidate);
-    return res.status(StatusCodes.OK).json({
-        candidate: createdCandidate,
-        msg: 'Candidate created successfully',
-    });
-}
-
 module.exports = {
     getSingleCandidate,
-    createCandidate,
     editCandidate,
     deleteCandidate,
 }

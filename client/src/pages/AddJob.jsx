@@ -49,9 +49,9 @@ export default function AddJob() {
       <div className={styles.content}>
         <div><h3>Job type</h3></div>
         <div className={styles.list}>
-          {allJobTypes.map(type => {
+          {allJobTypes.map((type, idx) => {
             const classNames = jobTypes.indexOf(type) === -1 ? styles.btn : styles.active;
-            return <button key={nanoid()} type='button' className={classNames} 
+            return <button key={nanoid()} type='button' id={`type${idx}`} className={classNames} 
               onClick={() => dispatch(changeJobTypes(type))}>{type}</button>
           })}
         </div>
@@ -59,7 +59,7 @@ export default function AddJob() {
       <label className={styles.content}>
         <div><h3>Location</h3></div>
         <div className={styles.singleList}>
-          <select value={location} onChange={e => dispatch(changeLocation(e.target.value))}>
+          <select value={location} data-testid='location' onChange={e => dispatch(changeLocation(e.target.value))}>
             {allLocations.map(loc => {
               return <option key={loc} value={loc}>{loc}</option>
             })}

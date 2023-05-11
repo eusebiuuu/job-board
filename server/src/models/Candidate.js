@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const CandidateSchema = new mongoose.Schema({
   firstName: {
@@ -25,12 +26,19 @@ const CandidateSchema = new mongoose.Schema({
       message: 'Please provide a valid email',
     }
   },
+  tempEmail: {
+    type: String,
+    validate: {
+      validator: validator.isEmail,
+      message: 'Please provide a valid email',
+    }
+  },
   phone: {
     type: String,
   },
   verified: {
-    type: Boolean,
-    default: false,
+    type: Date,
+    default: null,
   },
   education: {
     type: String,
@@ -47,12 +55,33 @@ const CandidateSchema = new mongoose.Schema({
   },
   birthday: {
     type: Date,
-    default: Date.now()
   },
   aboutMe: {
     type: String,
   },
+  verificationToken: {
+    type: String,
+  },
+  passwordToken: {
+    type: String,
+  },
+  passwordTokenExpirationDate: {
+    type: Date,
+  }
 });
+
+CandidateSchema.pre('save', async function () {
+  // console.log(this.modifiedPaths());
+  // console.log(this.isModified('name'));
+  if (!this.isModified('password')) return;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+});
+
+CandidateSchema.methods.comparePassword = async function (curPassword) {
+  const isMatch = await bcrypt.compare(curPassword, this.password);
+  return isMatch;
+};
 
 const Candidate = mongoose.model('Candidate', CandidateSchema);
 

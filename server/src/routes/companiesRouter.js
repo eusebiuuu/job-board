@@ -1,13 +1,13 @@
 const express = require('express');
 const companiesController = require('../controllers/companiesController.js');
+const { authenticateUser, authorizePermissions } = require('../middlewares/authentication.js');
 
 const companiesRouter = express.Router();
 
 companiesRouter.get('/:id', companiesController.getSingleCompany);
-companiesRouter.post('/', companiesController.createCompany);
-companiesRouter.patch('/:id', companiesController.editCompany);
-companiesRouter.delete('/:id', companiesController.deleteCompany);
+companiesRouter.patch('/:id', authenticateUser, authorizePermissions('company'), companiesController.editCompany);
+companiesRouter.delete('/:id', authenticateUser, authorizePermissions('company'), companiesController.deleteCompany);
 
-companiesRouter.post('/checkout', companiesController.checkout);
+companiesRouter.post('/checkout',  authenticateUser, authorizePermissions('company'), companiesController.checkout);
 
 module.exports = companiesRouter;

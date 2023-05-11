@@ -5,8 +5,7 @@ const getIDs = require('../utils/getIDs.js')
 const CustomAPIError = require('../utils/customError.js')
 
 const getApplications = async (req, res) => {
-  // candidate auth
-  const candidateID = '6440093501b470f9983c348f';
+  const candidateID = req.userInfo.userID;
   const applications = await Application.find({ candidateID });
   const jobIDs = getIDs(applications, 'jobID');
   const appliedJobs = await Job.find().where('_id').in(jobIDs);
@@ -16,13 +15,18 @@ const getApplications = async (req, res) => {
 }
 
 const createApplication = async (req, res) => {
-  // auth candidate
-  // check already applied
-  const candidateID = '6440093501b470f9983c348f';
+  const candidateID = req.userInfo.userID;
   const jobID = req.params.id;
   const job = await Job.findOne({ _id: jobID });
   if (!job) {
     throw new CustomAPIError('Job not found', StatusCodes.NOT_FOUND);
+  }
+  const existingApplication = await Application.findOne({
+    candidateID,
+    jobID,
+  });
+  if (existingApplication) {
+    throw new CustomAPIError('You cannot apply for a job multiple times', StatusCodes.FORBIDDEN);
   }
   const application = await Application.create({
     candidateID,
@@ -35,8 +39,7 @@ const createApplication = async (req, res) => {
 }
 
 const hideApplication = async (req, res) => {
-  // auth company
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const jobID = req.params.jobID;
   const candidateID = req.params.candidateID;
   const job = await Job.findOne({ _id: jobID });
@@ -59,8 +62,7 @@ const hideApplication = async (req, res) => {
 }
 
 const deleteApplication = async (req, res) => {
-  // auth candidate
-  const candidateID = '6440093501b470f9983c348f';
+  const candidateID = req.userInfo.userID;
   const jobID = req.params.id;
   const application = await Application.findOne({ jobID, candidateID });
   if (!application) {

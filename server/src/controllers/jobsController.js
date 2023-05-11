@@ -6,10 +6,22 @@ const getIDs = require('../utils/getIDs.js');
 const Candidate = require('../models/Candidate.js');
 
 const getAllJobs = async (req, res) => {
-  // return only not applied jobs if user is a candidate
-  const jobs = await Job.find();
+  const user = req.userInfo;
+  if (!user || user.type !== 'candidate') {
+    const jobs = await Job.find();
+    return res.status(StatusCodes.OK).json({
+      cnt: jobs.length,
+      jobs,
+    });
+  }
+  const applications = await Application.find({ candidateID: user.userID });
+  // console.log(applications);
+  const jobIDs = getIDs(applications, 'jobID');
+  // console.log(jobIDs);
+  const jobs = await Job.find({ _id: { $nin: jobIDs } }).populate('companyID');
   return res.status(StatusCodes.OK).json({
-    jobs,
+      cnt: jobs.length,
+      jobs,
   });
 }
 
@@ -25,8 +37,7 @@ const getSingleJob = async (req, res) => {
 }
 
 const editJob = async (req, res) => {
-  // company auth
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const jobID = req.params.id;
   const oldJob = await Job.findOne({ _id: jobID });
   if (!oldJob) {
@@ -48,8 +59,7 @@ const editJob = async (req, res) => {
 }
 
 const deleteJob = async (req, res) => {
-  // company auth
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const jobID = req.params.id;
   const job = await Job.findOne({ _id: jobID });
   if (!job) {
@@ -66,8 +76,7 @@ const deleteJob = async (req, res) => {
 }
 
 const addJob = async (req, res) => {
-  // company auth
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const curJob = req.body.job;
   curJob.companyID = companyID;
   const createdJob = await Job.create(curJob);
@@ -78,8 +87,7 @@ const addJob = async (req, res) => {
 }
 
 const getAllAnnouncements = async (req, res) => {
-  // company auth
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const announcements = await Job.find({ companyID });
   return res.status(StatusCodes.OK).json({
     announcements,
@@ -87,8 +95,7 @@ const getAllAnnouncements = async (req, res) => {
 }
 
 const getAllCandidates = async (req, res) => {
-  // auth company
-  const companyID = '643e2fe56955b36ee7f8cca4';
+  const companyID = req.userInfo.userID;
   const jobID = req.params.id;
   const job = await Job.findOne({ _id: jobID });
   if (!job) {

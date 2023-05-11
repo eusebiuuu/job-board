@@ -1,0 +1,23 @@
+.container {
+  /* max-width: 300px; */
+  height: 70vh;
+  width: 100%;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+.link {
+  padding: 1em 2em;
+}
+.link a {
+  padding: 1em 2em;
+  text-transform: uppercase;
+  background-color: var(--clr-grey-8);
+  transition: var(--transition);
+}
+.link a:hover {
+  box-shadow: var(--shadow);
+}
+.error {
+  padding: 2em 1em;
+}

@@ -1,0 +1,11 @@
+# name: Job board CI
+
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+
+# jobs:
+#   build:
+#     env:

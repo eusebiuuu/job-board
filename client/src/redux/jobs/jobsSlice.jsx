@@ -54,7 +54,6 @@ const jobsSlice = createSlice({
     },
     changeJobTypes: (state, action) => {
       const idx = state.jobTypes.indexOf(action.payload);
-      console.log(action.payload);
       if (idx !== -1) {
         state.jobTypes.splice(idx, 1);
       } else {
@@ -74,6 +73,9 @@ const jobsSlice = createSlice({
       state.minSalary = action.payload;
     },
     filterJobs: (state) => {
+      if (state.jobs === null) {
+        state.jobs = [];
+      }
       state.filteredJobs = state.jobs.filter(job => {
         if (!job.title.includes(state.keywords) && !job.requirements.includes(state.keywords) &&
         !job.description.includes(state.keywords)) {

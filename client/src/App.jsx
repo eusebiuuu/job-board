@@ -22,6 +22,7 @@ import styles from './App.module.css'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useThemeContext } from './context/theme';
+import VerifyEmail from './pages/VerifyEmail';
 
 function App() {
   const { theme } = useThemeContext();
@@ -47,6 +48,7 @@ function App() {
       <Route path='jobs/:id' element={<SingleJob />} />
       <Route path='login' element={<Login />} />
       <Route path='register' element={<Register />} />
+      <Route path='verify-email' element={<VerifyEmail />} />
       <Route path='candidates/:id' element={<Candidates />} />
       <Route path='editJob/:id' element={<AddJob />} />
       <Route path='company' element={<Company />}>
