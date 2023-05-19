@@ -38,3 +38,15 @@ export const getCandidatesThunk = async (jobID, thunkAPI) => {
     return thunkAPI.rejectWithValue(err.response.data);
   }
 }
+
+export const registerCandidateThunk = async (userInfo, thunkAPI) => {
+  userInfo.type = 'candidate';
+  try {
+    const response = await customFetch.post(`/auth/register`, { user: userInfo });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+}

@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 import styles from './CandidateProfile.module.css'
 import { TextField } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAbilities, changeAboutMe, changeBirthday, changeEducation, changeEmail, changeExperience, changeFirstName, changeLastName, changePassword, changePhone, editCandidate, getSingleCandidate } from '../redux/candidate/candidateSlice';
+import { changeState, editCandidate, getSingleCandidate } from '../redux/candidate/candidateSlice';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/Loader';
 
@@ -23,10 +23,15 @@ export default function CandidateProfile() {
         await dispatch(getSingleCandidate(id));
       }
     })();
+    // eslint-disable-next-line
   }, []);
 
   function handleCandidateChange() {
     dispatch(editCandidate(id));
+  }
+  
+  function handleFieldChange(e) {
+    dispatch(changeState({ name: e.target.name, value: e.target.value }));
   }
 
   return (<>
@@ -42,43 +47,37 @@ export default function CandidateProfile() {
             <label htmlFor='file'>
               <div className={styles.msg}>Upload a new profile image</div>
             </label>
-            <input type='file' id='file' className={styles.upload} accept='image/png, image/jpeg, image/jpg' />
+            <input type='file' id='file' className={styles.upload} accept='.jpg, .svg, .png, .jpeg' />
           </div>
         </div>
         <div>
           <div className={styles.input}>
-            <TextField label='First name' value={firstName} required 
-              onChange={(e) => dispatch(changeFirstName(e.target.value))} />
+            <TextField label='First name' name='firstName' value={firstName} required onChange={handleFieldChange} />
           </div>
           <div className={styles.input}>
-            <TextField label='Last name' value={lastName} required 
-              onChange={(e) => dispatch(changeLastName(e.target.value))} />
+            <TextField label='Last name' name='lastName' value={lastName} required onChange={handleFieldChange} />
           </div>
           <div className={styles.input}>
             <div>
-              <TextField type='email' required disabled label='Email' value={email} 
-                onChange={(e) => dispatch(changeEmail(e.target.value))} />
+              <TextField type='email' name='email' required disabled label='Email' value={email} 
+                onChange={handleFieldChange} />
             </div>
             <div>
-              <button className={styles.change}>
-                Change
-              </button>
+              <button className={styles.change}>Change</button>
             </div>
           </div>
           <div className={styles.input}>
-            <TextField disabled type='password' required label='Password' value={password}
-              onChange={(e) => dispatch(changePassword(e.target.value))} />
+            <TextField disabled type='password' name='password' required label='Password' value={password}
+              onChange={handleFieldChange} />
             <div>
-              <button className={styles.change}>
-                Change
-              </button>
+              <button className={styles.change}>Change</button>
             </div>
           </div>
           <div className={styles.input}>
-            <TextField label='Phone' value={phone} onChange={(e) => dispatch(changePhone(e.target.value))} />
+            <TextField label='Phone' name='phone' value={phone} onChange={handleFieldChange} />
           </div>
           <div className={styles.input}>
-            <TextField label='Birthday' value={birthday} onChange={(e) => dispatch(changeBirthday(e.target.value))} />
+            <TextField label='Birthday' name='birthday' value={birthday} onChange={handleFieldChange} />
           </div>
         </div>
       </div>
@@ -88,7 +87,7 @@ export default function CandidateProfile() {
       <div className={styles.text}>
         <h3>About me</h3>
         <hr />
-        <textarea value={aboutMe} onChange={e => dispatch(changeAboutMe(e.target.value))} rows={10} />
+        <textarea value={aboutMe} name='aboutMe' onChange={handleFieldChange} rows={10} />
         <div className={styles.save}>
           <button onClick={handleCandidateChange}>Save changes</button>
         </div>
@@ -96,7 +95,7 @@ export default function CandidateProfile() {
       <div className={styles.text}>
         <h3>Experience</h3>
         <hr />
-        <textarea value={experience} onChange={e => dispatch(changeExperience(e.target.value))} rows={10} />
+        <textarea value={experience} name='experience' onChange={handleFieldChange} rows={10} />
         <div className={styles.save}>
           <button onClick={handleCandidateChange}>Save changes</button>
         </div>
@@ -104,7 +103,7 @@ export default function CandidateProfile() {
       <div className={styles.text}>
         <h3>Education</h3>
         <hr />
-        <textarea value={education} onChange={e => dispatch(changeEducation(e.target.value))} rows={10} />
+        <textarea value={education} name='education' onChange={handleFieldChange} rows={10} />
         <div className={styles.save}>
           <button onClick={handleCandidateChange}>Save changes</button>
         </div>
@@ -112,7 +111,7 @@ export default function CandidateProfile() {
       <div className={styles.abilities}>
         <h3>Abilities</h3>
         <hr />
-        <Chips placeholder='Ability' value={abilities} withRedux onChange={changeAbilities} />
+        <Chips placeholder='Ability' name='abilities' value={abilities} onChange={handleFieldChange} />
         <div className={styles.save}>
           <button onClick={handleCandidateChange}>Save changes</button>
         </div>

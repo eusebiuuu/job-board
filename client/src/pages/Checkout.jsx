@@ -23,7 +23,7 @@ export default function Checkout() {
           </ul>
         </div>
         <div className={styles.flex}>
-          <button className={styles.btn}>Pay</button>
+          <button className={styles.btn}>Buy</button>
         </div>
       </div>
       <div className={styles.choice}>
@@ -43,7 +43,7 @@ export default function Checkout() {
           </ul>
         </div>
         <div className={styles.flex}>
-          <button className={styles.btn}>Pay</button>
+          <button className={styles.btn}>Buy</button>
         </div>
       </div>
     </div>

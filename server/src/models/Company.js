@@ -36,7 +36,11 @@ const CompanySchema = new mongoose.Schema({
   },
   logo: {
     type: String,
-    default: 'assets/default-logo.jpg',
+    default: 'https://res.cloudinary.com/dwgihvjqj/image/upload/v1683961392/job-board/default-logo_rqto3e.png',
+  },
+  imagePublicID: {
+    type: String,
+    default: null,
   },
   aboutUs: {
     type: String,
@@ -64,6 +68,14 @@ const CompanySchema = new mongoose.Schema({
   },
   passwordTokenExpirationDate: {
     type: Date,
+  },
+  numOfReviews: {
+    type: Number,
+    default: 0,
+  },
+  averageRating: {
+    type: Number,
+    default: 0,
   }
 });
 
@@ -79,6 +91,13 @@ CompanySchema.methods.comparePassword = async function (curPassword) {
   const isMatch = await bcrypt.compare(curPassword, this.password);
   return isMatch;
 };
+
+CompanySchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'companyID',
+  justOne: false,
+})
 
 const Company = mongoose.model('Company', CompanySchema);
 

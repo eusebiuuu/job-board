@@ -2,13 +2,11 @@ import { nanoid } from 'nanoid';
 import styles from './Chips.module.css'
 import { TiDeleteOutline } from 'react-icons/ti';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 
 
 export default function Chips(props) {
-  const { placeholder, value: objects, onChange: changeObjects, withRedux } = props;
+  const { placeholder, name, value: objects, onChange: changeObjects } = props;
   const [object, setObject] = useState('');
-  const dispatch = useDispatch();
 
   function handleObjectAdd() {
     const exist = objects.find(curObj => {
@@ -17,13 +15,11 @@ export default function Chips(props) {
       }
       return null;
     });
-    if (withRedux) {
-      dispatch(changeObjects(!exist && object !== '' ? [...objects, object] : objects));
-    } else {
-      changeObjects(objects => {
-        return !exist && object !== '' ? [...objects, object] : objects;
-      })
-    }
+    const obj = { target: {
+      value: !exist && object !== '' ? [...objects, object] : objects,
+      name: name,
+    }};
+    changeObjects(obj);
     setObject(old => {
       return exist ? old : '';
     });
@@ -31,24 +27,17 @@ export default function Chips(props) {
 
   function handleObjectDelete(val) {
     const curIdx = objects.indexOf(val);
-    if (!withRedux) {
-      changeObjects(objects => {
-        return objects.filter((elem, idx) => {
-          if (curIdx !== idx) {
-            return elem;
-          }
-          return null;
-        });
-      });
-    } else {
-      dispatch(changeObjects(objects.filter((elem, idx) => {
-          if (curIdx !== idx) {
-            return elem;
-          }
-          return null;
-        })
-      ));
-    }
+    const newObjects = objects.filter((elem, idx) => {
+      if (curIdx !== idx) {
+        return elem;
+      }
+      return null;
+    });
+    const obj = { target: {
+      value: newObjects,
+      name: name,
+    }};
+    changeObjects(obj);
   }
 
   function handleObjectChange(event) {
@@ -67,7 +56,7 @@ export default function Chips(props) {
     </div>
   })}
   <div className={styles.form}>
-    <input id={`input${placeholder}`} onChange={handleObjectChange} type='text' value={object} placeholder={placeholder} onKeyDown={e => {
+    <input id={`input${placeholder}`} name={name} onChange={handleObjectChange} type='text' value={object} placeholder={placeholder} onKeyDown={e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         handleObjectAdd();

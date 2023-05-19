@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { editCompanyThunk, getCompanyThunk } from "./companyThunk";
+import { editCompanyThunk, getCompanyThunk, registerCompanyThunk } from "./companyThunk";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -19,37 +19,15 @@ export const getCompany = createAsyncThunk('company/getCompany', getCompanyThunk
 
 export const editCompany = createAsyncThunk('company/editCompany', editCompanyThunk);
 
+export const registerCompany = createAsyncThunk('company/register', registerCompanyThunk);
+
 const companySlice = createSlice({
   name: 'company',
   initialState,
   reducers: {
-    changeName: (state, { payload }) => {
-      state.name = payload;
-    },
-    changeEmail: (state, { payload }) => {
-      state.email = payload;
-    },
-    changePassword: (state, { payload }) => {
-      state.password = payload;
-    },
-    changePhone: (state, { payload }) => {
-      state.phone = payload;
-    },
-    changeMainHeadquarter: (state, { payload }) => {
-      state.mainHeadquarter = payload;
-    },
-    changeSubscriptionExpiration: (state, { payload }) => {
-      state.subscriptionExpiration = payload;
-    },
-    changeLogo: (state, { payload }) => {
-      state.logo = payload;
-    },
-    changeAvailablePosts: (state, { payload }) => {
-      state.availablePosts = payload;
-    },
-    changeAboutUs: (state, { payload }) => {
-      state.aboutUs = payload;
-    },
+    changeState: (state, { payload }) => {
+      state[payload.name] = payload.value;
+    }
   },
   extraReducers: builder => {
     builder
@@ -74,19 +52,22 @@ const companySlice = createSlice({
         toast.success(payload.msg);
         return { isLoading: false, ...payload.company };
       })
+      .addCase(registerCompany.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerCompany.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload.msg);
+      })
+      .addCase(registerCompany.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        toast.success(payload.msg);
+      })
   }
 });
 
 export default companySlice.reducer;
 
 export const {
-  changeName,
-  changeAboutUs,
-  changeAvailablePosts,
-  changeEmail,
-  changeLogo,
-  changeMainHeadquarter,
-  changePassword,
-  changePhone,
-  changeSubscriptionExpiration,
+  changeState,
 } = companySlice.actions;

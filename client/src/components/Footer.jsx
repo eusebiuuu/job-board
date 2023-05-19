@@ -31,7 +31,7 @@ function Footer(props) {
         <h5>For recruiters</h5>
         <ul className={styles.list}>
           <li>
-            <Link to='/company/candidates'>Candidates</Link>
+            <Link to='/company/announcements'>Announcements</Link>
           </li>
           <li>
             <Link to='/company/addJob'>Add job</Link>

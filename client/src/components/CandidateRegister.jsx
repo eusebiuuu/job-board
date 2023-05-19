@@ -1,51 +1,53 @@
 import { TextField } from '@mui/material'
 import styles from './CandidateRegister.module.css'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { registerCandidate } from '../redux/candidate/candidateSlice';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  password: '',
+}
 
 export default function CandidateRegister(props) {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
+  const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
 
-  function handleFullNameChange(event) {
-    setFullName(event.target.value);
+  function handleFormChange(e) {
+    setFormData(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
+    });
   }
 
-  function handleEmailChange(event) {
-    setEmail(event.target.value);
-  }
-
-  function handlePasswordChange(event) {
-    setPassword(event.target.value);
-  }
-
-  function handlePhoneChange(event) {
-    setPhone(event.target.value);
-  }
-
-  function handleSubmitForm(event) {
+  function handleFormSubmit(event) {
     event.preventDefault();
-    // set to initial values
+    dispatch(registerCandidate(formData));
+    setFormData(initialState);
   }
 
-  return (<form className={styles.form} onSubmit={handleSubmitForm}>
+  return (<form className={styles.form} onSubmit={handleFormSubmit}>
     <div className={styles.input}>
-      <TextField label='Full name' value={fullName} required onChange=  {handleFullNameChange} />
+      <TextField label='First name' value={formData.firstName} name='firstName' required onChange={handleFormChange} />
     </div>
     <div className={styles.input}>
-      <TextField type='email' required label='Email' value={email} onChange={handleEmailChange} />
+      <TextField label='Last name' value={formData.lastName} name='lastName' required onChange={handleFormChange} />
     </div>
     <div className={styles.input}>
-      <TextField type='password' required label='Password' value={password} onChange={handlePasswordChange} />
+      <TextField type='email' name='email' required label='Email' value={formData.email} onChange={handleFormChange} />
     </div>
     <div className={styles.input}>
-      <TextField label='Phone' value={phone} onChange={handlePhoneChange} />
+      <TextField type='password' name='password' required label='Password' value={formData.password}
+        onChange={handleFormChange} />
     </div>
-    <label htmlFor='file'>
-      <div className={styles.msg}>Upload profile image:</div>
-    </label>
-    <input type='file' id='file' className={styles.upload} accept='image/png, image/jpeg, image/jpg' />
+    <div className={styles.input}>
+      <TextField label='Phone' value={formData.phone} name='phone' onChange={handleFormChange} />
+    </div>
     <div>
       <button type='submit' className={styles.btn}>Register</button>
     </div>

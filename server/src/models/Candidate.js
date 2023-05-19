@@ -48,13 +48,17 @@ const CandidateSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: 'assets/default-profile.jpg',
+    default: 'https://res.cloudinary.com/dwgihvjqj/image/upload/v1683961362/job-board/default-profile_h6gpon.png',
+  },
+  imagePublicID: {
+    type: String,
+    default: null,
   },
   abilities: {
     type: [String],
   },
   birthday: {
-    type: Date,
+    type: String,
   },
   aboutMe: {
     type: String,

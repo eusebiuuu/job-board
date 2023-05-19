@@ -13,6 +13,7 @@ const initialState = {
   jobTypes: ['full-time'],
   minSalary: '',
   requirements: '',
+  image: '',
   job: null,
 }
 

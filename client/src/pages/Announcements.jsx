@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Filters from '../components/Filters'
 import styles from './Announcements.module.css'
 import { Link } from 'react-router-dom';
-import { clearFilters, getAllAnnouncements } from '../redux/jobs/jobsSlice';
+import { getAllAnnouncements } from '../redux/jobs/jobsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import Loader from '../components/Loader';
@@ -12,7 +12,7 @@ export default function Announcements(props) {
   const { isLoading, filteredJobs } = useSelector((state) => state.jobs);
 
   useEffect(() => {
-    dispatch(clearFilters());
+    // dispatch(clearFilters());
     dispatch(getAllAnnouncements());
     // eslint-disable-next-line
   }, []);

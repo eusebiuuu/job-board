@@ -6,53 +6,52 @@
   justify-content: space-between;
   padding: 0.5rem;
 }
+.container button {
+  text-transform: none;
+}
+.container button:hover {
+  box-shadow: none;
+}
 .logo {
-  width: 2rem;
-  height: 2rem;
-  color: var(--clr-secondary);
+  width: 4rem;
+  height: 4rem;
 }
-.links {
-  padding: 0 0.2vw;
-  display: flex;
-  flex-wrap: nowrap;
-}
-.link-container {
+.allJobs, .account, .sidebar, .logo, .theme, .auth {
   height: 3em;
   transition: var(--transition);
   padding: 0 1vw;
   display: grid;
   place-self: center;
 }
-.link-container a div {
+.allJobs a div, .account button div, .theme, .auth {
   display: grid;
   place-self: center;
   grid-template-columns: auto auto;
 }
-.link-container button div {
-  display: grid;
-  place-self: center;
-  grid-template-columns: auto auto;
+.account {
+  position: relative;
 }
 .icon {
   display: flex;
   justify-content: space-around;
 }
-.link-container:hover {
+.allJobs:hover, .theme:hover, .auth:hover {
   transform: scale(1.1);
-}
-.badge {
-  color: var(--clr-grey-2);
 }
 .sidebar {
   display: none;
 }
-.link-container button:hover {
-  box-shadow: none;
+.details {
+  position: absolute;
+  top: 100%;
+}
+.details li {
+  text-decoration: none;
+}
+.hide {
+  display: none;
 }
 @media only screen and (max-width: 500px) {
-  .link-container {
-    display: none;
-  }
   .sidebar {
     display: inline;
   }

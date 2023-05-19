@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { editCandidateThunk, getCandidatesThunk, getSingleCandidateThunk } from "./candidateThunk";
+import { editCandidateThunk, getCandidatesThunk, getSingleCandidateThunk, registerCandidateThunk } from "./candidateThunk";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -24,42 +24,14 @@ export const getSingleCandidate = createAsyncThunk('candidate/getCandidate', get
 
 export const getCandidates = createAsyncThunk('candidate/getCandidates', getCandidatesThunk);
 
+export const registerCandidate = createAsyncThunk('candidate/register', registerCandidateThunk);
+
 const candidateSlice = createSlice({
   name: 'candidate',
   initialState,
   reducers: {
-    changeLastName: (state, { payload }) => {
-      state.lastName = payload;
-    },
-    changeFirstName: (state, { payload }) => {
-      state.firstName = payload;
-    },
-    changeEmail: (state, { payload }) => {
-      state.email = payload;
-    },
-    changePassword: (state, { payload }) => {
-      state.password = payload;
-    },
-    changePhone: (state, { payload }) => {
-      state.phone = payload;
-    },
-    changeEducation: (state, { payload }) => {
-      state.education = payload;
-    },
-    changeExperience: (state, { payload }) => {
-      state.experience = payload;
-    },
-    changeImage: (state, { payload }) => {
-      state.image = payload;
-    },
-    changeAbilities: (state, { payload }) => {
-      state.abilities = payload;
-    },
-    changeAboutMe: (state, { payload }) => {
-      state.aboutMe = payload;
-    },
-    changeBirthday: (state, { payload }) => {
-      state.birthday = payload;
+    changeState: (state, { payload }) => {
+      state[payload.name] = payload.value;
     },
   },
   extraReducers: builder => {
@@ -95,21 +67,22 @@ const candidateSlice = createSlice({
       .addCase(getCandidates.fulfilled, (state, { payload }) => {
         return { isLoading: false, candidates: payload.candidates };
       })
+      .addCase(registerCandidate.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerCandidate.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload.msg);
+      })
+      .addCase(registerCandidate.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        toast.success(payload.msg);
+      })
   }
 })
 
 export default candidateSlice.reducer;
 
 export const {
-  changeAbilities,
-  changeAboutMe,
-  changeBirthday,
-  changeEducation,
-  changeEmail,
-  changeExperience,
-  changeFirstName,
-  changeImage,
-  changeLastName,
-  changePassword,
-  changePhone,
+  changeState,
 } = candidateSlice.actions;

@@ -23,6 +23,7 @@ export default function AddJob() {
       dispatch(clearFields(true));
       dispatch(getSingleJob(jobID));
     }
+    // eslint-disable-next-line
   }, []);
 
   async function submitJob(event) {
@@ -35,6 +36,14 @@ export default function AddJob() {
       await dispatch(editJob(jobID));
       navigate(`/jobs/${jobID}`);
     }
+  }
+
+  function handleCitiesChange(e) {
+    dispatch(changeCities(e.target.value));
+  }
+
+  function handleBenefitsChange(e) {
+    dispatch(changeBenefits(e.target.value));
   }
 
   return (<>
@@ -68,7 +77,7 @@ export default function AddJob() {
       </label>
       <div className={styles.content}>
         <div><h3>Cities</h3></div>
-        <Chips placeholder='City' withRedux onChange={changeCities} value={cities} />
+        <Chips placeholder='City' name='cities' onChange={handleCitiesChange} value={cities} />
       </div>
       <div className={styles.content}>
         <div><h3>Minimum salary ($)</h3></div>
@@ -88,7 +97,7 @@ export default function AddJob() {
       <div className={styles.content}>
         <div><h3>Benefits</h3></div>
         <div>
-          <Chips placeholder='Benefit' withRedux onChange={changeBenefits} value={benefits} />
+          <Chips placeholder='Benefit' name='benefits' onChange={handleBenefitsChange} value={benefits} />
         </div>
       </div>
       <label>

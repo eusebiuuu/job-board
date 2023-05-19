@@ -57,7 +57,7 @@ const login = async (req, res) => {
   } else {
     refreshToken = crypto.randomBytes(30).toString('hex');
     const token = await Token.create({ refreshToken, ip, userID: user._id, type });
-    console.log(token);
+    // console.log(token);
   }
 	const name = type === 'candidate' ? `${user.firstName} ${user.lastName}` : user.name;
 	const storedUser = {
@@ -80,14 +80,21 @@ const login = async (req, res) => {
 }
 
 const showCurrentUser = async (req, res) => {
-	const { userID, type } = req.userInfo;
 	// console.log(req.userInfo);
+	if (!req.userInfo) {
+		return res.status(StatusCodes.OK).json({
+			user: null,
+		});
+	}
+	const { userID, type } = req.userInfo;
 	const user = type === 'candidate'
 		? await Candidate.findOne({ _id: userID })
 		: await Company.findOne({ _id: userID });
 	return res.status(StatusCodes.OK).json({
-		msg: 'Show current user',
-		user,
+		user: {
+			...user,
+			type: type,
+		}
 	});
 }
 
@@ -118,7 +125,7 @@ const verifyEmail = async (req, res) => {
     throw new CustomAPIError('Invalid credentials', StatusCodes.UNAUTHORIZED);
   }
   if (verificationToken !== user.verificationToken) {
-		console.log(verificationToken, user.verificationToken);
+		// console.log(verificationToken, user.verificationToken);
     throw new CustomAPIError('Invalid credentials', StatusCodes.UNAUTHORIZED);
   }
 	user.email = email;

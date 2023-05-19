@@ -26,3 +26,15 @@ export const editCompanyThunk = async (companyID, thunkAPI) => {
     return thunkAPI.rejectWithValue(err.response.data);
   }
 }
+
+export const registerCompanyThunk = async (userInfo, thunkAPI) => {
+  userInfo.type = 'company';
+  try {
+    const response = await customFetch.post(`/auth/register`, { user: userInfo });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    return thunkAPI.rejectWithValue(err.response.data);
+  }
+}

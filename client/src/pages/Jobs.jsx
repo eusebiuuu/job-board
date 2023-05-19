@@ -13,6 +13,7 @@ export default function Jobs() {
 
   useEffect(() => {
     dispatch(getAllJobs());
+    // console.log('Calling...');
     // eslint-disable-next-line
   }, []);
 
@@ -20,18 +21,18 @@ export default function Jobs() {
     {isLoading || !filteredJobs
       ? <Loader />
       : <>
-          <Filters show={true} />
-          <div className={styles.title}>
-          {filteredJobs.length !== 0
-            ? <h2>Found jobs</h2>
-            : <h2>No jobs found...</h2>}
-          </div>
-          <div className={styles.jobs}>
-            {filteredJobs.map(job => {
-              return <JobCard key={nanoid()} apply job={job} />
-            })}
-          </div>
-        </>
+        <Filters allJobs={true} />
+        <div className={styles.title}>
+        {filteredJobs.length !== 0
+          ? <h2>Found jobs</h2>
+          : <h2>No jobs found...</h2>}
+        </div>
+        <div className={styles.jobs}>
+          {filteredJobs.map(job => {
+            return <JobCard key={nanoid()} apply job={job} />
+          })}
+        </div>
+      </>
     }
   </div>)
 }

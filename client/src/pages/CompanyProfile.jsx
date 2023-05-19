@@ -3,9 +3,10 @@ import logo from '../assets/logo.svg'
 import { TextField } from '@mui/material'
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAboutUs, changeEmail, changeMainHeadquarter, changeName, changePassword, changePhone, editCompany, getCompany } from '../redux/company/companySlice';
+import { editCompany, getCompany } from '../redux/company/companySlice';
 import { useEffect } from 'react';
 import Loader from '../components/Loader';
+import { changeState } from '../redux/candidate/candidateSlice';
 
 export default function CompanyProfile() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function CompanyProfile() {
     } else {
       dispatch(getCompany(id));
     }
+    // eslint-disable-next-line
   }, []);
 
   function handleCompanyChange() {
@@ -27,6 +29,10 @@ export default function CompanyProfile() {
     } else {
       dispatch(editCompany(id));
     }
+  }
+
+  function handleFieldChange(e) {
+    dispatch(changeState, { name: e.target.name, value: e.target.value });
   }
 
   return (<>
@@ -40,30 +46,21 @@ export default function CompanyProfile() {
             <label htmlFor='file'>
               <div className={styles.msg}>Upload a new company logo</div>
             </label>
-            <input type='file' id='file' className={styles.upload} accept='image/png, image/jpeg, image/jpg' />
+            <input type='file' id='file' className={styles.upload} accept='.jpg, .svg, .png, .jpeg' />
           </div>
         </div>
         <div>
           <h3>Personal data</h3>
           <hr />
           <div className={styles.input}>
-            <TextField id='outline-basic' label='Name' value={name} required 
-              onChange={e => dispatch(changeName(e.target.value))} />
+            <TextField id='outline-basic' label='Name' name='name' value={name} required 
+              onChange={handleFieldChange} />
             </div>
           <div className={styles.input}>
             <div>
-              <TextField type='email' required disabled label='Email' value={email} 
-                onChange={e => dispatch(changeEmail(e.target.value))} />
+              <TextField type='email' required disabled label='Email' name='email' value={email} 
+                onChange={handleFieldChange} />
             </div>
-            <div>
-              <button to='/changeEmail' className={styles.change}>
-                Change
-              </button>
-            </div>
-          </div>
-          <div className={styles.input}>
-            <TextField disabled type='password' required label='Password' value={password} 
-              onChange={e => dispatch(changePassword(e.target.value))} />
             <div>
               <button to='/changeEmail' className={styles.change}>
                 Change
@@ -71,11 +68,20 @@ export default function CompanyProfile() {
             </div>
           </div>
           <div className={styles.input}>
-            <TextField label='Phone' value={phone} onChange={e => dispatch(changePhone(e.target.value))} />
+            <TextField disabled type='password' required label='Password' name='password' value={password} 
+              onChange={handleFieldChange} />
+            <div>
+              <button to='/changeEmail' className={styles.change}>
+                Change
+              </button>
+            </div>
           </div>
           <div className={styles.input}>
-            <TextField label='Headquarter' value={mainHeadquarter} 
-              onChange={e => dispatch(changeMainHeadquarter(e.target.value))} />
+            <TextField label='Phone' name='phone' value={phone} onChange={handleFieldChange} />
+          </div>
+          <div className={styles.input}>
+            <TextField label='Headquarter' value={mainHeadquarter} name='mainHeadquarter'
+              onChange={handleFieldChange} />
           </div>
         </div>
       </div>
@@ -85,7 +91,7 @@ export default function CompanyProfile() {
       <div className={styles.aboutUs}>
         <h3>About Us</h3>
         <hr />
-        <textarea value={aboutUs} onChange={e => dispatch(changeAboutUs(e.target.value))} cols={100} rows={10} />
+        <textarea value={aboutUs} name='aboutUs' onChange={handleFieldChange} cols={100} rows={10} />
         <div className={styles.save}>
           <button onClick={handleCompanyChange}>Save changes</button>
         </div>

@@ -4,11 +4,13 @@ const CustomAPIError = require('../utils/customError.js');
 const Application = require('../models/Application.js');
 const getIDs = require('../utils/getIDs.js');
 const Candidate = require('../models/Candidate.js');
+const { getPagination } = require('../utils/pagination.js');
 
 const getAllJobs = async (req, res) => {
   const user = req.userInfo;
+  const { skip, limit } = getPagination(req.query);
   if (!user || user.type !== 'candidate') {
-    const jobs = await Job.find();
+    const jobs = await Job.find().populate('companyID').skip(skip).limit(limit);
     return res.status(StatusCodes.OK).json({
       cnt: jobs.length,
       jobs,
@@ -18,7 +20,7 @@ const getAllJobs = async (req, res) => {
   // console.log(applications);
   const jobIDs = getIDs(applications, 'jobID');
   // console.log(jobIDs);
-  const jobs = await Job.find({ _id: { $nin: jobIDs } }).populate('companyID');
+  const jobs = await Job.find({ _id: { $nin: jobIDs } }).populate('companyID').skip(skip).limit(limit);
   return res.status(StatusCodes.OK).json({
       cnt: jobs.length,
       jobs,
