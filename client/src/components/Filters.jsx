@@ -2,7 +2,7 @@ import { allExperiences, allJobTypes, allLocations } from '../utils/filters'
 import styles from './Filters.module.css'
 import ListElement from './ListElement'
 import Chips from './Chips'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { filterJobs } from '../redux/jobs/jobsSlice'
 import { nanoid } from 'nanoid'
 import { useEffect, useState } from 'react'
@@ -19,6 +19,7 @@ const initialState = {
 export default function Filters(props) {
   const { allJobs } = props;
   const dispatch = useDispatch();
+  const { jobs } = useSelector(state => state.jobs);
   const [filters, setFilters] = useState(() => {
     if (allJobs && localStorage.getItem('filters')) {
       return JSON.parse(localStorage.getItem('filters'));
@@ -35,7 +36,7 @@ export default function Filters(props) {
     // console.log('Filtering...');
     dispatch(filterJobs(filters));
     // eslint-disable-next-line
-  }, [filters]);
+  }, [filters, jobs]);
 
   function handleFiltersChange(e) {
     const field = e.target.name, val = e.target.value;

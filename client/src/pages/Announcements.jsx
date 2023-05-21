@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Filters from '../components/Filters'
 import styles from './Announcements.module.css'
 import { Link } from 'react-router-dom';
@@ -9,17 +9,18 @@ import Loader from '../components/Loader';
 
 export default function Announcements(props) {
   const dispatch = useDispatch();
-  const { isLoading, filteredJobs } = useSelector((state) => state.jobs);
+  const { filteredJobs } = useSelector((state) => state.jobs);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // dispatch(clearFilters());
     dispatch(getAllAnnouncements());
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
   return (<div className={styles.container}>
-    <Filters show={false} />
-    {isLoading || !filteredJobs
+    <Filters />
+    {loading || !filteredJobs
     ? <Loader />
     : <>{filteredJobs.length === 0
       ? <div className={styles.flex}><h2>No announcements found...</h2></div>

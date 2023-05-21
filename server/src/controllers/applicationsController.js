@@ -8,9 +8,25 @@ const getApplications = async (req, res) => {
   const candidateID = req.userInfo.userID;
   const applications = await Application.find({ candidateID });
   const jobIDs = getIDs(applications, 'jobID');
-  const appliedJobs = await Job.find().where('_id').in(jobIDs);
+  const appliedJobs = await Job.find().where('_id').in(jobIDs).populate('companyID');
   return res.status(StatusCodes.OK).json({
     jobs: appliedJobs,
+  });
+}
+
+const getSingleApplication = async (req, res) => {
+  const candidateID = req.userInfo.userID;
+  const jobID = req.params.id;
+  const job = await Job.findOne({ _id: jobID });
+  if (!job) {
+    throw new CustomAPIError('Job not found', StatusCodes.NOT_FOUND);
+  }
+  const existingApplication = await Application.findOne({
+    candidateID,
+    jobID,
+  });
+  return res.status(StatusCodes.OK).json({
+    application: existingApplication,
   });
 }
 
@@ -57,7 +73,7 @@ const hideApplication = async (req, res) => {
   await application.save();
   return res.status(StatusCodes.OK).json({
     application,
-    msg: 'Application hidden successfully',
+    msg: 'Candidate deleted successfully',
   });
 }
 
@@ -76,6 +92,7 @@ const deleteApplication = async (req, res) => {
 
 module.exports = {
   getApplications,
+  getSingleApplication,
   createApplication,
   hideApplication,
   deleteApplication,

@@ -1,120 +1,196 @@
 import styles from './AddJob.module.css'
 import { nanoid } from 'nanoid';
 import Chips from '../components/Chips';
-import { useDispatch, useSelector } from 'react-redux';
-import { addJob, changeBenefits, changeCities, changeDescription, changeExperience, changeJobTypes, changeLocation, changeMinSalary, changeRequirements, changeTitle, clearFields, editJob, getSingleJob } from '../redux/job/jobSlice';
 import { allJobTypes, allExperiences, allLocations } from '../utils/filters'
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
+import customFetch from '../lib/customFetch';
+import { toast } from 'react-toastify';
+
+const initialState = {
+  title: '',
+  description: '',
+  benefits: [],
+  experience: 'no experience',
+  location: 'office',
+  cities: [],
+  jobTypes: ['full-time'],
+  minSalary: '',
+  requirements: '',
+  image: '',
+  companyID: '',
+}
 
 export default function AddJob() {
+  const navigate = useNavigate();
   const { id: jobID } = useParams();
   const jobCreation = !Boolean(jobID);
-  const { title, jobTypes, location, cities, benefits, minSalary, experience, 
-    requirements, description, isLoading } = useSelector((state) => state.job);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [jobInfo, setJobInfo] = useState(initialState);
+  const [loading, setLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  function handleJobInfoChange(e) {
+    const field = e.target.name, val = e.target.value;
+    setJobInfo(prev => {
+      if (['cities', 'benefits'].includes(field)) {
+        return {
+          ...prev,
+          [field]: val.map(elem => {
+            return elem.toLowerCase();
+          })
+        }
+      } else if (field === 'jobTypes') {
+        const idx = jobInfo.jobTypes.indexOf(val);
+        if (idx === -1) {
+          return {
+            ...prev,
+            jobTypes: [...prev.jobTypes, val]
+          }
+        } else {
+          return {
+            ...prev,
+            jobTypes: prev.jobTypes.filter((elem, curIdx) => {
+              if (idx === curIdx) {
+                return null;
+              }
+              return elem;
+            })
+          }
+        }
+      } else {
+        return {
+          ...prev,
+          [field]: val,
+        }
+      }
+    })
+  }
 
   useEffect(() => {
-    if (jobCreation) {
-      dispatch(clearFields(false));
+    if (!jobCreation) {
+      (async () => {
+        try {
+          const resp = await customFetch.get(`/jobs/${jobID}`);
+          setJobInfo(prev => {
+            return {
+              ...prev,
+              ...resp.data.job,
+              companyID: resp.data.job.companyID._id,
+            }
+          });
+          setLoading(false);
+        } catch (err) {
+          setLoading(false);
+          navigate('/jobs');
+          toast.error(err.response.data.msg);
+        }
+      })();
     } else {
-      dispatch(clearFields(true));
-      dispatch(getSingleJob(jobID));
+      setLoading(false);
     }
     // eslint-disable-next-line
   }, []);
 
   async function submitJob(event) {
     event.preventDefault();
+    setSubmitLoading(true);
     if (jobCreation) {
-      const resp = await dispatch(addJob());
-      console.log(resp);
-      navigate(`/jobs/${resp.payload.job._id}`);
+      try {
+        const resp = await customFetch.post('/jobs', { job: jobInfo });
+        toast.success(resp.data.msg);
+        setSubmitLoading(false);
+        navigate(`/jobs/${jobID}`);
+      } catch (err) {
+        setSubmitLoading(false);
+        console.log(err);
+        toast.error(err.response.data.msg);
+      }
     } else {
-      await dispatch(editJob(jobID));
-      navigate(`/jobs/${jobID}`);
+      try {
+        const resp = await customFetch.patch(`/jobs/${jobID}`, { job: jobInfo });
+        toast.success(resp.data.msg);
+        setSubmitLoading(false);
+        navigate(`/jobs/${jobID}`);
+      } catch (err) {
+        setSubmitLoading(false);
+        console.log(err);
+        toast.error(err.response.data.msg);
+      }
     }
   }
 
-  function handleCitiesChange(e) {
-    dispatch(changeCities(e.target.value));
-  }
-
-  function handleBenefitsChange(e) {
-    dispatch(changeBenefits(e.target.value));
-  }
-
   return (<>
-  {isLoading
-  ? <Loader />
-  : <div className={styles.form}>
-      <label className={styles.content}>
-        <div><h3>Job title</h3></div>
-        <div><input value={title} placeholder='Job title' 
-          onChange={(e) => dispatch(changeTitle(e.target.value))} /></div>
-      </label>
-      <div className={styles.content}>
-        <div><h3>Job type</h3></div>
-        <div className={styles.list}>
-          {allJobTypes.map((type, idx) => {
-            const classNames = jobTypes.indexOf(type) === -1 ? styles.btn : styles.active;
-            return <button key={nanoid()} type='button' id={`type${idx}`} className={classNames} 
-              onClick={() => dispatch(changeJobTypes(type))}>{type}</button>
-          })}
-        </div>
-      </div>
-      <label className={styles.content}>
-        <div><h3>Location</h3></div>
-        <div className={styles.singleList}>
-          <select value={location} data-testid='location' onChange={e => dispatch(changeLocation(e.target.value))}>
-            {allLocations.map(loc => {
-              return <option key={loc} value={loc}>{loc}</option>
+    {loading
+      ? <Loader />
+      : <div className={styles.form}>
+        <label className={styles.content}>
+          <div><h3>Job title</h3></div>
+          <div><input value={jobInfo.title} name='title' placeholder='Job title' onChange={handleJobInfoChange} /></div>
+        </label>
+        <div className={styles.content}>
+          <div><h3>Job type</h3></div>
+          <div className={styles.list}>
+            {allJobTypes.map((type, idx) => {
+              const classNames = jobInfo.jobTypes.indexOf(type) === -1 ? styles.btn : styles.active;
+              return <button key={nanoid()} name='jobTypes' value={type} id={`type${idx}`} className={classNames}
+                onClick={handleJobInfoChange}>{type}</button>
             })}
-          </select>
+          </div>
         </div>
-      </label>
-      <div className={styles.content}>
-        <div><h3>Cities</h3></div>
-        <Chips placeholder='City' name='cities' onChange={handleCitiesChange} value={cities} />
-      </div>
-      <div className={styles.content}>
-        <div><h3>Minimum salary ($)</h3></div>
-        <div><input value={minSalary} type='number' step={100} placeholder='Min salary'
-        onChange={e => dispatch(changeMinSalary(e.target.value))} /></div>
-      </div>
-      <div className={styles.content}>
-        <div><h3>Experience</h3></div>
-        <div className={styles.singleList}>
-          <select value={experience} onChange={e => dispatch(changeExperience(e.target.value))}>
-            {allExperiences.map(exp => {
-              return <option key={exp} value={exp}>{exp}</option>
-            })}
-          </select>
+        <label className={styles.content}>
+          <div><h3>Location</h3></div>
+          <div className={styles.singleList}>
+            <select value={jobInfo.location} data-testid='location' name='location' onChange={handleJobInfoChange}>
+              {allLocations.map(loc => {
+                return <option key={loc} value={loc}>{loc}</option>
+              })}
+            </select>
+          </div>
+        </label>
+        <div className={styles.content}>
+          <div><h3>Cities</h3></div>
+          <Chips placeholder='City' name='cities' onChange={handleJobInfoChange} value={jobInfo.cities} />
+        </div>
+        <div className={styles.content}>
+          <div><h3>Minimum salary ($)</h3></div>
+          <div><input value={jobInfo.minSalary} type='number' name='minSalary' step={100}
+          placeholder='Min salary' onChange={handleJobInfoChange} /></div>
+        </div>
+        <div className={styles.content}>
+          <div><h3>Experience</h3></div>
+          <div className={styles.singleList}>
+            <select value={jobInfo.experience} name='experience' onChange={handleJobInfoChange}>
+              {allExperiences.map(exp => {
+                return <option key={exp} value={exp}>{exp}</option>
+              })}
+            </select>
+          </div>
+        </div>
+        <div className={styles.content}>
+          <div><h3>Benefits</h3></div>
+          <div>
+            <Chips placeholder='Benefit' name='benefits' onChange={handleJobInfoChange} value={jobInfo.benefits} />
+          </div>
+        </div>
+        <label>
+          <h3>Requirements</h3>
+          <hr />
+          <textarea onChange={handleJobInfoChange} value={jobInfo.requirements} name='requirements' rows={10} />
+        </label>
+        <label>
+          <h3>Description</h3>
+          <hr />
+          <textarea onChange={handleJobInfoChange} value={jobInfo.description} name='description' rows={10} />
+        </label>
+        <div className={styles.specialBtn}>
+          {submitLoading
+            ? <Loader />
+            : <button type='submit' onClick={submitJob}>
+              {jobCreation ? 'Add job' : 'Edit job'}
+            </button>
+          }
         </div>
       </div>
-      <div className={styles.content}>
-        <div><h3>Benefits</h3></div>
-        <div>
-          <Chips placeholder='Benefit' name='benefits' onChange={handleBenefitsChange} value={benefits} />
-        </div>
-      </div>
-      <label>
-        <h3>Requirements</h3>
-        <hr />
-        <textarea onChange={e => dispatch(changeRequirements(e.target.value))} value={requirements} rows={10} />
-      </label>
-      <label>
-        <h3>Description</h3>
-        <hr />
-        <textarea onChange={e => dispatch(changeDescription(e.target.value))} value={description} rows={10} />
-      </label>
-      <div className={styles.specialBtn}>
-        <button type='submit' onClick={submitJob}>
-          {jobCreation ? 'Add job' : 'Edit job'}
-        </button>
-      </div>
-    </div>
-  }</>);
+    }</>);
 }

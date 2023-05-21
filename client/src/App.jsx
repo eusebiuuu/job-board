@@ -23,54 +23,63 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useThemeContext } from './context/theme';
 import VerifyEmail from './pages/VerifyEmail';
+import { useUserContext } from './context/user';
+import Loader from './components/Loader';
 
 function App() {
   const { theme } = useThemeContext();
-  return (<div className={`${styles.container} ${theme ? '' : 'dark'}`}>
-  <ToastContainer
-    position="bottom-right"
-    autoClose={3000}
-    hideProgressBar={false}
-    newestOnTop={false}
-    closeOnClick
-    rtl={false}
-    pauseOnFocusLoss
-    draggable
-    pauseOnHover
-    theme="light"
-  />
-  <BrowserRouter>
-    <Navbar />
-    <Sidebar />
-    <Routes>
-      <Route index element={<Home />} />
-      <Route path='jobs' element={<Jobs />} />
-      <Route path='jobs/:id' element={<SingleJob />} />
-      <Route path='login' element={<Login />} />
-      <Route path='register' element={<Register />} />
-      <Route path='verify-email' element={<VerifyEmail />} />
-      <Route path='candidates/:id' element={<Candidates />} />
-      <Route path='editJob/:id' element={<AddJob />} />
-      <Route path='company' element={<Company />}>
-        <Route path='profile' element={<CompanyProfile />} />
-        <Route path='addJob' element={<AddJob />} />
-        <Route path='checkout' element={<Checkout />} />
-        <Route path='announcements' element={<Announcements />} />
-        <Route path='*' element={<NotFound />} />
-      </Route>
-      <Route path='candidate' element={<Candidate />}>
-        <Route path='profile' element={<CandidateProfile />} />
-        <Route path='appliedJobs' element={<AppliedJobs />} />
-        <Route path='*' element={<NotFound />} />
-      </Route>
-      <Route path='candidate/profile/:id' element={<CandidateProfile />} />
-      <Route path='company/profile/:id' element={<CompanyProfile />} />
-      <Route path='faq' element={<FAQ />} />
-      <Route path='*' element={<NotFound />} />
-    </Routes>
-    <Footer />
-  </BrowserRouter>
-</div>);
+  const { sidebar, userID } = useUserContext();
+  return (<>
+    {userID !== null
+      ? <div className={`${styles.container} ${theme ? '' : 'dark'}`}>
+        <div className={`${styles.wrapper} ${sidebar ? styles.shadow : ''}`}></div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <BrowserRouter>
+          <Navbar />
+          <Sidebar />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='jobs' element={<Jobs />} />
+            <Route path='jobs/:id' element={<SingleJob />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+            <Route path='verify-email' element={<VerifyEmail />} />
+            <Route path='candidates/:id' element={<Candidates />} />
+            <Route path='editJob/:id' element={<AddJob />} />
+            <Route path='company' element={<Company />}>
+              <Route path='profile' element={<CompanyProfile />} />
+              <Route path='addJob' element={<AddJob />} />
+              <Route path='checkout' element={<Checkout />} />
+              <Route path='announcements' element={<Announcements />} />
+              <Route path='*' element={<NotFound />} />
+            </Route>
+            <Route path='candidate' element={<Candidate />}>
+              <Route path='profile' element={<CandidateProfile />} />
+              <Route path='appliedJobs' element={<AppliedJobs />} />
+              <Route path='*' element={<NotFound />} />
+            </Route>
+            <Route path='candidate/profile/:id' element={<CandidateProfile />} />
+            <Route path='company/profile/:id' element={<CompanyProfile />} />
+            <Route path='faq' element={<FAQ />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </div>
+      : <Loader />
+    }</>
+  );
 }
 
 export default App;

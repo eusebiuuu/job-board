@@ -34,6 +34,7 @@
   width: 7em;
   height: 7em;
   border: 2px solid var(--clr-grey-1);
+  border-radius: 50%;
 }
 .list {
   list-style-position: inside;
@@ -41,4 +42,7 @@
 }
 .list li::marker {
   content: "⇒ ";
+}
+.hide {
+  display: none;
 }

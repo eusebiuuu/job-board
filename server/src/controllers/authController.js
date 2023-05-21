@@ -80,7 +80,7 @@ const login = async (req, res) => {
 }
 
 const showCurrentUser = async (req, res) => {
-	// console.log(req.userInfo);
+	console.log(req.userInfo);
 	if (!req.userInfo) {
 		return res.status(StatusCodes.OK).json({
 			user: null,
@@ -91,10 +91,8 @@ const showCurrentUser = async (req, res) => {
 		? await Candidate.findOne({ _id: userID })
 		: await Company.findOne({ _id: userID });
 	return res.status(StatusCodes.OK).json({
-		user: {
-			...user,
-			type: type,
-		}
+		user: user,
+		type: type,
 	});
 }
 
@@ -111,7 +109,7 @@ const logout = async (req, res) => {
     expires: new Date(Date.now()),
   });
 	return res.status(StatusCodes.OK).json({
-		msg: 'User logged out successfully',
+		msg: 'You have logged out successfully',
 	});
 }
 

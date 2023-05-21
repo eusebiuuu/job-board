@@ -23,7 +23,7 @@ const editCandidate = async (req, res) => {
 		throw new CustomAPIError('You are not allowed to modify other candidates', StatusCodes.FORBIDDEN);
 	}
 	const curCandidate = req.body.candidate;
-	const { verified, password, email, ...goodProps } = curCandidate;
+	const { verified, password, email, image, imagePublicID, ...goodProps } = curCandidate;
 	const editedCandidate = await Candidate.findOneAndUpdate({ _id: candidateID }, goodProps, {
 		new: true,
 		runValidators: true,

@@ -1,34 +1,35 @@
 import styles from './Navbar.module.css'
 import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { BsFillPersonFill } from 'react-icons/bs'
 import { AiOutlineMenu } from 'react-icons/ai'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { TbReportSearch } from 'react-icons/tb'
 import { useThemeContext } from '../context/theme'
-import customFetch from '../lib/customFetch'
+import { useUserContext } from '../context/user'
+import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 
 function Navbar() {
   const { onThemeToggle } = useThemeContext();
-  const [user, setUser] = useState('');
+  const { type, onSidebarToggle, onLogout } = useUserContext();
   const [details, setDetails] = useState(false);
+  const containerRef = useRef();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const resp = await customFetch.get('/auth/showMe');
-        if (resp.data.user) {
-          setUser(resp.data.user.type);
-        }
-      } catch (err) {
-        console.log(err);
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setDetails(false);
       }
-    })();
-    console.log('Navbar rendering...');
-  }, []);
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }; 
+  }, [containerRef]);
 
-  return (<nav className={styles.container}>
+  return (<nav className={styles.container} ref={containerRef}>
     <Link to='/'>
       <div className={styles.logo}>
         <img src={logo} alt='logo' />
@@ -36,26 +37,29 @@ function Navbar() {
     </Link>
     <div className={styles.theme}>
       <button onClick={onThemeToggle}>
-        <h3>Change theme</h3>
+        <h3>Theme</h3>
       </button>
     </div>
     <div className={styles.allJobs}>
       <Link to='/jobs'>
         <div>
           <div><h3>Search jobs</h3></div>
-          <div><TbReportSearch size={25} /></div>
+          <div><TbReportSearch size={23} /></div>
         </div>
       </Link>
     </div>
-    <div className={user !== '' ? styles.account : styles.hide}>
+    <div className={type !== '' ? styles.account : styles.hide}>
       <button onClick={() => setDetails(prev => !prev)}>
         <div>
           <div><h3>Account</h3></div>
           <div><CgProfile size={25} /></div>
+          <div>
+            {!details ? <IoMdArrowDropdown size={25} /> : <IoMdArrowDropup size={25} />}
+          </div>
         </div>
       </button>
-      <div onClick={() => setDetails(prev => !prev)} className={user === '' || !details ? styles.hide : styles.details}>
-        {user === 'candidate'
+      <div onClick={() => setDetails(prev => !prev)} className={type === '' || !details ? styles.hide : styles.details}>
+        {type === 'company'
         ? <ul>
           <li>
             <Link to='/company/profile'>
@@ -73,11 +77,6 @@ function Navbar() {
           <li>
             <Link to='/company/addJob'>
               <h4>Recruiting?</h4>
-            </Link>
-          </li>
-          <li>
-            <Link to='/company/candidates'>
-              <h4>Candidates</h4>
             </Link>
           </li>
           <li>
@@ -105,18 +104,18 @@ function Navbar() {
       </div>
     </div>
     <div className={styles.sidebar}>
-      <button>
+      <button onClick={onSidebarToggle}>
         <AiOutlineMenu size={25} />
       </button>
     </div>
     <div className={styles.auth}>
-      {user === ''
+      {type === ''
         ? <button>
           <Link to='/login'>
             <h3>Login</h3>
           </Link>
         </button>
-        : <button onClick={() => setUser('')}>
+        : <button onClick={() => {onLogout(true); navigate('/')}}>
           <h3>Logout</h3>
         </button>
       }

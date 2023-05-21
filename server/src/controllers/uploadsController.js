@@ -31,8 +31,21 @@ const uploadImage = async (req, res) => {
 	const user = type === 'candidate'
 	? await Candidate.findOne({ _id: userID })
 	: await Company.findOne({ _id: userID });
+	const publicID = user.imagePublicID;
+	// console.log(publicID);
+	if (publicID) {
+		await cloudinary.uploader.destroy(publicID, function (err, res) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log(res);
+			}
+		});
+	}
 	user.imagePublicID = result.public_id;
-	type === 'candidate' ? user.image = result.secure_url : user.logo = result.secure_url;
+	type === 'candidate'
+		? user.image = result.secure_url
+		: user.logo = result.secure_url;
 	await user.save();
 	return res.status(StatusCodes.OK).json({
 		image: {
@@ -42,39 +55,6 @@ const uploadImage = async (req, res) => {
 	});
 };
 
-const deleteImage = async (req, res) => {
-	const { userID, type } = req.userInfo;
-	const user = type === 'candidate'
-		? await Candidate.findOne({ _id: userID })
-		: await Company.findOne({ _id: userID });
-  const publicID = user.imagePublicID;
-	// console.log(publicID);
-	if (!publicID) {
-		return res.status(StatusCodes.OK).json({
-			msg: 'Message',
-		});
-	}
-  let error = null, result = null;
-  await cloudinary.uploader.destroy(publicID, function (err, res) {
-    if (err) {
-      error = err;
-    } else {
-      result = res;
-    }
-  });
-  if (error) {
-    throw new CustomAPIError(error, StatusCodes.BAD_REQUEST);
-  }
-  if (result.result !== 'ok') {
-    throw new CustomAPIError(result.result, StatusCodes.BAD_REQUEST);
-  }
-  res.status(StatusCodes.OK).json({
-    msg: 'Image deleted successfully',
-    result: result.result
-  })
-}
-
 module.exports = {
 	uploadImage,
-  deleteImage,
 }

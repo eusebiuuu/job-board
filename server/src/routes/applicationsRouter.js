@@ -10,6 +10,12 @@ applicationsRouter.get(
   authorizePermissions('candidate'),
   applicationsController.getApplications
 );
+applicationsRouter.get(
+  '/:id',
+  authenticateUser,
+  authorizePermissions('candidate'),
+  applicationsController.getSingleApplication
+);
 applicationsRouter.post(
   '/:id',
   authenticateUser,
@@ -20,11 +26,13 @@ applicationsRouter.patch(
   '/:jobID/:candidateID',
   authenticateUser,
   authorizePermissions('company'),
-  applicationsController.hideApplication);
+  applicationsController.hideApplication
+);
 applicationsRouter.delete(
   '/:id',
   authenticateUser,
   authorizePermissions('candidate'),
-  applicationsController.deleteApplication);
+  applicationsController.deleteApplication
+);
 
 module.exports = applicationsRouter;

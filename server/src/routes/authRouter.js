@@ -1,10 +1,10 @@
 const express = require('express');
 const authController = require('../controllers/authController.js');
-const { authenticateUser } = require('../middlewares/authentication.js');
+const { authenticateUser, showMeAuthentication } = require('../middlewares/authentication.js');
 
 const authRouter = express.Router();
 
-authRouter.get('/showMe', authenticateUser, authController.showCurrentUser);
+authRouter.get('/showMe', showMeAuthentication, authController.showCurrentUser);
 authRouter.post('/register', authController.register);
 authRouter.post('/login', authController.login);
 authRouter.delete('/logout', authenticateUser, authController.logout);

@@ -30,6 +30,34 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
+const showMeAuthentication = async (req, res, next) => {
+  const { refreshToken, accessToken } = req.signedCookies;
+  if (!req.signedCookies || (!refreshToken && !accessToken)) {
+    return next();
+  }
+  try {
+    if (accessToken) {
+      const payload = getTokenInfo(accessToken);
+      req.userInfo = payload.user;
+      return next();
+    }
+    const payload = getTokenInfo(refreshToken);
+    // console.log(payload);
+    const existingToken = await Token.findOne({
+      refreshToken: payload.refreshToken,
+      userID: payload.user.userID,
+    });
+    if (!existingToken || !existingToken.isValid) {
+      throw new CustomAPIError('Invalid authentication', StatusCodes.UNAUTHORIZED);
+    }
+    attachCookiesToResponse({ res, user: payload.user, refreshToken: payload.refreshToken });
+    req.userInfo = payload.user;
+    return next();
+  } catch (error) {
+    throw new CustomAPIError('Invalid authentication', StatusCodes.UNAUTHORIZED);
+  }
+}
+
 const authorizePermissions = (allowedType) => {
   return (req, res, next) => {
     if (req.userInfo.type !== allowedType) {
@@ -77,4 +105,5 @@ module.exports = {
   authenticateUser,
   authorizePermissions,
   authenticateCandidate,
+  showMeAuthentication,
 };

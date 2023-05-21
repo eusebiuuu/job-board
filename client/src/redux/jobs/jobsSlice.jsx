@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllAnnouncementsThunk, getAllJobsThunk } from "./jobsThunk";
+import { getAllAnnouncementsThunk, getAllJobsThunk, getAppliedJobsThunk } from "./jobsThunk";
 import { toast } from "react-toastify";
 
 const initialState = {
   jobs: null,
   filteredJobs: null,
-  isLoading: true,
   page: 1,
   sort: 'oldest',
 }
@@ -13,6 +12,8 @@ const initialState = {
 export const getAllJobs = createAsyncThunk('jobs/getAllJobs', getAllJobsThunk);
 
 export const getAllAnnouncements = createAsyncThunk('jobs/getAllAnnouncements', getAllAnnouncementsThunk);
+
+export const getAppliedJobs = createAsyncThunk('/application/getAppliedJobs', getAppliedJobsThunk);
 
 const jobsSlice = createSlice({
   name: 'jobs',
@@ -62,28 +63,23 @@ const jobsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllJobs.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(getAllJobs.rejected, (state, action) => {
-        state.isLoading = false;
         toast.error(action.payload.msg);
       })
       .addCase(getAllJobs.fulfilled, (state, action) => {
-        console.log(action);
-        state.isLoading = false;
         state.jobs = state.filteredJobs = action.payload.jobs;
       })
-      .addCase(getAllAnnouncements.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(getAllAnnouncements.rejected, (state, action) => {
-        state.isLoading = false;
         toast.error(action.payload.msg);
       })
       .addCase(getAllAnnouncements.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.jobs = action.payload.announcements;
+        state.jobs = state.filteredJobs = action.payload.announcements;
+      })
+      .addCase(getAppliedJobs.rejected, (state, action) => {
+        toast.error(action.payload.msg);
+      })
+      .addCase(getAppliedJobs.fulfilled, (state, action) => {
+        state.jobs = state.filteredJobs = action.payload.jobs;
       })
   }
 });

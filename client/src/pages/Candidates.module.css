@@ -31,7 +31,10 @@
 }
 .action button {
   border: 2px solid var(--clr-grey-1);
+}
+.action button a {
   padding: 0.5em 1em;
+  width: 100%;
 }
 
 @media screen and (max-width: 500px)  {

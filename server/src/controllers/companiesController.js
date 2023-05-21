@@ -29,7 +29,7 @@ const editCompany = async (req, res) => {
   if (companyID !== curCompanyID) {
     throw new CustomAPIError('You aren`t allowed to modify other company', StatusCodes.FORBIDDEN);
   }
-  const { verified, password, email, subscriptionExpiration, availablePosts, ...goodProps } = curCompany;
+  const { verified, password, email, subscriptionExpiration, logo, imagePublicID, availablePosts, ...goodProps } = curCompany;
   const editedCompany = await Company.findOneAndUpdate({ _id: companyID }, goodProps, {
     new: true,
     runValidators: true,

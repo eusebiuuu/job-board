@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { TextField } from '@mui/material';
 import customFetch from '../lib/customFetch';
 import { toast } from 'react-toastify';
+import { useUserContext } from '../context/user';
 
 const initialState = {
   email: '',
@@ -11,10 +12,11 @@ const initialState = {
   type: 'candidate',
 }
 
-export default function Login(props) {
+export default function Login() {
+  const { onTypeChange, onUserIDChange } = useUserContext();
   const [formData, setFormData] = useState(initialState);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   function handleFieldChange(e) {
     setFormData(prev => {
@@ -29,8 +31,9 @@ export default function Login(props) {
     setLoading(true);
     try {
       const resp = await customFetch.post('/auth/login', formData);
-      console.log(resp);
       toast.success(resp.data.msg);
+      onTypeChange(resp.data.loginInfo.type);
+      onUserIDChange(resp.data.loginInfo.userID);
       setLoading(false);
       navigate('/');
     } catch(err) {
@@ -43,7 +46,8 @@ export default function Login(props) {
   return (<div className={styles.container}>
     <div className={styles.item1}>
       <h2>Login</h2>
-      <TextField label='Email' className={styles.input} name='email' value={formData.email} onChange={handleFieldChange} />
+      <TextField label='Email' className={styles.input} name='email' value={formData.email}
+        onChange={handleFieldChange} />
       <TextField label='Password' name='password' className={styles.input} value={formData.password}
         onChange={handleFieldChange} />
       <div className={styles.link}>
@@ -56,7 +60,9 @@ export default function Login(props) {
           <option value={'company'}>Company</option>
         </select>
       </div>
-      <button className={styles.btn} disabled={loading} onClick={handleUserLogin}>Login</button>
+      <button className={styles.btn} onClick={handleUserLogin} disabled={loading}>
+        {loading ? <>Loading...</> : <>Login</>}
+      </button>
     </div>
     <div className={styles.item2}>
       <h2>Not registered?</h2>

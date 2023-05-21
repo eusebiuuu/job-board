@@ -29,7 +29,7 @@ const getAllJobs = async (req, res) => {
 
 const getSingleJob = async (req, res) => {
   const jobID = req.params.id;
-  const job = await Job.findOne({ _id: jobID });
+  const job = await Job.findOne({ _id: jobID }).populate('companyID');
   if (!job) {
     throw new CustomAPIError('Job not found', StatusCodes.NOT_FOUND);
   }

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import styles from './Jobs.module.css'
 import Filters from "../components/Filters";
 import JobCard from "../components/JobCard";
@@ -6,14 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { getAllJobs } from "../redux/jobs/jobsSlice";
 import Loader from "../components/Loader";
+import { useUserContext } from "../context/user";
 
 export default function Jobs() {
-  const { isLoading, filteredJobs } = useSelector((state) => state.jobs);
+  const { filteredJobs } = useSelector((state) => state.jobs);
+  const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
-
+  const { type } = useUserContext();
+  
   useEffect(() => {
     dispatch(getAllJobs());
-    // console.log('Calling...');
+    setIsLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -23,13 +26,14 @@ export default function Jobs() {
       : <>
         <Filters allJobs={true} />
         <div className={styles.title}>
-        {filteredJobs.length !== 0
-          ? <h2>Found jobs</h2>
-          : <h2>No jobs found...</h2>}
+          {filteredJobs.length !== 0
+            ? <h2>Found jobs</h2>
+            : <h2>No jobs found...</h2>
+          }
         </div>
         <div className={styles.jobs}>
           {filteredJobs.map(job => {
-            return <JobCard key={nanoid()} apply job={job} />
+            return <JobCard key={nanoid()} apply={type !== 'company'} job={job} />
           })}
         </div>
       </>

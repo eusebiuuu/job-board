@@ -1,16 +1,55 @@
 .sidebar {
   position: fixed;
-  width: 100vw;
+  width: 90%;
+  height: 100vh;
+  z-index: 10;
+  transition-duration: 0.5s;
+  top: 0;
+  background-color: var(--clr-grey-8);
 }
-.link-container {
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--clr-grey-8);
+  height: 5rem;
+  padding: 1em;
+}
+.logo img {
+  height: 3rem;
+  width: 3rem;
+}
+.close {
+  display: grid;
+  place-self: center;
+  margin-right: 1em;
+}
+.close button:hover {
+  box-shadow: none;
+}
+.account button {
+  width: 100%;
+  display: grid;
+  place-self: center;
+  grid-template-columns: auto auto auto 1fr;
+  text-transform: none;
+}
+.auth button, .auth a {
+  width: 100%;
+  text-transform: none;
+  text-align: left;
+}
+.link-container, .account, .auth {
   max-width: 100%;
   background-color: var(--clr-grey-8);
   transition: var(--transition);
   padding: 0.5rem;
   border-top: 2px solid black;
 }
-.link-container:hover {
-  background-color: var(--clr-primary-6);
+.auth {
+  border-bottom: 2px solid black;
+}
+.link-container:hover, .account:hover, .auth:hover {
+  background-color: var(--clr-grey-7);
 }
 .flex {
   display: flex;
@@ -22,5 +61,8 @@ a {
   place-self: center;
 }
 .hide {
-  transform: translate(-150%);
+  transform: translate(-100%);
+}
+.hideDetails {
+  display: none;
 }

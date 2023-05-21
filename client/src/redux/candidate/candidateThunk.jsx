@@ -5,7 +5,7 @@ export const editCandidateThunk = async (candidateID, thunkAPI) => {
   console.log(candidate);
   try {
     const response = await customFetch.patch(`/candidates/${candidateID}`, { candidate });
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (err) {
     console.log(err);
@@ -14,24 +14,9 @@ export const editCandidateThunk = async (candidateID, thunkAPI) => {
 }
 
 export const getSingleCandidateThunk = async (candidateID, thunkAPI) => {
-  if (candidateID) {
-    try {
-      const response = await customFetch.get(`/candidates/${candidateID}`);
-      console.log(response);
-      return response.data;
-    } catch (err) {
-      console.log(err);
-      return thunkAPI.rejectWithValue(err.response.data);
-    }
-  } else {
-    //
-  }
-}
-
-export const getCandidatesThunk = async (jobID, thunkAPI) => {
   try {
-    const response = await customFetch.get(`/jobs/candidates/${jobID}`);
-    console.log(response);
+    const response = await customFetch.get(`/candidates/${candidateID}`);
+    // console.log(response);
     return response.data;
   } catch (err) {
     console.log(err);
@@ -39,11 +24,10 @@ export const getCandidatesThunk = async (jobID, thunkAPI) => {
   }
 }
 
-export const registerCandidateThunk = async (userInfo, thunkAPI) => {
-  userInfo.type = 'candidate';
+export const deleteCandidateThunk = async (candidateID, thunkAPI) => {
   try {
-    const response = await customFetch.post(`/auth/register`, { user: userInfo });
-    console.log(response);
+    const response = await customFetch.delete(`/candidates/${candidateID}`);
+    // console.log(response);
     return response.data;
   } catch (err) {
     console.log(err);

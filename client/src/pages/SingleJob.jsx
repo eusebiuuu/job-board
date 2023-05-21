@@ -1,42 +1,115 @@
 import styles from './SingleJob.module.css'
-import logo from '../assets/logo.svg'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { nanoid } from 'nanoid'
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteJob, getSingleJob } from '../redux/job/jobSlice';
 import Loader from '../components/Loader';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import customFetch from '../lib/customFetch';
+import { toast } from 'react-toastify';
+import { useUserContext } from '../context/user';
 
 export default function SingleJob() {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { job, isLoading } = useSelector(state => state.job);
+  const { type, userID } = useUserContext();
+  const [isLoading, setIsLoading] = useState(true);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [applyLoading, setApplyLoading] = useState(false);
+  const [job, setJob] = useState({});
+  const [apply, setApply] = useState(null);
 
   useEffect(() => {
-    dispatch(getSingleJob(id));
+    (async () => {
+      try {
+        const response = await customFetch.get(`/jobs/${id}`);
+        setJob(response.data.job);
+      } catch (err) {
+        console.log(err);
+        toast.error(err.response.data.msg);
+      }
+      if (type === 'candidate') {
+        try {
+          const response = await customFetch.get(`/applications/${id}`);
+          const val = response.data.application ? false : true;
+          setApply(val);
+        } catch (err) {
+          console.log(err);
+          toast.error(err.response.data.msg);
+        }
+      }
+      setIsLoading(false);
+    })();
   }, []);
 
-  async function handleJobDelete() {
-    await dispatch(deleteJob(id));
-    navigate('/jobs');
+  async function handleApplyChange() {
+    setApplyLoading(true);
+    if (apply) {
+      try {
+        const response = await customFetch.post(`/applications/${id}`);
+        toast.success(response.data.msg);
+        setApply(false);
+      } catch (err) {
+        console.log(err);
+        toast.error(err.response.data.msg);
+      }
+    } else {
+      try {
+        const response = await customFetch.delete(`/applications/${id}`);
+        toast.success(response.data.msg);
+        setApply(true);
+      } catch (err) {
+        console.log(err);
+        toast.error(err.response.data.msg);
+      }
+    }
+    setApplyLoading(false);
   }
 
+  async function handleJobDelete() {
+    setDeleteLoading(true);
+    try {
+      const response = await customFetch.delete(`/jobs/${id}`);
+      toast.success(response.data.msg);
+      setDeleteLoading(false);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.msg);
+      setDeleteLoading(false);
+    }
+    navigate('/jobs');
+  }
+  const ownedJobs = type === 'company' && userID === job?.companyID?._id;
+
   return (<div className={styles.container}>
-    {isLoading || !job
+    {isLoading
     ? <Loader />
     : <>
         <h2>Job details</h2>
         <div className={styles.flexBtns}>
-          <button className={styles.btn1}>Cancel application</button>
+          {type !== 'company'
+            ? <>
+              <button className={`${styles.btn1} ${apply ? '' : styles.hide}`} onClick={handleApplyChange}>
+                {applyLoading
+                  ? 'Loading...'
+                  : 'Apply now'
+                }
+              </button>
+              <button className={`${styles.btn1} ${!apply ? '' : styles.hide}`} onClick={handleApplyChange}>
+                {applyLoading
+                  ? 'Loading...'
+                  : 'Cancel application'
+                }
+              </button>
+            </>
+            : null
+          }
           <div>
-            <button className={styles.btn2}>
+            <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`}>
               <Link to={`/editJob/${id}`}>Edit job</Link>
             </button>
-            <button className={styles.btn2} onClick={handleJobDelete}>
-              Delete job
+            <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`} onClick={handleJobDelete}>
+              {deleteLoading ? 'Loading...' : 'Delete job'}
             </button>
-            <button className={styles.btn2}>
+            <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`}>
               <Link to={`/candidates/${job._id}`}>Candidates</Link>
             </button>
           </div>
@@ -46,10 +119,10 @@ export default function SingleJob() {
           <div className={styles.header}>
             <div>
               <h2>{job.title}</h2>
-              <h3>Company</h3>
+              <h3>{job.companyID.name}</h3>
             </div>
             <div className={styles.image}>
-              <img src={logo} alt='Company logo' />
+              <img src={job.companyID.logo} alt='Company logo' />
             </div>
           </div>
           <h2>Description</h2>
@@ -65,9 +138,10 @@ export default function SingleJob() {
           </ul>
           <h2>Minimum salary: 
             {Number(job.minSalary)
-            ? ` ${Number(job.minSalary)}$`
-            : ' Unspecified'
-          }</h2>
+              ? ` ${Number(job.minSalary)}$`
+              : ' Unspecified'
+            }
+          </h2>
           <br />
           <ul className={styles.list}>
             <h2>Cities</h2>
