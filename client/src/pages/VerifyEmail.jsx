@@ -25,7 +25,7 @@ export default function VerifyEmail() {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [email, type, verificationToken]);
 
   return <>{isLoading
     ? <Loader />

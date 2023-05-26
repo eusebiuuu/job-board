@@ -1,6 +1,20 @@
+import { toast } from 'react-toastify';
+import customFetch from '../lib/customFetch';
 import styles from './Checkout.module.css'
 
 export default function Checkout() {
+  
+  async function handleSubscriptionBuy(monthly) {
+    try {
+      const resp = await customFetch.post('/companies/checkout', { monthly });
+      console.log(resp);
+      window.location = resp.data.url;
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.msg);
+    }
+  }
+
   return (<div className={styles.container}>
     <div className={styles.flex}>
       <h2>Payment methods</h2>
@@ -23,7 +37,7 @@ export default function Checkout() {
           </ul>
         </div>
         <div className={styles.flex}>
-          <button className={styles.btn}>Buy</button>
+          <button className={styles.btn} onClick={() => handleSubscriptionBuy(false)}>Buy</button>
         </div>
       </div>
       <div className={styles.choice}>
@@ -43,9 +57,10 @@ export default function Checkout() {
           </ul>
         </div>
         <div className={styles.flex}>
-          <button className={styles.btn}>Buy</button>
+          <button className={styles.btn} onClick={() => handleSubscriptionBuy(true)}>Buy</button>
         </div>
       </div>
     </div>
+    <div className='test'>Test card: 4242 4242 4242 4242</div>
   </div>)
 }

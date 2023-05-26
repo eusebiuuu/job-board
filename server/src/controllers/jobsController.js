@@ -4,13 +4,12 @@ const CustomAPIError = require('../utils/customError.js');
 const Application = require('../models/Application.js');
 const getIDs = require('../utils/getIDs.js');
 const Candidate = require('../models/Candidate.js');
-const { getPagination } = require('../utils/pagination.js');
+const Company = require('../models/Company.js');
 
 const getAllJobs = async (req, res) => {
   const user = req.userInfo;
-  const { skip, limit } = getPagination(req.query);
   if (!user || user.type !== 'candidate') {
-    const jobs = await Job.find().populate('companyID').skip(skip).limit(limit);
+    const jobs = await Job.find().populate('companyID');
     return res.status(StatusCodes.OK).json({
       cnt: jobs.length,
       jobs,
@@ -20,7 +19,7 @@ const getAllJobs = async (req, res) => {
   // console.log(applications);
   const jobIDs = getIDs(applications, 'jobID');
   // console.log(jobIDs);
-  const jobs = await Job.find({ _id: { $nin: jobIDs } }).populate('companyID').skip(skip).limit(limit);
+  const jobs = await Job.find({ _id: { $nin: jobIDs } }).populate('companyID');
   return res.status(StatusCodes.OK).json({
       cnt: jobs.length,
       jobs,
@@ -79,6 +78,21 @@ const deleteJob = async (req, res) => {
 
 const addJob = async (req, res) => {
   const companyID = req.userInfo.userID;
+  const company = await Company.findOne({ _id: companyID });
+  if (company.availablePosts === 0) {
+    throw new CustomAPIError(
+      'You run out of job posts. Please go to checkout to get more',
+      StatusCodes.FORBIDDEN
+    );
+  }
+  if (new Date(company.subscriptionExpiration).getTime() < new Date(Date.now()).getTime()) {
+    throw new CustomAPIError(
+      'Your monthly subscription has expired. Purchase a new one from the checkout page',
+      StatusCodes.FORBIDDEN
+    );
+  }
+  company.availablePosts--;
+  await company.save();
   const curJob = req.body.job;
   curJob.companyID = companyID;
   const createdJob = await Job.create(curJob);

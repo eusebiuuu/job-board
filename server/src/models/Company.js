@@ -27,13 +27,6 @@ const CompanySchema = new mongoose.Schema({
       message: 'Please provide a valid email',
     }
   },
-  tempEmail: {
-    type: String,
-    validate: {
-      validator: validator.isEmail,
-      message: 'Please provide a valid email',
-    }
-  },
   logo: {
     type: String,
     default: 'https://res.cloudinary.com/dwgihvjqj/image/upload/v1683961392/job-board/default-logo_rqto3e.png',
@@ -45,12 +38,15 @@ const CompanySchema = new mongoose.Schema({
   aboutUs: {
     type: String,
     maxLength: [1000, 'The description can be maximum 1000 characters'],
+    default: '',
   },
   phone: {
     type: String,
+    default: '',
   },
   mainHeadquarter: {
     type: String,
+    default: '',
   },
   subscriptionExpiration: {
     type: Date,

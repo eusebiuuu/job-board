@@ -26,15 +26,9 @@ const CandidateSchema = new mongoose.Schema({
       message: 'Please provide a valid email',
     }
   },
-  tempEmail: {
-    type: String,
-    validate: {
-      validator: validator.isEmail,
-      message: 'Please provide a valid email',
-    }
-  },
   phone: {
     type: String,
+    default: '',
   },
   verified: {
     type: Date,
@@ -42,9 +36,11 @@ const CandidateSchema = new mongoose.Schema({
   },
   education: {
     type: String,
+    default: '',
   },
   experience: {
     type: String,
+    default: '',
   },
   image: {
     type: String,
@@ -56,12 +52,15 @@ const CandidateSchema = new mongoose.Schema({
   },
   abilities: {
     type: [String],
+    default: [],
   },
   birthday: {
     type: String,
+    default: '',
   },
   aboutMe: {
     type: String,
+    default: '',
   },
   verificationToken: {
     type: String,

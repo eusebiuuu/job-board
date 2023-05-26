@@ -51,7 +51,7 @@ export default function Login() {
       <TextField label='Password' name='password' className={styles.input} value={formData.password}
         onChange={handleFieldChange} />
       <div className={styles.link}>
-        <Link to='/forgotPassword'>Forgot your password?</Link>
+        <Link to='/forgot-password'>Forgot your password?</Link>
       </div>
       <div className={styles.choice}>
         <label htmlFor='type'>Choose account type</label>

@@ -100,7 +100,7 @@ export default function AddJob() {
         const resp = await customFetch.post('/jobs', { job: jobInfo });
         toast.success(resp.data.msg);
         setSubmitLoading(false);
-        navigate(`/jobs/${jobID}`);
+        navigate(`/jobs/${resp.data.job._id}`);
       } catch (err) {
         setSubmitLoading(false);
         console.log(err);

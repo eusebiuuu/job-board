@@ -6,6 +6,7 @@ const initialState = {
   jobs: null,
   filteredJobs: null,
   page: 1,
+  limit: 10,
   sort: 'oldest',
 }
 
@@ -13,12 +14,18 @@ export const getAllJobs = createAsyncThunk('jobs/getAllJobs', getAllJobsThunk);
 
 export const getAllAnnouncements = createAsyncThunk('jobs/getAllAnnouncements', getAllAnnouncementsThunk);
 
-export const getAppliedJobs = createAsyncThunk('/application/getAppliedJobs', getAppliedJobsThunk);
+export const getAppliedJobs = createAsyncThunk('jobs/getAppliedJobs', getAppliedJobsThunk);
 
 const jobsSlice = createSlice({
   name: 'jobs',
   initialState,
   reducers: {
+    changeState: (state, { payload }) => {
+      state[payload.name] = payload.value;
+      if (payload.name !== 'page') {
+        state.page = 1;
+      }
+    },
     filterJobs: (state, { payload: filters }) => {
       if (state.jobs === null) {
         state.jobs = [];
@@ -59,6 +66,7 @@ const jobsSlice = createSlice({
         }
         return job;
       });
+      state.page = 1;
     }
   },
   extraReducers: (builder) => {
@@ -88,4 +96,5 @@ export default jobsSlice.reducer;
 
 export const {
   filterJobs,
+  changeState,
 } = jobsSlice.actions;

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { deleteCompanyThunk, editCompanyThunk, getCompanyThunk } from "./companyThunk";
+import { deleteCompanyThunk, editCompanyThunk } from "./companyThunk";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -8,13 +8,12 @@ const initialState = {
   password: '',
   phone: '',
   mainHeadquarter: '',
-  subscriptionExpiration: '',
+  subscriptionExpiration: null,
   logo: '',
   availablePosts: 0,
   aboutUs: '',
+  averageRating: 0,
 }
-
-export const getCompany = createAsyncThunk('company/getCompany', getCompanyThunk);
 
 export const editCompany = createAsyncThunk('company/editCompany', editCompanyThunk);
 
@@ -30,12 +29,6 @@ const companySlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getCompany.rejected, (state, action) => {
-        toast.error(action.payload.msg);
-      })
-      .addCase(getCompany.fulfilled, (state, { payload }) => {
-        return { ...payload.company };
-      })
       .addCase(editCompany.rejected, (state, action) => {
         toast.error(action.payload.msg);
       })

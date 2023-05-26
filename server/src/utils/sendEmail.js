@@ -3,11 +3,9 @@ const emailMessages = require('./emailMessages');
 
 const sendEmail = async (req, name, email, token, type, field) => {
   // console.log(req);
-  // const forwardedHost = req.get('x-forwarded-host');
-  // const forwardedProtocol = req.get('x-forwarded-proto');
-  // console.log(forwardedHost, forwardedProtocol);
-  // const origin = `${forwardedProtocol}://${forwardedHost}`;
-  const origin = 'http://localhost:3000'
+  const forwardedHost = req.get('x-forwarded-host');
+  const forwardedProtocol = req.get('x-forwarded-proto');
+  const origin = `${forwardedProtocol}://${forwardedHost}`;
   // console.log(origin);
 
   const message = emailMessages[field];

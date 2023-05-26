@@ -4,10 +4,15 @@ const { authenticateUser, authorizePermissions } = require('../middlewares/authe
 
 const companiesRouter = express.Router();
 
+companiesRouter.post('/checkout',  authenticateUser, authorizePermissions('company'), companiesController.checkout);
+companiesRouter.post(
+  '/paymentCompletion',
+  authenticateUser,
+  authorizePermissions('company'),
+  companiesController.verifyPayment
+);
 companiesRouter.get('/:id', companiesController.getSingleCompany);
 companiesRouter.patch('/:id', authenticateUser, authorizePermissions('company'), companiesController.editCompany);
 companiesRouter.delete('/:id', authenticateUser, authorizePermissions('company'), companiesController.deleteCompany);
-
-companiesRouter.post('/checkout',  authenticateUser, authorizePermissions('company'), companiesController.checkout);
 
 module.exports = companiesRouter;

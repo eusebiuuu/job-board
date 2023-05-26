@@ -4,10 +4,72 @@ const Job = require('../models/Job.js');
 const Review = require('../models/Review.js');
 const CustomAPIError = require('../utils/customError.js');
 const Token = require('../models/Token.js');
+const stripe = require("stripe")(process.env.STRIPE_API_KEY);
+const crypto = require('crypto');
 
-const checkout = (req, res) => {
+const checkout = async (req, res) => {
+  const forwardedHost = req.get('x-forwarded-host');
+  const forwardedProtocol = req.get('x-forwarded-proto');
+  const origin = `${forwardedProtocol}://${forwardedHost}`;
+
+  const { userID: companyID } = req.userInfo;
+  const company = await Company.findOne({ _id: companyID });
+  if (company.verificationToken) {
+    throw new CustomAPIError(
+      'User token already exists. Please contact the admin.',
+      StatusCodes.BAD_REQUEST,
+    );
+  }
+  const verificationToken = crypto.randomBytes(30).toString('hex');
+  company.verificationToken = verificationToken;
+  await company.save();
+
+  const { monthly } = req.body;
+  const recurring = { interval: 'month' };
+  const queries = `monthly=${monthly}&token=${verificationToken}`;
+  const session = await stripe.checkout.sessions.create({
+    line_items: [{
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: monthly ? 'Subscription' : 'One-time payment',
+        },
+        unit_amount: monthly ? 20 * 100 : 10 * 100,
+        ...(monthly) && recurring
+      },
+      quantity: 1,
+    }],
+    mode: monthly ? 'subscription' : 'payment',
+    payment_method_types: ['card'],
+    success_url: `${origin}/payment-completion?success=true&${queries}`,
+    cancel_url: `${origin}/payment-completion?cancelled=true&${queries}`,
+  });
   return res.status(StatusCodes.OK).json({
-    msg: 'Checkout',
+    url: session.url,
+  });
+}
+
+const verifyPayment = async (req, res) => {
+  const { monthly, token } = req.body;
+  const { userID: companyID } = req.userInfo;
+  const company = await Company.findOne({ _id: companyID });
+  if (token !== company.verificationToken) {
+    throw new CustomAPIError('Invalid payment', StatusCodes.FORBIDDEN);
+  }
+  company.verificationToken = null;
+  const oneMonth = 1000 * 60 * 60 * 24 * 30;
+  if (monthly) {
+    company.availablePosts = 1000;
+    company.subscriptionExpiration = Date.now() + oneMonth;
+  } else {
+    const oneYear = oneMonth * 12;
+    company.availablePosts = 30;
+    company.subscriptionExpiration = Date.now() + oneYear;
+  }
+  console.log(company.subscriptionExpiration);
+  await company.save();
+  return res.status(StatusCodes.OK).json({
+    msg: 'Payment finished successfully',
   });
 }
 
@@ -69,6 +131,7 @@ const deleteCompany = async (req, res) => {
 module.exports = {
   getSingleCompany,
   checkout,
+  verifyPayment,
   deleteCompany,
   editCompany
 }

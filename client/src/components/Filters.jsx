@@ -33,7 +33,6 @@ export default function Filters(props) {
     if (allJobs) {
       localStorage.setItem('filters', JSON.stringify(filters));
     }
-    // console.log('Filtering...');
     dispatch(filterJobs(filters));
     // eslint-disable-next-line
   }, [filters, jobs]);

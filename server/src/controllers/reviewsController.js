@@ -42,13 +42,8 @@ const getReview = async (req, res) => {
     companyID,
     candidateID,
   });
-  if (!review) {
-    return res.status(StatusCodes.OK).json({
-      rating: 0,
-    });
-  }
   return res.status(StatusCodes.OK).json({
-    rating: review.rating,
+    rating: review ? review.rating : 0,
   });
 }
 

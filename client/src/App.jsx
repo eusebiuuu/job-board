@@ -25,6 +25,11 @@ import { useThemeContext } from './context/theme';
 import VerifyEmail from './pages/VerifyEmail';
 import { useUserContext } from './context/user';
 import Loader from './components/Loader';
+import ChangeEmail from './pages/ChangeEmail';
+import ChangePassword from './pages/ChangePassword';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import PaymentCompletion from './pages/PaymentCompletion';
 
 function App() {
   const { theme } = useThemeContext();
@@ -55,8 +60,13 @@ function App() {
             <Route path='login' element={<Login />} />
             <Route path='register' element={<Register />} />
             <Route path='verify-email' element={<VerifyEmail />} />
+            <Route path='change-email' element={<ChangeEmail />} />
+            <Route path='change-password' element={<ChangePassword />} />
+            <Route path='forgot-password' element={<ForgotPassword />} />
+            <Route path='reset-password' element={<ResetPassword />} />
             <Route path='candidates/:id' element={<Candidates />} />
             <Route path='editJob/:id' element={<AddJob />} />
+            <Route path='payment-completion' element={<PaymentCompletion />} />
             <Route path='company' element={<Company />}>
               <Route path='profile' element={<CompanyProfile />} />
               <Route path='addJob' element={<AddJob />} />

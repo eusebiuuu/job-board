@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import customFetch from '../lib/customFetch';
 import { toast } from 'react-toastify';
 import { useUserContext } from '../context/user';
+import getDate from '../utils/getDate';
 
 export default function SingleJob() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ export default function SingleJob() {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [applyLoading, setApplyLoading] = useState(false);
   const [job, setJob] = useState({});
-  const [apply, setApply] = useState(null);
+  const [apply, setApply] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +39,7 @@ export default function SingleJob() {
       }
       setIsLoading(false);
     })();
+    // eslint-disable-next-line 
   }, []);
 
   async function handleApplyChange() {
@@ -115,7 +117,7 @@ export default function SingleJob() {
           </div>
         </div>
         <div className={styles.details}>
-          <p>Posted at {job.createdAt}</p>
+          <p>Posted on {getDate(job.createdAt)}</p>
           <div className={styles.header}>
             <div>
               <h2>{job.title}</h2>

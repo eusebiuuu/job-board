@@ -10,6 +10,7 @@ authRouter.post('/login', authController.login);
 authRouter.delete('/logout', authenticateUser, authController.logout);
 authRouter.post('/verifyEmail', authController.verifyEmail);
 authRouter.post('/changeEmail', authenticateUser, authController.changeEmail);
+authRouter.post('/changePassword', authenticateUser, authController.changePassword);
 authRouter.post('/forgotPassword', authController.forgotPassword);
 authRouter.post('/resetPassword', authController.resetPassword);
 

@@ -1,0 +1,60 @@
+import { toast } from "react-toastify";
+import { useUserContext } from "../context/user";
+import customFetch from "../lib/customFetch";
+import { useNavigate } from "react-router-dom";
+import styles from './ChangeEmail.module.css'
+import { useState } from "react";
+
+const initialState = {
+  newEmail: '',
+  password: '',
+}
+
+export default function ChangeEmail() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const { userID, type } = useUserContext();
+  const navigate = useNavigate();
+
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const resp = await customFetch.post('/auth/changeEmail', { ...formData, userID, type });
+      toast.success(resp.data.msg);
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.msg);
+    }
+    setIsLoading(false);
+  }
+
+  function handleFormDataChange(e) {
+    setFormData(prev => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      }
+    });
+  }
+
+  return (<div className={styles.container}>
+    <form onSubmit={handleFormSubmit}>
+      <h2>Change email</h2>
+      <div className={styles.field}>
+        <input name='newEmail' id="newEmail" value={formData.newEmail} 
+          onChange={handleFormDataChange} placeholder="New email" />
+      </div>
+      <div className={styles.field}>
+        <input name='password' type="password" id="password" value={formData.password} 
+          onChange={handleFormDataChange} placeholder="Password" />
+        </div>
+      <div className={styles.btn}>
+        <button type="submit">
+          {isLoading ? 'Loading...' : 'Change'}
+        </button>
+      </div>
+    </form>
+  </div>)
+}
