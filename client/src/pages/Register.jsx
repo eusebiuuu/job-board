@@ -16,6 +16,7 @@ export default function Register() {
       toast.warning('You must be logged out in order to register');
       navigate('/');
     }
+    // eslint-disable-next-line
   }, []);
 
   function handleCandidateChange(val) {
