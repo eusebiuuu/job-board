@@ -10,6 +10,7 @@ jobs:
   test_pull_request:
     env:
       CI: false
+      MONGO_URI: mongodb://localhost/nasa
     strategy:
       matrix:
         node-version: [18.x]
