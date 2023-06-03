@@ -20,6 +20,7 @@ describe('Test jobs controller', () => {
       "password":"VBzvmOh",
       "name":"Katzzzz",
       "mainHeadquarter":"Lagunas",
+      "phone": "0829339273",
       "email":"dgiberd2222@engadget.com",
       "aboutUS":"at turpis a pede posuere nonummy integer non velit donec diam neque vestibulum eget vulputate ut ultrices vel augue vestibulum",
     };

@@ -54,18 +54,18 @@ function Footer(props) {
       </div>
       <div className={`${styles['list-container']} ${styles['icons-container']}`}>
         <div className={styles.icons}>
-          <a href='https://www.facebook.com'>
+          <a target='_blank' rel='noreferrer' href='https://www.facebook.com'>
             <BsFacebook size={30} />
           </a>
-          <a href='https://www.twitter.com'>
+          <a target='_blank' rel='noreferrer' href='https://www.twitter.com'>
             <BsTwitter size={30} />
           </a>
         </div>
         <div className={styles.icons}>
-          <a href='https://www.youtube.com'>
+          <a target='_blank' rel='noreferrer' href='https://www.youtube.com'>
             <AiFillYoutube size={30} />
           </a>
-          <a href='https://www.linkedin.com'>
+          <a target='_blank' rel='noreferrer' href='https://www.linkedin.com'>
             <AiFillLinkedin size={30} />
           </a>
         </div>

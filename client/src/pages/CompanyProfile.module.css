@@ -1,25 +1,23 @@
 .container {
-  margin: 1em 10vw;
+  margin: 1em auto;
+  width: 90%;
+  max-width: 650px;
 }
 .personal {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  place-items: center;
-}
-.personal > div {
-  margin: 1em 0;
+  gap: 1em;
+  margin: 2em 0;
 }
 .personal img {
   height: 20em;
   width: 15em;
   background-color: var(--clr-grey-9);
-  object-fit: cover;
   border: 2px solid var(--clr-grey-1);
-}
-.rating {
-  font-size: 2em;
+  margin: 1em auto;
 }
 .rating span {
+  font-size: 1.3em;
   color:rgb(253, 203, 3);
 }
 .rating svg {
@@ -28,56 +26,66 @@
 }
 .rating button {
   padding: 0.5em 1em;
-  border: 2px solid var(--clr-grey-1);
   margin-left: 1em;
+  background-color: var(--clr-tertiary);
 }
 .average {
   font-size: 2em;
   margin: 0.5em 0 0 0;
+  text-align: center;
 }
 .average svg {
   color:rgb(253, 203, 3);
   vertical-align: middle;
 }
-.input {
+.field {
+  font-size: 1.4em;
   margin: 1em 0;
 }
-.input div {
+.input {
+  margin: 1em 0;
+  max-width: 250px;
+}
+.phone {
+  padding: 0;
+  max-width: 250px;
+  margin: 0;
+}
+.input > div {
   width: 100%;
 }
 .change {
-  padding: 0.5em 1em;
-  border: 2px solid var(--clr-grey-1);
-  text-align: center;
   margin: 0.5em 0;
 }
+.change a {
+  width: 100%;
+  padding: 0.5em 1em;
+  color: var(--clr-btn-text);
+}
+.upload-container {
+  width: 100%;
+  text-align: center;
+}
 .upload {
-  padding: 0.5em 0;
+  padding: 0;
   cursor: pointer;
   border: none;
   border-radius: 0;
+  border: 1px solid var(--clr-stroke);
+  width: 300px;
+  margin: 0 auto;
 }
 ::-webkit-file-upload-button {
   padding: 0.5em 1em;
   background-color: var(--clr-grey-8);
   border: none;
 }
-.save {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-}
-.save button {
-  padding: 0.5em 1em;
-  border: 2px solid var(--clr-grey-1);
-}
 .aboutUs {
   margin: 2em 0;
 }
-.aboutUs textarea {
+.aboutUs textarea, .aboutUs div {
   width: 100%;
-  resize: none;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 .subscription {
   display: grid;
@@ -86,38 +94,45 @@
   grid-template-columns: 1fr 1fr;
   margin: 1em 0;
 }
-.msg h2 a {
-  display: inline;
-  margin-left: 0.3em;
-  text-decoration: underline;
+.msg {
+  font-size: 1.4em;
+  color: var(--clr-tertiary);
 }
-.delete {
+.msg a {
+  display: inline;
+  margin: 0 0.2em;
+  text-decoration: underline;
+  color: var(--clr-tertiary);
+}
+.save, .delete {
   display: flex;
   justify-content: space-around;
+  width: 100%;
+}
+.save button {
+  background-color: var(--clr-primary);
 }
 .delete button {
+  background-color: var(--clr-tertiary);
+}
+.delete button, .save button {
   margin: 2em;
   padding: 1em 2em;
-  border: 2px solid var(--clr-red-light);
   box-shadow: 8px 8px 2px rgba(0, 0, 0, 0.2);
-  color: var(--clr-red-light);
-  background-color: var(--clr-white);
 }
-.delete button:hover {
-  color: var(--clr-white);
-  border: 2px solid var(--clr-red-light);
-  background-color: var(--clr-red-light);
-}
-.delete button:active {
+.delete button:active, .save button:active {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
-.hide {
-  display: none;
-}
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 660px) {
   .personal {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
+    place-items: center;
+  }
+  .container {
+    width: 90%;
+    max-width: 300px;
+    margin: 2em auto;
   }
 }

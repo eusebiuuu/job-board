@@ -28,7 +28,7 @@ const CandidateSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: '',
+    required: true,
   },
   verified: {
     type: Date,

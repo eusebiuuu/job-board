@@ -8,6 +8,7 @@ import { changeState, getAllJobs } from "../redux/jobs/jobsSlice";
 import Loader from "../components/Loader";
 import { useUserContext } from "../context/user";
 import getPaginatedJobs from "../utils/pagination";
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai'
 
 export default function Jobs() {
   const { filteredJobs, page, limit } = useSelector((state) => state.jobs);
@@ -26,26 +27,25 @@ export default function Jobs() {
   }
 
   return (<div className={styles.container}>
-    {/* <div className={styles.box}>
-      <div className={styles.spinner}></div>
-    </div> */}
     {isLoading || !filteredJobs
       ? <Loader />
       : <>
         <Filters allJobs={true} />
-        <label htmlFor="limit">Jobs display limit</label>
-        <select value={limit} id="limit" name="limit" onChange={handleFieldChange}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-        </select>
+        <div className={styles.select}>
+          <label htmlFor="limit">Jobs display limit</label>
+          <select value={limit} id="limit" name="limit" onChange={handleFieldChange}>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </select>
+        </div>
         <div className={styles.title}>
           {filteredJobs.length !== 0
             ? <h2>Found jobs</h2>
             : <h2>No jobs found...</h2>
           }
         </div>
-        <div className={styles.jobs}>
+        <div className={styles.jobs} data-testid='jobs'>
           {getPaginatedJobs(limit, page, filteredJobs).map(job => {
             return <JobCard key={nanoid()} apply={type !== 'company'} job={job} />
           })}
@@ -53,12 +53,12 @@ export default function Jobs() {
         <div className={styles.btns}>
           <button disabled={page === 1}
             onClick={() => dispatch(changeState({ name: 'page', value: page - 1 }))}>
-            Previous page
+            <AiOutlineLeft size={25} />
           </button>
           <div>Page: {page}</div>
           <button disabled={filteredJobs.length <= page * limit}
             onClick={() => dispatch(changeState({ name: 'page', value: page + 1 }))}>
-            Next page
+            <AiOutlineRight size={25} />
           </button>
         </div>
       </>

@@ -1,12 +1,10 @@
-const { default: mongoose, isValidObjectId } = require('mongoose');
-const jobs = require('../data/jobs.json');
-const Job = require('../models/Job');
+const list = require('../mockData/reviews.json');
+const Review = require('../models/Review');
 
 async function populateDB() {
-  await Job.deleteMany();
-  for (const job of jobs) {
-    job.companyID = new mongoose.Types.ObjectId(job.companyID);
-    await Job.create(job);
+  await Review.deleteMany();
+  for (const obj of list) {
+    await Review.create(obj);
   }
 }
 

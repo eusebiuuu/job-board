@@ -15,14 +15,25 @@ export default function Checkout() {
     }
   }
 
+  function copyToClipboard() {
+    (() => {
+      navigator.clipboard.writeText('4242 4242 4242 4242')
+    })();
+    toast.success('Copied!');
+  }
+
   return (<div className={styles.container}>
     <div className={styles.flex}>
       <h2>Payment methods</h2>
     </div>
+    <div className={styles.footer}>
+      <div className={styles.test}>Test card: 4242 4242 4242 4242</div>
+      <button onClick={copyToClipboard} className={styles.copy}>Copy</button>
+    </div>
     <div className={styles.choices}>
       <div className={styles.choice}>
         <div className={styles.flex}>
-          <h3>Individual pay</h3>
+          <h3>Single</h3>
         </div>
         <div className={styles.flex}>
           <h2>10$</h2>
@@ -42,10 +53,10 @@ export default function Checkout() {
       </div>
       <div className={styles.choice}>
         <div className={styles.flex}>
-          <h3>Monthly pay</h3>
+          <h3>Subscription</h3>
         </div>
         <div className={styles.flex}>
-          <h2>20$</h2>
+          <h2>20$/month</h2>
         </div>
         <hr />
         <div className={styles.benefits}>
@@ -61,6 +72,5 @@ export default function Checkout() {
         </div>
       </div>
     </div>
-    <div className='test'>Test card: 4242 4242 4242 4242</div>
   </div>)
 }

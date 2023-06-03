@@ -22,9 +22,6 @@
   border: none;
   padding: 0.5em;
 }
-.container input::placeholder {
-  color: var(--clr-grey-6);
-}
 .container input {
   font-size: 1.3em;
 }
@@ -32,12 +29,11 @@
   width: 100%;
   padding: 0.7em;
   text-align: center;
-  background-color: var(--clr-grey-2);
+  background-color: var(--clr-primary);
   color: var(--clr-white);
   transition: 0.2s ease-in-out;
   font-size: 1.2em;
 }
 .container .btn button:hover {
-  background-color: var(--clr-white);
-  color: var(--clr-grey-2);
+  box-shadow: var(--shadow-3);
 }

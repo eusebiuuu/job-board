@@ -34,7 +34,7 @@ const candidateSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(editCandidate.rejected, (state, action) => {
-        toast.error(action.payload);
+        toast.error(action.payload.msg);
       })
       .addCase(editCandidate.fulfilled, (state, { payload }) => {
         toast.success(payload.msg);

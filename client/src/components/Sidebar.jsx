@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.css'
 import { BiLock } from 'react-icons/bi';
 import { BsFillPersonFill } from 'react-icons/bs';
@@ -12,6 +12,7 @@ import { useState } from 'react';
 function Sidebar() {
   const { type, sidebar, onSidebarToggle, onLogout } = useUserContext();
   const [details, setDetails] = useState(false);
+  const navigate = useNavigate();
 
   return (<div className={`${sidebar ? '' : styles.hide} ${styles.sidebar}`}>
     <div className={styles.header}>
@@ -96,7 +97,7 @@ function Sidebar() {
             </div>
           </div>
         </Link>
-        : <button onClick={() => onLogout(true)}>
+        : <button onClick={() => { onLogout(true); navigate('/'); }}>
           <h3>Logout</h3>
         </button>
       }

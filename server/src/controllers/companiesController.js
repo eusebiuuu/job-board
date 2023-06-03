@@ -66,7 +66,7 @@ const verifyPayment = async (req, res) => {
     company.availablePosts = 30;
     company.subscriptionExpiration = Date.now() + oneYear;
   }
-  console.log(company.subscriptionExpiration);
+  // console.log(company.subscriptionExpiration);
   await company.save();
   return res.status(StatusCodes.OK).json({
     msg: 'Payment finished successfully',
@@ -108,7 +108,15 @@ const deleteCompany = async (req, res) => {
   if (companyID !== curCompanyID) {
     throw new CustomAPIError('You aren`t allowed to modify other company', StatusCodes.FORBIDDEN);
   }
+  if (companyID.toString() === '64785c6e2c8310474ba4b6b0') {
+    throw new CustomAPIError('This is a test account. You cannot delete it', StatusCodes.FORBIDDEN);
+  }
+  // console.log('Oh oh');
+  // return;
   const company = await Company.findOne({ _id: companyID });
+  if (!company) {
+		throw new CustomAPIError('Profile already deleted', StatusCodes.FORBIDDEN);
+	}
   await Job.deleteMany({ companyID });
   await Review.deleteMany({ companyID });
   await Token.deleteOne({

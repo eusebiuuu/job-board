@@ -7,6 +7,7 @@ const UserContext = createContext();
 export default function UserProvider(props) {
   const [type, setType] = useState(null);
   const [sidebar, setSidebar] = useState(false);
+  const [modal, setModal] = useState(false);
   const [userID, setUserID] = useState(null);
 
   useEffect(() => {
@@ -22,14 +23,18 @@ export default function UserProvider(props) {
           handleUserTypeChange('');
         }
       } catch (err) {
+        // console.log(err);
         toast.error(err.response.data.msg);
-        console.log(err);
       }
     })();
   }, []);
 
   function handleUserTypeChange(val) {
     setType(val);
+  }
+
+  function handleModalToggle(val) {
+    setModal(val);
   }
 
   function handleUserIDChange(val) {
@@ -51,7 +56,7 @@ export default function UserProvider(props) {
       localStorage.clear();
     } catch (err) {
       toast.error(err.response.data.msg);
-      console.log(err);
+      // console.log(err);
     }
   }
 
@@ -62,6 +67,8 @@ export default function UserProvider(props) {
     onSidebarToggle: handleSidebarToggle,
     userID,
     onUserIDChange: handleUserIDChange,
+    modal,
+    onModalToggle: handleModalToggle,
     onLogout: logoutUser,
   }
 

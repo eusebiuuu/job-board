@@ -1,0 +1,32 @@
+.container {
+  width: 90%;
+  max-width: 500px;
+  margin: 3em auto;
+  font-size: 1.2em;
+}
+.dialogue {
+  margin: 2em 0;
+  background-color: var(--clr-primary);
+  color: var(--clr-white);
+  border-radius: 10px;
+  transition: all 0.3s linear;
+}
+.question {
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+  place-items: center;
+}
+.question svg {
+  vertical-align: middle;
+}
+.answer {
+  max-height: 0;
+  overflow: hidden;
+  border-radius: 0 0 10px 10px;
+  background-color: var(--clr-tertiary);
+}
+.answer.open {
+  max-height: 300px;
+  padding: 0.5em 1em;
+}

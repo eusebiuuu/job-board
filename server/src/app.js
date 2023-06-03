@@ -8,7 +8,7 @@ const { errorHandlerMiddleware } = require('./middlewares/errorHandler.js');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
-const RateLimit = require('express-rate-limit');
+const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const cloudinary = require('cloudinary').v2;
 const xss = require('xss-clean');
@@ -27,10 +27,13 @@ app.use(cors({
   origin: 'http://localhost:3000'
 }));
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
-app.use(RateLimit({
+app.use(rateLimit({
   windowMs: 1000 * 60 * 15,
   max: 100,
   standardHeaders: true,
+  message: `<h1 style='display:flex; align-items:center; justify-content:center; height:100vh'>
+    429 - Too many Requests <br> Try again later!
+  </h1>`,
 }));
 app.use(helmet());
 app.use(xss());

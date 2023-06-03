@@ -5,40 +5,50 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <div>
+      <div
+        data-testid="chips"
+      >
         <div
           class="form"
         >
           <input
-            id="input"
+            id="inputCity"
+            name="City"
+            placeholder="City"
             type="text"
             value=""
           />
           <button
             class="btn"
-            id="add"
+            id="addCity"
           >
             Add 
+            City
           </button>
         </div>
       </div>
     </div>
   </body>,
   "container": <div>
-    <div>
+    <div
+      data-testid="chips"
+    >
       <div
         class="form"
       >
         <input
-          id="input"
+          id="inputCity"
+          name="City"
+          placeholder="City"
           type="text"
           value=""
         />
         <button
           class="btn"
-          id="add"
+          id="addCity"
         >
           Add 
+          City
         </button>
       </div>
     </div>

@@ -7,11 +7,16 @@
   margin-bottom: 1.5em;
 }
 .btns button {
-  padding: 1em 1.5em;
+  padding: 1em;
+}
+.default {
+  background-color: var(--clr-white);
+  color: var(--clr-header);
 }
 .btns button:hover {
   box-shadow: none;
 }
 .active {
-  background-color: var(--clr-secondary-6);
+  background-color: var(--clr-grey-8);
+  color: var(--clr-black);
 }

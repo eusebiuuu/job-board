@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import Filters from '../components/Filters'
 import styles from './Announcements.module.css'
-import { Link } from 'react-router-dom';
 import { changeState, getAllAnnouncements } from '../redux/jobs/jobsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import Loader from '../components/Loader';
 import getPaginatedJobs from '../utils/pagination';
+import JobCard from '../components/JobCard';
 
 export default function Announcements(props) {
   const dispatch = useDispatch();
@@ -43,15 +43,9 @@ export default function Announcements(props) {
       ? <Loader />
       : <>{filteredJobs.length === 0
         ? <div className={styles.flex}><h2>No announcements found...</h2></div>
-        : <>{getPaginatedJobs(null, page, filteredJobs).map(job => {
-          return <div key={nanoid()} className={styles.jobCard}>
-            <h3>{job.title}</h3>
-            <p>{job.description.substring(0, 150)}&hellip;</p>
-            <div className={styles.link}>
-              <Link to={`/jobs/${job._id}`}>More info</Link>
-            </div>
-          </div>
-        })}</>
+        : <div className={styles.jobs}>{getPaginatedJobs(null, page, filteredJobs).map(job => {
+          return <JobCard key={nanoid()} job={job} personal />
+        })}</div>
       }</>
     }
   </div>)

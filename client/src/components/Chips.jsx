@@ -16,7 +16,7 @@ export default function Chips(props) {
       return null;
     });
     const obj = { target: {
-      value: !exist && object !== '' ? [...objects, object] : objects,
+      value: !exist && object !== '' ? [...objects, object.toLowerCase()] : objects,
       name: name,
     }};
     changeObjects(obj);
@@ -44,19 +44,20 @@ export default function Chips(props) {
     setObject(event.target.value);
   }
 
-  return <div>
-  {objects && objects.map(elem => {
+  return <div data-testid='chips'>
+  {objects && objects.map((elem, idx) => {
     return <div key={nanoid()} className={styles.elem}>
       <div className={styles.flex}>
         <button onClick={() => handleObjectDelete(elem)}>
           <TiDeleteOutline size={25} />
         </button>
-        <div>{elem}</div>
+        <div data-testid={`${name}${idx}`}>{elem}</div>
       </div>
     </div>
   })}
   <div className={styles.form}>
-    <input id={`input${placeholder}`} name={name} onChange={handleObjectChange} type='text' value={object} placeholder={placeholder} onKeyDown={e => {
+    <input id={`input${placeholder}`} name={name} onChange={handleObjectChange} type='text'
+      value={object} placeholder={placeholder} onKeyDown={e => {
       if (e.key === 'Enter') {
         e.preventDefault();
         handleObjectAdd();

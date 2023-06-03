@@ -1,5 +1,7 @@
 .container {
-  margin: 3em 10vw;
+  margin: 3em auto;
+  width: 90%;
+  max-width: 600px;
 }
 .candidate {
   background-color: var(--clr-grey-9);
@@ -9,39 +11,50 @@
   display: grid;
   grid-template-areas:
     'data data data image'
+    'data data data image'
     'action action action action';
+}
+.email {
+  font-weight: bold;
+  letter-spacing: 0.1em;
 }
 .data {
   grid-area: data;
-  margin-right: 0.5em;
-}
-.data h4 {
-  text-transform: none;
+  margin-right: 1em;
 }
 .image {
-  width: 7em;
-  height: 9em;
-  object-fit: contain;
   grid-area: image;
+}
+.image img {
+  width: 8em;
+  height: 100%;
 }
 .action {
   display: flex;
   justify-content: space-between;
   grid-area: action;
+  margin-top: 1em;
 }
-.action button {
-  border: 2px solid var(--clr-grey-1);
+.btn2 {
+  padding: 0.5em 1em;
+  background-color: var(--clr-tertiary);
 }
-.action button a {
+.btn1 a {
+  color: var(--clr-btn-text);
   padding: 0.5em 1em;
   width: 100%;
 }
 
-@media screen and (max-width: 500px)  {
+@media screen and (max-width: 650px)  {
   .candidate {
     grid-template-columns: 1fr;
   }
   .image {
+    display: none;
+  }
+}
+@media screen and (max-width: 400px)  {
+  .email {
     display: none;
   }
 }

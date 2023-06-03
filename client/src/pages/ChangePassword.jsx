@@ -18,6 +18,10 @@ export default function ChangePassword() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
+    if (formData.newPassword.length < 6) {
+      toast.error('Password must have the length at least 6');
+      return;
+    }
     setIsLoading(true);
     try {
       const resp = await customFetch.post('/auth/changePassword', { ...formData, userID, type });

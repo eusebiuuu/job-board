@@ -1,14 +1,15 @@
 .container {
-  margin: 2em 10vw;
+  margin: 2em auto;
+  width: 90%;
+  max-width: 700px;
 }
-.container > h2 {
-  margin-bottom: 1em;
+.container h2 {
+  margin-bottom: 0.5em;
 }
 .details {
-  position: relative;
   background-color: var(--clr-grey-9);
   margin: 2em 0;
-  padding: 1em;
+  padding: 2em;
   border-radius: 30px;
 }
 .flexBtns {
@@ -17,24 +18,41 @@
   flex-wrap: wrap;
 }
 .btn1, .btn2 {
-  border: 2px solid var(--clr-grey-1);
   padding: 0.5em 1em;
   margin: 0.5em;
+}
+.btn1 a, .btn2 a {
+  color: var(--clr-white);
 }
 .btn2 {
   text-transform: capitalize;
   letter-spacing: 0.2em;
   font-weight: bold;
 }
+.company {
+  text-decoration: underline;
+}
 .header {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  margin: 0 0 1em 0;
+  gap: 1em;
+  width: 100%;
+}
+.header a {
+  width: fit-content;
 }
 .image img {
   width: 7em;
   height: 7em;
   border: 2px solid var(--clr-grey-1);
   border-radius: 50%;
+}
+.text {
+  margin-bottom: 1.5em;
+}
+.text, .list li {
+  font-size: 1.3em;
 }
 .list {
   list-style-position: inside;
@@ -45,4 +63,16 @@
 }
 .hide {
   display: none;
+}
+.back {
+  background-color: var(--clr-tertiary);
+  margin: 0.5em;
+  color: var(--clr-white);
+  padding: 0.5em 1em;
+}
+
+@media only screen and (max-width: 400px) {
+  .image img {
+    display: none;
+  }
 }

@@ -1,7 +1,10 @@
 .container {
-  background-color: var(--clr-primary-8);
+  background-color: var(--clr-secondary);
   max-width: 100%;
   padding: 0.3em;
+  color: var(--clr-grey-1);
+}
+.container a {
   color: var(--clr-grey-1);
 }
 .grid-container {
@@ -16,6 +19,13 @@
   letter-spacing: 0.1rem;
   font-size: 1rem;
   margin-bottom: 0.5rem;
+}
+.list li {
+  text-align: center;
+}
+.list a {
+  display: inline;
+  width: fit-content;
 }
 .list a:hover {
   text-decoration: underline;

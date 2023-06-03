@@ -13,9 +13,10 @@ import getAge from '../utils/getAge';
 import { nanoid } from 'nanoid';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
+import Modal from '../components/Modal';
 
 export default function CandidateProfile() {
-  const { userID, onLogout, type } = useUserContext();
+  const { userID, onLogout, onModalToggle } = useUserContext();
   const { firstName, lastName, email, password, birthday, abilities,
     aboutMe, experience, education, image, phone } = useSelector(state => state.candidate);
   const dispatch = useDispatch();
@@ -23,16 +24,12 @@ export default function CandidateProfile() {
   const [isLoading, setIsLoading] = useState(true);
   const [saveLoading, setSaveLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [actionType, setActionType] = useState('save');
   const navigate = useNavigate();
 
   let { id } = useParams();
   let personal = false;
   if (!id) {
-    if (type !== 'candidate') {
-      toast.error('You are not allowed to access this route');
-      onLogout();
-      navigate('/');
-    }
     personal = true;
     id = userID;
   }
@@ -40,8 +37,8 @@ export default function CandidateProfile() {
   useEffect(() => {
     (async () => {
       dispatch(getSingleCandidate(id));
+      setIsLoading(false);
     })();
-    setIsLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -51,12 +48,11 @@ export default function CandidateProfile() {
       const formData = new FormData();
       formData.append('image', file);
       try {
-        const result = await customFetch.post('/uploads', formData, {
+        await customFetch.post('/uploads', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
-        console.log(result);
       } catch (err) {
         console.log(err);
         toast.error(err.response.data.msg);
@@ -71,35 +67,45 @@ export default function CandidateProfile() {
   }
 
   function handleFieldChange(e) {
+    console.log(e);
     dispatch(changeState({ name: e.target.name, value: e.target.value }));
   }
 
-  function handleCandidateDelete() {
+  async function handleCandidateDelete() {
     setDeleteLoading(true);
     dispatch(deleteCandidate(id));
     setDeleteLoading(false);
-    onLogout(false);
+    if (userID === '64785efe7961b1b7db8843d6') {
+      return;
+    }
+    await onLogout(false);
     navigate('/');
+  }
+
+  function handleButtonClick(val) {
+    onModalToggle(true);
+    setActionType(val);
   }
 
   return (<>
     {isLoading
       ? <Loader />
       : <div className={styles.container}>
+        <Modal action={actionType === 'delete' ? handleCandidateDelete : handleCandidateChange} />
         <h3>Personal data</h3>
         <hr />
         <div className={styles.personal}>
-          <div>
+          <div className={styles.item}>
             <img src={image} alt='Profile' />
-            <div className={`${personal ? '' : styles.hide}`}>
-              <label htmlFor='file'>
-                <div className={styles.msg}>Upload a new profile image</div>
+            <div className={`${personal ? styles['upload-container'] : 'hide'}`}>
+              <label htmlFor='file' className={styles.msg}>
+                Upload a new profile image
               </label>
-              <input type='file' id='file' className={styles.upload} name='image'
-                onChange={handleFileChange} accept='.jpg, .svg, .png, .jpeg' />
+              <input type='file' id='file' name='image' accept='.jpg, .svg, .png, .jpeg'
+                className={styles.upload} onChange={handleFileChange} />
             </div>
           </div>
-          <div>
+          <div className={styles.item}>
             {personal
               ? <>
                 <div className={styles.input}>
@@ -126,25 +132,22 @@ export default function CandidateProfile() {
                     </button>
                   </div>
                 </div>
-                <div className={styles.phone}>
-                  <PhoneInput country={'ro'} value={phone} 
-                    onChange={() => handleFieldChange({ target: { name: 'phone', value: phone } })} />
-                </div>
                 <div>
-                  <label htmlFor='birthday'>Birthday</label>
-                  <div className={styles.input}>
-                    <TextField id='birthday' type='date' name='birthday' value={birthday}
-                      onChange={handleFieldChange} />
-                  </div>
+                  <PhoneInput value={phone} inputClass={styles.phone} containerClass={styles['phone-container']}
+                    onChange={(value) => handleFieldChange({ target: { name: 'phone', value } })} />
+                </div>
+                <div className={styles.input}>
+                  <TextField id='birthday' type='date' name='birthday' value={birthday}
+                    onChange={handleFieldChange} />
                 </div>
               </>
-              : <>
-                  <div className={styles.field}>First name: {firstName}</div>
-                  <div className={styles.field}>Last name: {lastName}</div>
-                  <div className={styles.field}>Email: {email}</div>
-                  <div className={styles.field}>Phone: {phone}</div>
-                  <div className={styles.field}>Age: {getAge(birthday)}</div>
-              </>
+              : <div className={styles.foreign}>
+                <div className={styles.field}>First name: {firstName}</div>
+                <div className={styles.field}>Last name: {lastName}</div>
+                <div className={styles.field}>Email: {email}</div>
+                <div className={styles.field}>Phone: {phone}</div>
+                <div className={styles.field}>Age: {getAge(birthday) ?? 'Unspecified'}</div>
+              </div>
             }
           </div>
         </div>
@@ -177,14 +180,14 @@ export default function CandidateProfile() {
           <hr />
           {personal
             ? <Chips placeholder='Ability' name='abilities' value={abilities} onChange={handleFieldChange} />
-            : <ul>
+            : <ul className={styles.list}>
               {abilities.map(ability => {
                 return <li key={nanoid()}>{ability}</li>
               })}
             </ul>
           }
-          <div className={`${styles.save} ${personal ? '' : styles.hide}`}>
-            <button onClick={handleCandidateChange} disabled={saveLoading}>
+          <div className={`${personal ? styles['btn-container'] : 'hide'}`}>
+            <button className={styles.save} onClick={() => handleButtonClick('save')} disabled={saveLoading}>
               {saveLoading
                 ? <>Loading...</>
                 : <>Save changes</>
@@ -192,14 +195,15 @@ export default function CandidateProfile() {
             </button>
           </div>
         </div>
-        <div className={`${styles.delete} ${personal ? '' : styles.hide}`}>
-          <button onClick={handleCandidateDelete} disabled={deleteLoading}>
+        <div className={`${personal ? styles['btn-container'] : 'hide'}`}>
+          <button className={styles.delete} onClick={() => handleButtonClick('delete')} disabled={deleteLoading}>
             {deleteLoading
               ? <>Loading...</>
               : <>Delete account</>
             }
           </button>
         </div>
-      </div>}
+      </div>
+    }
   </>)
 }

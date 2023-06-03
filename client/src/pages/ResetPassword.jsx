@@ -17,6 +17,10 @@ export default function ResetPassword() {
 
   async function handleFormSubmit(e) {
     e.preventDefault();
+    if (formData.password.length < 6) {
+      toast.error('Password is too short');
+      return;
+    }
     setIsLoading(true);
     try {
       const resp = await customFetch.post('/auth/resetPassword', { ...formData, token, email, type });

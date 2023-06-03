@@ -2,13 +2,11 @@
   padding: 5px;
 }
 .btn {
-  padding: 5px 10px;
-  border: 2px solid var(--clr-grey-1);
-  margin-top: 1em;
+  padding: 0.5em 1em;
 }
 .elem {
   display: inline-block;
-  background-color: var(--clr-secondary-5);
+  background-color: var(--clr-tertiary);
   color: var(--clr-white);
   border-radius: 30px;
   padding: 5px 10px;
@@ -17,6 +15,7 @@
   width: fit-content;
 }
 .elem button {
+  background-color: transparent;
   color: var(--clr-white);
 }
 .elem button:hover {
@@ -28,4 +27,11 @@
 }
 .form input {
   margin-right: 1em;
+  border-radius: 0;
+  border: none;
+  width: 100%;
+  max-width: 200px;
+}
+.form .btn {
+  padding: 0.5em 1em;
 }

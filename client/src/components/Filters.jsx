@@ -70,41 +70,43 @@ export default function Filters(props) {
   }
 
   return <div className={styles.container}>
-      <div className={styles.searchbar}>
-        <input className={styles.input} name='keywords' onChange={handleFiltersChange}
-          value={filters.keywords} placeholder={'Search jobs'} />
+    <div className={styles.searchbar}>
+      <input className={styles.input} name='keywords' onChange={handleFiltersChange}
+        value={filters.keywords} placeholder={'Search jobs'} />
+    </div>
+    <div className={styles.grid}>
+      <div className={styles.item}>
+        <h3>Experience</h3>
+        {allExperiences.map((elem, idx) => {
+          return <ListElement key={nanoid()} name='experiences' idx={idx} text={elem} value={filters.experiences}
+            onValueChange={handleFiltersChange} />
+        })}
       </div>
-      <div className={styles.grid}>
-        <div className={styles.item}>
-          <h4>Experience</h4>
-          {allExperiences.map(elem => {
-            return <ListElement key={nanoid()} name='experiences' text={elem} value={filters.experiences}
-              onValueChange={handleFiltersChange} />
-          })}
-        </div>
-        <div className={styles.item}>
-          <h4>Job type</h4>
-          {allJobTypes.map((elem, idx) => {
-            return <ListElement key={nanoid()} name='jobTypes' idx={idx} text={elem} value={filters.jobTypes}
-              onValueChange={handleFiltersChange} />
-          })}
-        </div>
-        <div className={styles.item}>
-          <h4>Location</h4>
-          {allLocations.map(elem => {
-            return <ListElement key={nanoid()} name='locations' text={elem} value={filters.locations}
-              onValueChange={handleFiltersChange} />
-          })}
-        </div>
-        <div className={styles.salary}>
-          <h4>Minimum salary ($)</h4>
-          <input className={styles['salary-input']} placeholder='Salary' name='minSalary' step={500}
-            onChange={handleFiltersChange} value={filters.minSalary} type='number' />
-        </div>
+      <div className={styles.item}>
+        <h3>Job type</h3>
+        {allJobTypes.map((elem, idx) => {
+          return <ListElement key={nanoid()} name='jobTypes' idx={idx} text={elem} value={filters.jobTypes}
+            onValueChange={handleFiltersChange} />
+        })}
       </div>
-      <Chips placeholder='City' name='cities' onChange={handleFiltersChange} value={filters.cities} />
-      <div>
-        <button className={styles.filterBtn} onClick={handleFiltersClear}>Clear filters</button>
+      <div className={styles.item}>
+        <h3>Location</h3>
+        {allLocations.map((elem, idx) => {
+          return <ListElement key={nanoid()} name='locations' idx={idx} text={elem} value={filters.locations}
+            onValueChange={handleFiltersChange} />
+        })}
       </div>
     </div>
+    <div className={styles.salary}>
+      <label htmlFor='salary'>
+        <h3>Salary ($):</h3>
+      </label>
+      <input className={styles['salary-input']} placeholder='Salary' name='minSalary' step={500}
+        onChange={handleFiltersChange} value={filters.minSalary} type='number' id='salary' />
+    </div>
+    <Chips placeholder='City' name='cities' onChange={handleFiltersChange} value={filters.cities} />
+    <div>
+      <button className={styles.filterBtn} onClick={handleFiltersClear}>Clear filters</button>
+    </div>
+  </div>
 }

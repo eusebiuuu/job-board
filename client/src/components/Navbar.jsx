@@ -2,16 +2,15 @@ import styles from './Navbar.module.css'
 import logo from '../assets/logo.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import { BsFillPersonFill } from 'react-icons/bs'
+import { BiLogIn, BiLogOut } from 'react-icons/bi'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useEffect, useRef, useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { TbReportSearch } from 'react-icons/tb'
-import { useThemeContext } from '../context/theme'
 import { useUserContext } from '../context/user'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 
 function Navbar() {
-  const { onThemeToggle } = useThemeContext();
   const { type, onSidebarToggle, onLogout } = useUserContext();
   const [details, setDetails] = useState(false);
   const containerRef = useRef();
@@ -35,11 +34,6 @@ function Navbar() {
         <img src={logo} alt='logo' />
       </div>
     </Link>
-    <div className={styles.theme}>
-      <button onClick={onThemeToggle}>
-        <h3>Theme</h3>
-      </button>
-    </div>
     <div className={styles.allJobs}>
       <Link to='/jobs'>
         <div>
@@ -110,13 +104,26 @@ function Navbar() {
     </div>
     <div className={styles.auth}>
       {type === ''
-        ? <button>
-          <Link to='/login'>
-            <h3>Login</h3>
-          </Link>
-        </button>
+        ? <>
+          <button>
+            <Link to='/login'>
+              <h3>
+                Login
+                <BiLogIn size={25} />
+              </h3>
+            </Link>
+          </button>
+          <button>
+            <Link to='/register'>
+              <h3>Register</h3>
+            </Link>
+          </button>
+        </>
         : <button onClick={() => {onLogout(true); navigate('/')}}>
-          <h3>Logout</h3>
+          <h3>
+            Logout
+            <BiLogOut size={25} />
+          </h3>
         </button>
       }
     </div>

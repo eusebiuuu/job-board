@@ -1,8 +1,20 @@
 .slideshow-container {
-  display: flex;
-  justify-content: space-around;
-  max-width: 100vw;
   position: relative;
+  width: 100%;
+  height: 40vh;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.slideshow {
+  width: 100%;
+  transition: all 0.5s ease;
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding: 2em 10%;
 }
 .hide {
   display: none;
@@ -13,6 +25,7 @@
   width: 70%;
 }
 .prev, .next {
+  background-color: transparent;
   position: absolute;
   color: var(--clr-grey-2);
   padding: 2rem auto;
@@ -26,46 +39,51 @@
   right: 0;
 }
 .prev:hover, .next:hover {
-  background-color: var(--clr-grey-7);
+  background-color: rgba(134, 135, 134, 0.219);
 }
-.btn {
-  border: 2px solid var(--clr-grey-2);
-  padding: 0.5em;
+.btn a {
+  padding: 1em;
   margin: auto;
+  width: 100%;
+  color: var(--clr-btn-text);
+  font-size: 1em;
+}
+.btn:hover {
+  box-shadow: var(--shadow-3);
 }
 .register {
   display: flex;
   justify-content: space-around;
   padding-bottom: 1em;
+  margin-top: 2em;
 }
-.recruit {
-  background-color: var(--clr-white);
+.filled {
+  background-color: var(--clr-grey-8);
   padding: 2em;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  place-items: center;
 }
-.recruit div {
+.filled div {
   margin: auto;
-  padding: 1em;
 }
 .aboutMe {
   padding: 2em;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  place-items: center;
 }
 .aboutMe div {
   margin: auto;
-  /* padding: 1em; */
 }
-.logo {
+.image img {
   width: 15em;
   height: 18em;
+  object-fit: contain;
 }
 
-@media screen and (max-width: 500px) {
-  .recruit {
+@media screen and (max-width: 600px) {
+  .filled {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
   }

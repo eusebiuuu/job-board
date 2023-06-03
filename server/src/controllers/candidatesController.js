@@ -40,6 +40,11 @@ const deleteCandidate = async (req, res) => {
 	if (candidateID !== curCandidateID) {
 		throw new CustomAPIError('You are not allowed to delete other candidates', StatusCodes.FORBIDDEN);
 	}
+	if (candidateID.toString() === '64785efe7961b1b7db8843d6') {
+    throw new CustomAPIError('This is a test account. You cannot delete it', StatusCodes.FORBIDDEN);
+  }
+  // console.log('Oh oh');
+	// return;
 	const candidate = await Candidate.findOne({ _id: candidateID });
 	if (!candidate) {
 		throw new CustomAPIError('Profile already deleted', StatusCodes.FORBIDDEN);

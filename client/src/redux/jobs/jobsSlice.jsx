@@ -30,9 +30,11 @@ const jobsSlice = createSlice({
       if (state.jobs === null) {
         state.jobs = [];
       }
+      const keys = filters.keywords.toLowerCase();
       state.filteredJobs = state.jobs.filter(job => {
-        if (!job.title.includes(filters.keywords) && !job.requirements.includes(filters.keywords) &&
-        !job.description.includes(filters.keywords)) {
+        if (!job.title.toLowerCase().includes(keys) &&
+          !job.requirements.toLowerCase().includes(keys) &&
+          !job.description.toLowerCase().includes(keys)) {
           return null;
         }
         const num1 = filters.minSalary === '' ? 0 : Number(filters.minSalary);

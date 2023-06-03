@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import customFetch from '../lib/customFetch';
 import { toast } from 'react-toastify';
+import { useUserContext } from '../context/user';
+import Modal from '../components/Modal';
 
 const initialState = {
   title: '',
@@ -29,6 +31,7 @@ export default function AddJob() {
   const [jobInfo, setJobInfo] = useState(initialState);
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const { onModalToggle } = useUserContext();
 
   function handleJobInfoChange(e) {
     const field = e.target.name, val = e.target.value;
@@ -92,8 +95,19 @@ export default function AddJob() {
     // eslint-disable-next-line
   }, []);
 
-  async function submitJob(event) {
-    event.preventDefault();
+  async function submitJob() {
+    if (jobInfo.title === '') {
+      toast.error('Title field must not be empty');
+      return;
+    }
+    if (jobInfo.description === '') {
+      toast.error('Description field must not be empty');
+      return;
+    }
+    if (jobInfo.requirements === '') {
+      toast.error('Requirements field must not be empty');
+      return;
+    }
     setSubmitLoading(true);
     if (jobCreation) {
       try {
@@ -124,9 +138,14 @@ export default function AddJob() {
     {loading
       ? <Loader />
       : <div className={styles.form}>
+        <Modal action={submitJob} />
         <label className={styles.content}>
-          <div><h3>Job title</h3></div>
-          <div><input value={jobInfo.title} name='title' placeholder='Job title' onChange={handleJobInfoChange} /></div>
+          <div>
+            <h3>Job title</h3>
+          </div>
+          <div>
+            <input value={jobInfo.title} required name='title' placeholder='Job title' onChange={handleJobInfoChange} />
+          </div>
         </label>
         <div className={styles.content}>
           <div><h3>Job type</h3></div>
@@ -176,17 +195,17 @@ export default function AddJob() {
         <label>
           <h3>Requirements</h3>
           <hr />
-          <textarea onChange={handleJobInfoChange} value={jobInfo.requirements} name='requirements' rows={10} />
+          <textarea required spellCheck='false' onChange={handleJobInfoChange} value={jobInfo.requirements} name='requirements' rows={10} />
         </label>
         <label>
           <h3>Description</h3>
           <hr />
-          <textarea onChange={handleJobInfoChange} value={jobInfo.description} name='description' rows={10} />
+          <textarea required spellCheck='false' onChange={handleJobInfoChange} value={jobInfo.description} name='description' rows={10} />
         </label>
         <div className={styles.specialBtn}>
           {submitLoading
             ? <Loader />
-            : <button type='submit' onClick={submitJob}>
+            : <button type='submit' onClick={() => onModalToggle(true)}>
               {jobCreation ? 'Add job' : 'Edit job'}
             </button>
           }

@@ -18,6 +18,7 @@ const JobSchema = new mongoose.Schema({
   },
   benefits: {
     type: [String],
+    default: [],
   },
   jobTypes: {
     type: [String],
@@ -34,6 +35,7 @@ const JobSchema = new mongoose.Schema({
   },
   cities: {
     type: [String],
+    default: [],
   },
   location: {
     type: String,

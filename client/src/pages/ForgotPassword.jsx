@@ -45,7 +45,7 @@ export default function ForgotPassword() {
           onChange={handleFormDataChange} placeholder="Email" />
       </div>
       <div className={styles.btn}>
-        <select name='type' value={formData.type} onChange={handleFormDataChange}>
+        <select name='type' id='type' className={styles.select} value={formData.type} onChange={handleFormDataChange}>
           <option value={'candidate'}>Candidate</option>
           <option value={'company'}>Company</option>
         </select>

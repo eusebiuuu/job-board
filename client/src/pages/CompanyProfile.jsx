@@ -2,7 +2,7 @@ import styles from './CompanyProfile.module.css'
 import { TextField } from '@mui/material'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deleteCompany, editCompany } from '../redux/company/companySlice';
+import { deleteCompany } from '../redux/company/companySlice';
 import { useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import { useUserContext } from '../context/user';
@@ -12,6 +12,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'
 import Rating from 'react-rating'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import Modal from '../components/Modal';
 
 const initialState = {
   name: '',
@@ -28,7 +29,7 @@ const initialState = {
 
 export default function CompanyProfile() {
   const dispatch = useDispatch();
-  const { userID, onLogout, type } = useUserContext();
+  const { userID, onLogout, type, onModalToggle } = useUserContext();
   const [company, setCompany] = useState(initialState);
   const [file, setFile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +37,7 @@ export default function CompanyProfile() {
   const [saveLoading, setSaveLoading] = useState(false);
   const [rating, setRating] = useState(0);
   const navigate = useNavigate();
+  const [actionType, setActionType] = useState('save');
 
   const subscription = company.availablePosts > 0 || company.subscriptionExpiration
     ? (company.availablePosts > 100 ? 'monthly' : 'one-time')
@@ -46,6 +48,8 @@ export default function CompanyProfile() {
 
   let expired = false;
   if (subscription === 'monthly' && company.subscriptionExpiration < curDate.getTime()) {
+    expired = true;
+  } else if (company.availablePosts === 0 && subscription === 'one-time') {
     expired = true;
   }
   if (subscription !== 'none') {
@@ -63,11 +67,6 @@ export default function CompanyProfile() {
   let { id } = useParams();
   let personal = false;
   if (!id) {
-    if (type !== 'company') {
-      toast.error('You are not allowed to access this route');
-      onLogout();
-      navigate('/');
-    }
     personal = true;
     id = userID;
   }
@@ -93,12 +92,20 @@ export default function CompanyProfile() {
           toast.error(err.response.data.msg);
         }
       }
+      setIsLoading(false);
     })();
-    setIsLoading(false);
     // eslint-disable-next-line
   }, []);
 
   async function handleCompanyChange() {
+    if (company.name === '') {
+      toast.error('Name field must not be empty');
+      return;
+    }
+    if (company.phone === '') {
+      toast.error('Phone field must not be empty');
+      return;
+    }
     setSaveLoading(true);
     if (file) {
       const formData = new FormData();
@@ -109,13 +116,18 @@ export default function CompanyProfile() {
             'Content-Type': 'multipart/form-data'
           }
         });
-        // console.log(result);
       } catch (err) {
         console.log(err);
         toast.error(err.response.data.msg);
       }
     }
-    dispatch(editCompany(id));
+    try {
+      const response = await customFetch.patch(`/companies/${id}`, { company });
+      toast.success(response.data.msg);
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.msg);
+    }
     setSaveLoading(false);
   }
 
@@ -124,6 +136,7 @@ export default function CompanyProfile() {
   }
 
   function handleFieldChange(e) {
+    // console.log(e);
     setCompany(prev => {
       return {
         ...prev,
@@ -132,11 +145,19 @@ export default function CompanyProfile() {
     });
   }
 
-  function handleCompanyDelete() {
+  function handleButtonClick(val) {
+    onModalToggle(true);
+    setActionType(val);
+  }
+
+  async function handleCompanyDelete() {
     setDeleteLoading(true);
     dispatch(deleteCompany(id));
     setDeleteLoading(false);
-    onLogout();
+    if (userID === '64785c6e2c8310474ba4b6b0') {
+      return;
+    }
+    await onLogout();
     navigate('/');
   }
 
@@ -156,9 +177,10 @@ export default function CompanyProfile() {
     {isLoading
       ? <Loader />
       : <div className={styles.container}>
+        <Modal action={actionType === 'delete' ? handleCompanyDelete : handleCompanyChange} />
         {type === 'candidate'
           ? <div className={styles.rating}>
-            <Rating fractions={2} className={styles.stars} initialRating={rating} emptySymbol={<AiOutlineStar />} 
+            <Rating fractions={2} className={styles.stars} initialRating={rating} emptySymbol={<AiOutlineStar />}
               fullSymbol={<AiFillStar />} onChange={(val) => setRating(val)} />
             <button onClick={handleReviewChange}>
               {saveLoading ? 'Loading...' : 'Save'}
@@ -171,14 +193,14 @@ export default function CompanyProfile() {
         <div className={styles.personal}>
           <div>
             <img src={company.logo} alt='Company logo' />
-            <div className={`${personal ? '' : styles.hide}`}>
+            <div className={`${personal ? styles['upload-container'] : 'hide'}`}>
               <label htmlFor='file'>
-                <div className={styles.msg}>Upload a new company logo</div>
+                Upload a new company logo
               </label>
-              <input type='file' id='file' onChange={handleFileChange} 
+              <input type='file' id='file' onChange={handleFileChange}
                 className={styles.upload} accept='.jpg, .svg, .png, .jpeg' />
             </div>
-            <div className={styles.average}>{company.averageRating.toFixed(2)}<AiFillStar/></div>
+            <div className={styles.average}>{company.averageRating.toFixed(2)}<AiFillStar /></div>
           </div>
           {personal
             ? <div>
@@ -187,10 +209,8 @@ export default function CompanyProfile() {
                   onChange={handleFieldChange} />
               </div>
               <div className={styles.input}>
-                <div>
-                  <TextField type='email' required disabled label='Email' name='email' value={company.email}
-                    onChange={handleFieldChange} />
-                </div>
+                <TextField type='email' required disabled label='Email' name='email' value={company.email}
+                  onChange={handleFieldChange} />
                 <div>
                   <button className={styles.change}>
                     <Link to='/change-email'>Change email</Link>
@@ -206,9 +226,10 @@ export default function CompanyProfile() {
                   </button>
                 </div>
               </div>
-              <div className={styles.phone}>
-                <PhoneInput country={'ro'} value={company.phone}
-                  onChange={() => handleFieldChange({ target: { name: 'phone', value: company.phone } })} />
+              <div>
+                <PhoneInput country={'ro'} value={company.phone} buttonClass={styles['phone-btn']}
+                  containerClass={styles['phone-container']} inputClass={styles.phone}
+                  onChange={(value) => handleFieldChange({ target: { name: 'phone', value } })} />
               </div>
               <div className={styles.input}>
                 <TextField label='Headquarter' value={company.mainHeadquarter} name='mainHeadquarter'
@@ -219,7 +240,7 @@ export default function CompanyProfile() {
               <div className={styles.field}>Company name: {company.name}</div>
               <div className={styles.field}>Email: {company.email}</div>
               <div className={styles.field}>Phone: {company.phone}</div>
-              <div className={styles.field}>Main headquarter: {company.mainHeadquarter}</div>
+              <div className={styles.field}>Main headquarter: {company.mainHeadquarter ?? 'Unspecified'}</div>
             </div>
           }
         </div>
@@ -231,11 +252,11 @@ export default function CompanyProfile() {
             : <div>{company.aboutUs}</div>
           }
         </div>
-        <div className={`${personal ? '' : styles.hide}`}>
+        <div className={`${personal ? '' : 'hide'}`}>
           <h3>Subscription details</h3>
           <hr />
           {expired || subscription === 'none'
-            ? <div className={styles.subsMsg}>
+            ? <div className={styles.msg}>
               {expired ? 'Your subscription has expired' : 'No subscription purchased'}
             </div>
             : <div className={styles.subscription}>
@@ -251,28 +272,21 @@ export default function CompanyProfile() {
               </div>
             </div>
           }
-          <div className={`${styles.msg} ${personal ? '' : styles.hide}`}>
-            <h2>
+          <div className={`${personal ? styles.msg : 'hide'}`}>
+            <div>
               You can always view, change or update your subscription
               <Link to='/company/checkout'>here</Link>.
-            </h2>
+            </div>
           </div>
         </div>
-        <div className={`${personal ? '' : styles.hide}`}>
-          <button onClick={handleCompanyChange} disabled={saveLoading}>
-            {saveLoading
-              ? <>Loading...</>
-              : <>Save changes</>
-            }
+        <div className={`${personal ? styles.save : 'hide'}`}>
+          <button onClick={() => handleButtonClick('save')} disabled={saveLoading}>
+            {saveLoading ? 'Loading...' : 'Save changes'}
           </button>
         </div>
-        <div className={`${styles.delete} ${personal ? '' : styles.hide}`}
-          onClick={handleCompanyDelete} disabled={deleteLoading}>
-          <button>
-            {deleteLoading
-              ? <>Loading...</>
-              : <>Delete account</>
-            }
+        <div className={`${personal ? styles.delete : 'hide'}`}>
+          <button onClick={() => handleButtonClick('delete')} disabled={deleteLoading}>
+            {deleteLoading ? 'Loading...' : 'Delete account'}
           </button>
         </div>
       </div>

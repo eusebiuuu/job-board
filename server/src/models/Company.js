@@ -42,7 +42,7 @@ const CompanySchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: '',
+    required: true,
   },
   mainHeadquarter: {
     type: String,

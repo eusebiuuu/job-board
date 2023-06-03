@@ -1,17 +1,21 @@
 .container {
-  width: 100vw;
-  max-width: 100%;
-  background-color: var(--clr-grey-8);
+  width: 100%;
+  background-color: var(--clr-secondary);
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
   top: 0;
   position: sticky;
   z-index: 2;
-  box-shadow: 10px 0 10px var(--clr-grey-5);
+  box-shadow: var(--shadow-4);
+}
+.container svg {
+  vertical-align: middle;
 }
 .container button {
   text-transform: none;
+  background-color: transparent;
+  color: var(--clr-header);
 }
 .container button:hover {
   box-shadow: none;
@@ -36,6 +40,9 @@
   place-self: center;
   grid-template-columns: auto auto;
 }
+.auth button {
+  margin: 0 1em;
+}
 .account button div {
   display: grid;
   place-self: center;
@@ -48,7 +55,7 @@
   display: grid;
   grid-template-columns: auto auto 1fr;
 }
-.allJobs:hover, .theme:hover, .auth:hover {
+.allJobs:hover, .theme:hover, .auth button:hover {
   transform: scale(1.1);
 }
 .sidebar {
@@ -59,7 +66,7 @@
   top: 3.5rem;
   display: block;
   background-color: #fff;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-3);
   z-index: 2;
 }
 .details li {

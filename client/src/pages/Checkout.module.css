@@ -1,39 +1,54 @@
 .container {
   margin: 2em auto;
-  max-width: 600px;
+  max-width: 800px;
   width: 90%;
 }
 .choices {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2em;
+  margin-top: 2em;
 }
 .choice {
-  background-color: var(--clr-primary-8);
+  background-color: var(--clr-grey-8);
   padding: 2em 0.5em;
 }
 .benefits {
-  background-color: var(--clr-secondary-7);
+  background-color: var(--clr-white);
   margin: 2em;
 }
 .list {
   list-style-position: inside;
   padding: 1em;
+  font-size: 1.1em;
+}
+.list li {
+  margin: 0.5em 0;
 }
 .list li::marker {
   content: "⇒ ";
 }
+.footer {
+  margin-top: 1em;
+}
+.test {
+  margin: 1em 0;
+  font-size: 1.2em;
+  display: inline;
+}
+.copy {
+  padding: 0.5em 1em;
+  background-color: var(--clr-tertiary);
+  margin-left: 1em;
+}
 .flex {
   display: flex;
   justify-content: space-around;
-  padding-bottom: 1em;
 }
 .btn {
   padding: 0.5em 1em;
-  background-color: var(--clr-secondary-7);
   animation: pay 2s ease 0.5s infinite normal both;
 }
-
 @keyframes pay {
   0% {
     transform: scale(1);
@@ -43,12 +58,5 @@
   }
   100% {
     transform: scale(1);
-  }
-}
-
-@media screen and (max-width: 650px) {
-  .choices {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
   }
 }

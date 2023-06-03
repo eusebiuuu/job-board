@@ -7,11 +7,12 @@ import customFetch from '../lib/customFetch';
 import { toast } from 'react-toastify';
 import { useUserContext } from '../context/user';
 import getDate from '../utils/getDate';
+import Modal from '../components/Modal';
 
 export default function SingleJob() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { type, userID } = useUserContext();
+  const { type, userID, onModalToggle } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [applyLoading, setApplyLoading] = useState(false);
@@ -85,7 +86,9 @@ export default function SingleJob() {
     {isLoading
     ? <Loader />
     : <>
+        <Modal action={handleJobDelete} />
         <h2>Job details</h2>
+        <button className={styles.back} onClick={() => navigate(-1)}>Back</button>
         <div className={styles.flexBtns}>
           {type !== 'company'
             ? <>
@@ -108,11 +111,12 @@ export default function SingleJob() {
             <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`}>
               <Link to={`/editJob/${id}`}>Edit job</Link>
             </button>
-            <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`} onClick={handleJobDelete}>
+            <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`}
+              onClick={() => onModalToggle(true)}>
               {deleteLoading ? 'Loading...' : 'Delete job'}
             </button>
             <button className={`${styles.btn2} ${ownedJobs ? '' : styles.hide}`}>
-              <Link to={`/candidates/${job._id}`}>Candidates</Link>
+              <Link to={`/company/candidates/${job._id}`}>Candidates</Link>
             </button>
           </div>
         </div>
@@ -121,17 +125,18 @@ export default function SingleJob() {
           <div className={styles.header}>
             <div>
               <h2>{job.title}</h2>
-              <h3>{job.companyID.name}</h3>
+              <Link to={`/company/profile/${job.companyID._id}`}>
+                <h3 className={styles.company}>{job.companyID.name}</h3>
+              </Link>
             </div>
             <div className={styles.image}>
               <img src={job.companyID.logo} alt='Company logo' />
             </div>
           </div>
           <h2>Description</h2>
-          <div>{job.description}</div>
+          <div className={styles.text}>{job.description}</div>
           <h2>Requirements</h2>
-          <br />
-          <div>{job.requirements}</div>
+          <div className={styles.text}>{job.requirements}</div>
           <ul className={styles.list}>
             <h2>Benefits</h2>
             {job.benefits.map(elem => {
@@ -144,7 +149,6 @@ export default function SingleJob() {
               : ' Unspecified'
             }
           </h2>
-          <br />
           <ul className={styles.list}>
             <h2>Cities</h2>
             {job.cities.map(elem => {
@@ -152,9 +156,7 @@ export default function SingleJob() {
             })}
           </ul>
           <h2>Location: {job.location}</h2>
-          <br />
           <h2>Experience: {job.experience}</h2>
-          <br />
           <ul className={styles.list}>
             <h2>Job type</h2>
             {job.jobTypes.map(elem => {
