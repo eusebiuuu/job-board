@@ -4,8 +4,10 @@
   "main": "./src/server.js",
   "scripts": {
     "test": "jest --verbose --watchAll",
-    "start": "nodemon ./src/server.js",
-    "deploy": "pm2 start ./src/server.js -i max"
+    "dev": "nodemon ./src/server.js",
+    "deploy": "pm2 start ./src/server.js -i max",
+    "update": "pm2 reload ./src/server.js",
+    "clear": "pm2 stop ./src/server.js && pm2 delete ./src/server.js"
   },
   "author": "eusebiuu",
   "license": "ISC",
