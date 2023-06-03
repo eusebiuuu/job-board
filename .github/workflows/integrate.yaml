@@ -11,6 +11,10 @@ jobs:
     env:
       CI: false
       MONGO_URI: mongodb://localhost/nasa
+      JWT_SECRET: 384216d39fb165e197418746ffbb3af274a5a
+      COOKIE_PARSER_SECRET: c0c694fbfe2cd3585d6ecb2106
+      CRYPTO_HASH_ALGORITHM: sha256
+      CRYPTO_HASH_ENCODING: hex
     strategy:
       matrix:
         node-version: [18.x]
