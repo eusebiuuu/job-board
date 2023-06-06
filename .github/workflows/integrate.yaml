@@ -7,7 +7,7 @@ on:
     branches: [ main ]
   
 jobs:
-  test_pull_request:
+  test_push:
     env:
       CI: false
       MONGO_URI: mongodb://localhost/nasa
