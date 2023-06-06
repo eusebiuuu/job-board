@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/server.js",
   "scripts": {
-    "test": "jest --verbose --watchAll",
+    "test": "jest --verbose",
     "dev": "nodemon ./src/server.js",
     "deploy": "pm2 start ./src/server.js -i max",
     "update": "pm2 reload ./src/server.js",
