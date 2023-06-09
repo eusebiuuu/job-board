@@ -44,7 +44,7 @@ export default function Home() {
     </div>
     <div className={styles.register}>
       <button className={`${type === '' ? styles.btn : 'hide'}`}>
-        <Link to='/register'>Register for free</Link>
+        <Link to='/register'>Register</Link>
       </button>
     </div>
     <div className={styles.filled}>

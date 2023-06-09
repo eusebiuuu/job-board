@@ -5,7 +5,8 @@
   "scripts": {
     "test": "jest --verbose",
     "dev": "nodemon ./src/server.js",
-    "deploy": "pm2 start ./src/server.js -i max",
+    "deploy": "node ./src/server.js",
+    "cluster": "pm2 start ./src/server.js -i max",
     "update": "pm2 reload ./src/server.js",
     "clear": "pm2 stop ./src/server.js && pm2 delete ./src/server.js"
   },

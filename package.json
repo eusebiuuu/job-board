@@ -4,12 +4,12 @@
   "description": "Job board project",
   "main": "index.js",
   "scripts": {
-    "install": "npm install --prefix server && npm install --prefix client",
+    "install-client": "npm install --prefix client",
+    "install-server": "npm install --prefix server",
+    "install": "npm run install-server && npm run install-server",
     "test": "npm test --prefix client && npm test --prefix server",
     "dev": "npm run dev --prefix server & npm start --prefix client",
-    "deploy": "npm run build --prefix client && npm run deploy --prefix server",
-    "update": "npm run update --prefix server",
-    "clear": "npm run clear --prefix server"
+    "deploy": "npm run deploy --prefix server"
   },
   "repository": {
     "type": "git",

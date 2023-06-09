@@ -2,9 +2,8 @@ const sgMail = require('@sendgrid/mail');
 const emailMessages = require('./emailMessages');
 
 const sendEmail = async (req, name, email, token, type, field) => {
-  // console.log(req);
-  const forwardedHost = req.get('x-forwarded-host');
-  const forwardedProtocol = req.get('x-forwarded-proto');
+  const forwardedHost = req.get('host');
+  const forwardedProtocol = req.get('x-forwarded-proto') || 'http';
   const origin = `${forwardedProtocol}://${forwardedHost}`;
   // console.log(origin);
 

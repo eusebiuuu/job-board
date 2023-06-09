@@ -8,8 +8,8 @@ const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const crypto = require('crypto');
 
 const checkout = async (req, res) => {
-  const forwardedHost = req.get('x-forwarded-host');
-  const forwardedProtocol = req.get('x-forwarded-proto');
+  const forwardedHost = req.get('host');
+  const forwardedProtocol = req.get('x-forwarded-proto') || 'http';
   const origin = `${forwardedProtocol}://${forwardedHost}`;
 
   const { userID: companyID } = req.userInfo;

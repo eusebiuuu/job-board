@@ -13,6 +13,7 @@ const helmet = require('helmet');
 const cloudinary = require('cloudinary').v2;
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
+const path = require('path');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -24,12 +25,12 @@ const app = express();
 
 app.set('trust proxy', 1);
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: []
 }));
 app.use(cookieParser(process.env.COOKIE_PARSER_SECRET));
 app.use(rateLimit({
   windowMs: 1000 * 60 * 15,
-  max: 100,
+  max: 1000,
   standardHeaders: true,
   message: `<h1 style='display:flex; align-items:center; justify-content:center; height:100vh'>
     429 - Too many Requests <br> Try again later!
@@ -38,11 +39,23 @@ app.use(rateLimit({
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "img-src": ["'self'", "https: data:"]
+    }
+  })
+);
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(morgan('common'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api/v1', version1Router);
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
+});
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
