@@ -36,17 +36,17 @@ app.use(rateLimit({
     429 - Too many Requests <br> Try again later!
   </h1>`,
 }));
-app.use(helmet());
+// app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
-app.use(
-  helmet.contentSecurityPolicy({
-    useDefaults: true,
-    directives: {
-      "img-src": ["'self'", "https: data:"]
-    }
-  })
-);
+// app.use(
+//   helmet.contentSecurityPolicy({
+//     useDefaults: true,
+//     directives: {
+//       "img-src": ["'self'", "https: data:"]
+//     }
+//   })
+// );
 
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));

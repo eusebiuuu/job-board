@@ -10,7 +10,8 @@ jobs:
   test_push:
     env:
       CI: false
-      MONGO_URI: mongodb://localhost/nasa
+      MONGO_URI: ${{ secrets.MONGO_URI }}
+      # MONGO_URI: mongodb://localhost/nasa
       JWT_SECRET: 384216d39fb165e197418746ffbb3af274a5a
       COOKIE_PARSER_SECRET: c0c694fbfe2cd3585d6ecb2106
       CRYPTO_HASH_ALGORITHM: sha256
@@ -18,7 +19,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        mongoDB-version: ['6.0']
+        # mongoDB-version: ['6.0']
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,10 +30,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: MongoDB in GitHub Actions
-        uses: supercharge/mongodb-github-action@1.9.0
-        with:
-          mongodb-version: ${{ matrix.mongoDB-version }}
+      # - name: MongoDB in GitHub Actions
+      #   uses: supercharge/mongodb-github-action@1.9.0
+      #   with:
+      #     mongodb-version: ${{ matrix.mongoDB-version }}
 
       - name: Install all dependencies
         run: npm install
@@ -43,7 +44,6 @@ jobs:
       - name: Test the app
         run: npm test
       
-      # Only for Docker
       # handle .env file and CD pipeline with Docker
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v2
@@ -54,8 +54,8 @@ jobs:
       #     username: ${{ secrets.DOCKERHUB_USERNAME }}
       #     password: ${{ secrets.DOCKERHUB_PASSWORD }}
       
-      # - name: Build and push
+      # - name: Build docker image and push it to DockerHub
       #   uses: docker/build-push-action@v4
       #   with:
       #     push: true
-      #     tags: eusebiuu/job-board:${{ github.sha }}
+      #     tags: eusebiuu/job-board
