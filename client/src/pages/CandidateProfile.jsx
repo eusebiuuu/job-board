@@ -67,7 +67,6 @@ export default function CandidateProfile() {
   }
 
   function handleFieldChange(e) {
-    console.log(e);
     dispatch(changeState({ name: e.target.name, value: e.target.value }));
   }
 

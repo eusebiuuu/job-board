@@ -63,7 +63,7 @@ export default function Chips(props) {
         handleObjectAdd();
       }
     }} />
-    <button id={`add${placeholder}`} className={styles.btn} onClick={handleObjectAdd}>Add {placeholder}</button>
+    <button id={`add${placeholder}`} className={styles.btn} onClick={handleObjectAdd}>Add</button>
   </div>
 </div>
 }
