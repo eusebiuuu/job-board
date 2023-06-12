@@ -1,9 +1,9 @@
 # Welcome to Rejob!
 > I strongly recommend you to go through the README first of all in order to get a better picture of how I approached this project, what features it consists of and more.  
 
-Though, you want to see the project in action right away? Click [here](#http://16.170.252.79).  
+Though, you want to see the project in action right away? Click [here](http://16.170.252.79).  
 
-Want to see the API Docs? Click [here](#https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
+Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
 
 [I want to see some code.](#code-snippets)
 
@@ -61,7 +61,7 @@ A candidate user can search jobs, apply and unapply for jobs, find and review co
 
 A company user can add jobs, find candidates that applied for a specified job, delete candidates' applications, pay for monthly or individual subscriptions, update profile and a lot more.  
 
-If you want to discover more features visit my website by clicking [here](#http://16.170.252.79).  
+If you want to discover more features visit my website by clicking [here](http://16.170.252.79).  
 
 
 ### Technologies and tools
@@ -116,7 +116,7 @@ The diagrams can be seen [here](https://www.figma.com/file/cNMMALbxdKtl9pBLf2WZe
 The wireframe can be seen [here](https://www.figma.com/file/t5cWTB9QZLxa3dTZUv0D05/Job-board-wireframe?type=design&t=fEZUqXg70mwJJblR-0).  
 
 ### API Docs
-Check the brief API documentation of the app [here](#https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
+Check the brief API documentation of the app [here](https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
 
 
 ## Installation and usage instructions
