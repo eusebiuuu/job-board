@@ -1,7 +1,7 @@
 const messages = [
   {
     id: 0,
-    title: 'Join the next generation of jobhunters and create a profile!',
+    title: 'Join the next generation of jobhunters and register to our platform!',
     subtitle: 'Increase your chances and let employers find you'
   },
   {

@@ -15,20 +15,13 @@ export default function Checkout() {
     }
   }
 
-  function copyToClipboard() {
-    (() => {
-      navigator.clipboard.writeText('4242 4242 4242 4242')
-    })();
-    toast.success('Copied!');
-  }
-
   return (<div className={styles.container}>
     <div className={styles.flex}>
       <h2>Payment methods</h2>
     </div>
     <div className={styles.footer}>
-      <div className={styles.test}>Test card: 4242 4242 4242 4242</div>
-      <button onClick={copyToClipboard} className={styles.copy}>Copy</button>
+      <div className={styles.test}>Success test card: 4242 4242 4242 4242</div>
+      <div className={styles.test}>Declined test card: 4000 0000 0000 9995</div>
     </div>
     <div className={styles.choices}>
       <div className={styles.choice}>

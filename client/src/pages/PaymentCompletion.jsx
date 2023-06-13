@@ -20,6 +20,7 @@ export default function PaymentCompletion() {
 
   useEffect(() => {
     (async () => {
+      if (!success) return;
       try {
         const resp = await customFetch.post('/companies/paymentCompletion', { monthly: monthly === 'true', token });
         toast.success(resp.data.msg);

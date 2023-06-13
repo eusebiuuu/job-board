@@ -1,12 +1,13 @@
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
+const { readdir } = require('fs');
+const path = require('path');
 const { StatusCodes } = require('http-status-codes');
 const CustomAPIError = require('../utils/customError');
 const Company = require('../models/Company');
 const Candidate = require('../models/Candidate');
 
 const uploadImage = async (req, res) => {
-  // console.log(req.files);
 	if (!req.files) {
 		throw new CustomAPIError('No file uploaded', StatusCodes.BAD_REQUEST);
 	}
@@ -16,8 +17,9 @@ const uploadImage = async (req, res) => {
 	}
 	const maxSize = 1024 * 1024 * 10;
 	if (curImage.size > maxSize) {
-		throw new CustomAPIError('Please upload an image smaller 10MB', StatusCodes.BAD_REQUEST);
+		throw new CustomAPIError('Please upload an image smaller than 10MB', StatusCodes.BAD_REQUEST);
 	}
+	console.log('Before');
 	const result = await cloudinary.uploader.upload(
 		req.files.image.tempFilePath,
 		{
@@ -25,8 +27,30 @@ const uploadImage = async (req, res) => {
 			folder: 'job-board'
 		}
 	);
-  // console.log(result);
+
+	console.log('Intended console logs:');
+	let source = path.join(__dirname, '..', '..');
+  readdir(source, { withFileTypes: true }, (err, files) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(
+        files
+          .filter(dirent => dirent.isDirectory())
+          .map(dirent => dirent.name)
+      );
+    }
+  })
+	source = path.join(__dirname, '..', '..', 'tmp');
+	fs.readdir(source, (err, files) => {
+		files.forEach(file => {
+			console.log(file);
+		});
+	});
+	console.log(req.files);
+
 	fs.unlinkSync(req.files.image.tempFilePath);
+	console.log('After');
 	const { userID, type } = req.userInfo;
 	const user = type === 'candidate'
 	? await Candidate.findOne({ _id: userID })
@@ -34,11 +58,9 @@ const uploadImage = async (req, res) => {
 	const publicID = user.imagePublicID;
 	// console.log(publicID);
 	if (publicID) {
-		await cloudinary.uploader.destroy(publicID, function (err, res) {
+		await cloudinary.uploader.destroy(publicID, function (err, _) {
 			if (err) {
 				console.log(err);
-			} else {
-				console.log(res);
 			}
 		});
 	}

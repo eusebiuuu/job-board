@@ -5,6 +5,7 @@ import { TextField } from '@mui/material';
 import customFetch from '../lib/customFetch';
 import { toast } from 'react-toastify';
 import { useUserContext } from '../context/user';
+import login from '../assets/login.svg'
 
 const initialState = {
   email: '',
@@ -121,24 +122,15 @@ export default function Login() {
       <button className={styles.btn} onClick={handleUserLogin} disabled={loading[0]}>
         {loading[0] ? 'Loading...' : 'Login'}
       </button>
-      <button className={styles.btn} onClick={handleTestCandidateLogin} disabled={loading[1]}>
-        {loading[1] ? 'Loading...' : 'Test candidate'}
-      </button>
       <button className={styles.btn} onClick={handleTestCompanyLogin} disabled={loading[2]}>
         {loading[2] ? 'Loading...' : 'Test company'}
       </button>
-    </div>
-    <div className={styles.item2}>
-      <h2 className={styles.title}>Not registered?</h2>
-      <h4>Search & apply</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur</p>
-      <h4>Find your dream job</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur</p>
-      <h4>Find the perfect candidates</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur</p>
-      <button className={styles.btn}>
-        <Link to='/register'>Register</Link>
+      <button className={styles.btn} onClick={handleTestCandidateLogin} disabled={loading[1]}>
+        {loading[1] ? 'Loading...' : 'Test candidate'}
       </button>
+    </div>
+    <div className={styles.image}>
+      <img src={login} alt={'Login'} />
     </div>
   </div>)
 }

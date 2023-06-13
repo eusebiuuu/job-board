@@ -3,6 +3,7 @@ import { useUserContext } from "../context/user";
 import customFetch from "../lib/customFetch";
 import styles from './ChangeEmail.module.css'
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   newEmail: '',
@@ -13,6 +14,7 @@ export default function ChangeEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(initialState);
   const { userID, type, onLogout } = useUserContext();
+  const navigate = useNavigate();
   const emailPattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
   async function handleFormSubmit(e) {
@@ -26,6 +28,7 @@ export default function ChangeEmail() {
       const resp = await customFetch.post('/auth/changeEmail', { ...formData, userID, type });
       toast.success(resp.data.msg);
       await onLogout();
+      navigate('/');
     } catch (err) {
       console.log(err);
       toast.error(err.response.data.msg);

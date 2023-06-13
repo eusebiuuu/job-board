@@ -3,13 +3,14 @@
   max-width: 100%;
   padding: 0.3em;
   color: var(--clr-grey-1);
+  margin-top: 8em;
 }
 .container a {
   color: var(--clr-grey-1);
 }
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 .list-container {
   text-align: center;
@@ -55,7 +56,6 @@
   .grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
     row-gap: 2em;
   }
   .icons-container {

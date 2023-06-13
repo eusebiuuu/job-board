@@ -75,7 +75,7 @@ function Navbar() {
           </li>
           <li>
             <Link to='company/announcements'>
-              <h4>Announcements</h4>
+              <h4>Posts</h4>
             </Link>
           </li>
         </ul>

@@ -17,7 +17,7 @@ import Modal from '../components/Modal';
 
 export default function CandidateProfile() {
   const { userID, onLogout, onModalToggle } = useUserContext();
-  const { firstName, lastName, email, password, birthday, abilities,
+  const { firstName, lastName, email, birthday, abilities,
     aboutMe, experience, education, image, phone } = useSelector(state => state.candidate);
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
@@ -124,7 +124,7 @@ export default function CandidateProfile() {
                   </div>
                 </div>
                 <div className={styles.input}>
-                  <TextField label='Password' type='password' value={password} disabled />
+                  <TextField label='Password' type='password' value={'password'} disabled />
                   <div>
                     <button className={styles.change}>
                       <Link to='/change-password'>Change password</Link>

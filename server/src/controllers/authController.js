@@ -12,7 +12,7 @@ const register = async (req, res) => {
 	const { email, password, type, verified, subscriptionExpiration, availablePosts, ...rest } = req.body.user;
 	const user = type === 'candidate' ? await Candidate.findOne({ email }) : await Company.findOne({ email });
 	if (user) {
-		throw new CustomAPIError('Email already exists. Please choose a different email address', StatusCodes.BAD_REQUEST);
+		throw new CustomAPIError('Email already exists. Please choose a different one', StatusCodes.BAD_REQUEST);
 	}
 	const validName = type === 'candidate' ? rest.firstName && rest.lastName : rest.name;
 	if (!email || !password || !validName) {
@@ -33,7 +33,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
 	const { email, type, password } = req.body;
 	if (!email || !password) {
-		throw new CustomAPIError('Please provide email and password', StatusCodes.BAD_REQUEST);
+		throw new CustomAPIError('Please provide the email and the password', StatusCodes.BAD_REQUEST);
 	}
 	const user = type === 'candidate' ? await Candidate.findOne({ email }) : await Company.findOne({ email });
 	if (!user) {
@@ -44,7 +44,7 @@ const login = async (req, res) => {
 		throw new CustomAPIError('Invalid password', StatusCodes.UNAUTHORIZED);
 	}
 	if (!user.verified) {
-		throw new CustomAPIError('Check your email to validate your account', StatusCodes.UNAUTHORIZED);
+		throw new CustomAPIError('Check your email to validate your account first', StatusCodes.UNAUTHORIZED);
 	}
 	let refreshToken = '';
 	const existingToken = await Token.findOne({ userID: user._id, type });
@@ -135,6 +135,12 @@ const verifyEmail = async (req, res) => {
 
 const changeEmail = async (req, res) => {
 	const { newEmail, userID, password, type } = req.body;
+	if (type === 'candidate' && userID.toString() === '64785efe7961b1b7db8843d6') {
+    throw new CustomAPIError('This is a test account. You cannot change its email', StatusCodes.FORBIDDEN);
+  }
+	if (type === 'company' && userID.toString() === '64785c6e2c8310474ba4b6b0') {
+    throw new CustomAPIError('This is a test account. You cannot change its email', StatusCodes.FORBIDDEN);
+  }
 	if (!newEmail) {
 		throw new CustomAPIError('Invalid email', StatusCodes.BAD_REQUEST);
 	}
@@ -145,7 +151,7 @@ const changeEmail = async (req, res) => {
 		throw new CustomAPIError('Invalid credentials', StatusCodes.UNAUTHORIZED);
 	}
 	if (!user.verified) {
-		throw new CustomAPIError('Please verify your current email first', StatusCodes.UNAUTHORIZED);
+		throw new CustomAPIError('Please verify your current email address first', StatusCodes.UNAUTHORIZED);
 	}
 	const validPassword = await user.comparePassword(password);
 	if (!validPassword) {
@@ -165,12 +171,18 @@ const changeEmail = async (req, res) => {
 	const name = type === 'candidate' ? `${user.firstName} ${user.lastName}` : user.name;
 	await sendEmail(req, name, newEmail, verificationToken, type, 'verify');
 	return res.status(StatusCodes.OK).json({
-		msg: 'Data received. Please check your email address',
+		msg: 'Modification complete. Please check your email address',
 	});
 }
 
 const changePassword = async (req, res) => {
 	const { userID, oldPassword, newPassword, type } = req.body;
+	if (type === 'candidate' && userID.toString() === '64785efe7961b1b7db8843d6') {
+    throw new CustomAPIError('This is a test account. You cannot change its password', StatusCodes.FORBIDDEN);
+  }
+	if (type === 'company' && userID.toString() === '64785c6e2c8310474ba4b6b0') {
+    throw new CustomAPIError('This is a test account. You cannot change its password', StatusCodes.FORBIDDEN);
+  }
 	const user = type === 'candidate'
 		? await Candidate.findOne({ _id: userID })
 		: await Company.findOne({ _id: userID });
@@ -190,6 +202,9 @@ const changePassword = async (req, res) => {
 
 const forgotPassword = async (req, res) => {
 	const { email, type } = req.body;
+	if (email === 'scashley0@cdc.gov' || email === 'jreddel0@drupal.org') {
+    throw new CustomAPIError('This is a test account. You cannot change its password', StatusCodes.FORBIDDEN);
+  }
 	if (!email) {
 		throw new CustomAPIError('Invalid email', StatusCodes.BAD_REQUEST);
 	}
@@ -200,7 +215,7 @@ const forgotPassword = async (req, res) => {
 		throw new CustomAPIError('Invalid email', StatusCodes.BAD_REQUEST);
 	}
 	if (!user.verified) {
-		throw new CustomAPIError('Please verify your email first', StatusCodes.UNAUTHORIZED);
+		throw new CustomAPIError('Please verify your email address first', StatusCodes.UNAUTHORIZED);
 	}
 	const passwordToken = crypto.randomBytes(30).toString('hex');
 	const expirationPeriod = 1000 * 60 * 10;
@@ -211,7 +226,7 @@ const forgotPassword = async (req, res) => {
 	const name = type === 'candidate' ? `${user.firstName} ${user.lastName}` : user.name;
 	await sendEmail(req, name, email, passwordToken, type, 'reset');
 	return res.status(StatusCodes.OK).json({
-		msg: 'Check your email',
+		msg: 'Data processed. Please, check your email',
 	});
 }
 

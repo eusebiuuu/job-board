@@ -8,17 +8,20 @@ const stripe = require("stripe")(process.env.STRIPE_API_KEY);
 const crypto = require('crypto');
 
 const checkout = async (req, res) => {
-  const forwardedHost = req.get('host');
+  const forwardedHost = req.get('x-forwarded-host') || req.get('host');
+  // console.log(req.get('x-forwarded-host'));
   const forwardedProtocol = req.get('x-forwarded-proto') || 'http';
+  // console.log(req.get('x-forwarded-proto'));
   const origin = `${forwardedProtocol}://${forwardedHost}`;
-
+  // console.log(origin);
   const { userID: companyID } = req.userInfo;
   const company = await Company.findOne({ _id: companyID });
   if (company.verificationToken) {
-    throw new CustomAPIError(
-      'User token already exists. Please contact the admin.',
-      StatusCodes.BAD_REQUEST,
-    );
+    company.verificationToken = null;
+    // throw new CustomAPIError(
+    //   'User token already exists. Please report the error to the admin',
+    //   StatusCodes.BAD_REQUEST,
+    // );
   }
   const verificationToken = crypto.randomBytes(30).toString('hex');
   company.verificationToken = verificationToken;
@@ -35,7 +38,7 @@ const checkout = async (req, res) => {
           name: monthly ? 'Subscription' : 'One-time payment',
         },
         unit_amount: monthly ? 20 * 100 : 10 * 100,
-        ...(monthly) && recurring
+        ...(monthly) && { recurring }
       },
       quantity: 1,
     }],
@@ -69,7 +72,7 @@ const verifyPayment = async (req, res) => {
   // console.log(company.subscriptionExpiration);
   await company.save();
   return res.status(StatusCodes.OK).json({
-    msg: 'Payment finished successfully',
+    msg: 'Payment completed successfully',
   });
 }
 
@@ -115,7 +118,7 @@ const deleteCompany = async (req, res) => {
   // return;
   const company = await Company.findOne({ _id: companyID });
   if (!company) {
-		throw new CustomAPIError('Profile already deleted', StatusCodes.FORBIDDEN);
+		throw new CustomAPIError('Account already deleted', StatusCodes.FORBIDDEN);
 	}
   await Job.deleteMany({ companyID });
   await Review.deleteMany({ companyID });

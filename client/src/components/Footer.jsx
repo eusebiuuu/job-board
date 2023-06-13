@@ -14,41 +14,13 @@ function Footer(props) {
         </ul>
       </div>
       <div className={styles['list-container']}>
-        <h5>For jobseekers</h5>
-        <ul className={styles.list}>
-          <li>
-            <Link to='/jobs'>Search job</Link>
-          </li>
-          <li>
-            <Link to='/register'>Register</Link>
-          </li>
-          <li>
-            <Link to='/login'>Login</Link>
-          </li>
-        </ul>
-      </div>
-      <div className={styles['list-container']}>
-        <h5>For recruiters</h5>
-        <ul className={styles.list}>
-          <li>
-            <Link to='/company/announcements'>Announcements</Link>
-          </li>
-          <li>
-            <Link to='/company/addJob'>Add job</Link>
-          </li>
-          <li>
-            <Link to='/company/checkout'>Checkout</Link>
-          </li>
-        </ul>
-      </div>
-      <div className={styles['list-container']}>
         <h5>More</h5>
         <ul className={styles.list}>
           <li>
-            <Link to='#'>My website</Link>
+            <Link to='/faq'>FAQ</Link>
           </li>
           <li>
-            <Link to='/faq'>FAQ</Link>
+            <a href='https://documenter.getpostman.com/view/24263146/2s93sdXrCc' target='_blank' rel='noreferrer'>API Docs</a>
           </li>
         </ul>
       </div>

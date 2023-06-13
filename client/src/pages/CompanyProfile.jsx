@@ -218,7 +218,7 @@ export default function CompanyProfile() {
                 </div>
               </div>
               <div className={styles.input}>
-                <TextField disabled type='password' required label='Password' name='password' value={company.password}
+                <TextField disabled type='password' required label='Password' name='password' value={'password'}
                   onChange={handleFieldChange} />
                 <div>
                   <button className={styles.change}>
@@ -240,7 +240,9 @@ export default function CompanyProfile() {
               <div className={styles.field}>Company name: {company.name}</div>
               <div className={styles.field}>Email: {company.email}</div>
               <div className={styles.field}>Phone: {company.phone}</div>
-              <div className={styles.field}>Main headquarter: {company.mainHeadquarter ?? 'Unspecified'}</div>
+              <div className={styles.field}>Main headquarter:
+                {` ${company.mainHeadquarter !== '' ? company.mainHeadquarter : 'Unspecified'}`}
+              </div>
             </div>
           }
         </div>
@@ -257,7 +259,7 @@ export default function CompanyProfile() {
           <hr />
           {expired || subscription === 'none'
             ? <div className={styles.msg}>
-              {expired ? 'Your subscription has expired' : 'No subscription purchased'}
+              {expired ? 'Your subscription has expired.' : 'No subscription purchased.'}
             </div>
             : <div className={styles.subscription}>
               <div className={styles.part}>

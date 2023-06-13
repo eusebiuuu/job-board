@@ -4,14 +4,12 @@ import styles from './Home.module.css'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import { Link } from "react-router-dom";
 import recruit from '../assets/recruit.svg'
-import logo from '../assets/logo.svg'
+import team from '../assets/team.svg'
 import jobs from '../assets/jobs.svg'
-import { useUserContext } from "../context/user";
 
 export default function Home() {
   const [imageID, setImageID] = useState(0);
   const len = messages.length;
-  const { type } = useUserContext();
 
   function handleImageIDIncrease() {
     setImageID(prev => {
@@ -42,42 +40,33 @@ export default function Home() {
         <BsChevronRight size={'3em'} />
       </button>
     </div>
-    <div className={styles.register}>
-      <button className={`${type === '' ? styles.btn : 'hide'}`}>
-        <Link to='/register'>Register</Link>
-      </button>
-    </div>
     <div className={styles.filled}>
       <div>
-        <h2>Recruiting?</h2>
-        <p>Sit tincidunt pharetra enim diam posuere donec. Amet cursus integer sociis lectus gravida risus. Sit sem tortor quisque ipsum. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar.</p>
+        <h2>Register to our platform</h2>
+        <p>Sit tincidunt pharetra enim diam posuere donec. Amet cursus integer sociis lectus gravida risus. Sit sem tortor quisque ipsum. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar.</p>
         <button className={styles.btn}>
-          <Link to={`${type !== 'company' ? '/register' : '/company/addJob'}`}>Start recruiting</Link>
+          <Link to='/register'>Register</Link>
         </button>
       </div>
       <div>
         <div className={styles.image}>
-          <img src={recruit} alt={'Recruit candidates'} />
+          <img src={recruit} alt={'Register to our platform'} />
         </div>
       </div>
     </div>
     <div className={styles.aboutMe}>
       <div className={styles.image}>
-        <img src={logo} alt={'profile'} />
+        <img src={team} alt={'our company'} />
       </div>
       <div>
-        <h2>About me</h2>
-        <p>Sit tincidunt pharetra enim diam posuere donec. Amet cursus integer sociis lectus gravida risus. Sit sem tortor quisque ipsum. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar.</p>
-        <button className={styles.btn}>
-          {/*eslint-disable-next-line*/}
-          <a target="_blank" rel="noreferrer" href={"#"}>Visit my website</a>
-        </button>
+        <h2>About Us</h2>
+        <p>Sit tincidunt pharetra enim diam posuere donec. Amet cursus integer sociis lectus gravida risus. Sit sem tortor quisque ipsum. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar.</p>
       </div>
     </div>
     <div className={styles.filled}>
       <div>
         <h2>Looking for jobs?</h2>
-        <p>Suspendisse feugiat neque sed eros malesuada, eu consequat lectus sodales. Integer commodo nibh ante. Mauris scelerisque mi a nunc auctor, non tincidunt mauris auctor. Morbi at eros quis sem imperdiet venenatis vitae ac augue. In sit amet consectetur orci, ac faucibus sapien.</p>
+        <p>Suspendisse feugiat neque sed eros malesuada, eu consequat lectus sodales. Integer commodo nibh ante. Mauris scelerisque mi a nunc auctor, non tincidunt mauris auctor. Morbi at eros quis sem imperdiet venenatis vitae ac augue. In sit amet consectetur orci, ac faucibus sapien. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar. At in neque dolor dignissim sagittis at molestie at. In lacus, in id velit quam facilisis lectus vulputate erat. Gravida ornare commodo, sagittis pulvinar.</p>
         <button className={styles.btn}>
           <Link to='/jobs'>Search jobs</Link>
         </button>

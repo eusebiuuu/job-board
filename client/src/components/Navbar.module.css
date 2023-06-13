@@ -31,7 +31,6 @@
 .allJobs, .account, .sidebar, .logo, .theme, .auth {
   height: 3em;
   transition: var(--transition);
-  padding: 0 1vw;
   display: grid;
   place-self: center;
 }
@@ -68,17 +67,16 @@
   background-color: #fff;
   box-shadow: var(--shadow-3);
   z-index: 2;
+  width: 100%;
+
 }
 .details li {
   text-decoration: none;
   transition: var(--transition);
-}
-.details li a {
-  width: 100%;
-  height: 100%;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.5em;
 }
 .details li:hover {
+  padding: 0.5em 0.8em;
   background-color: var(--clr-grey-8);
 }
 .hide {

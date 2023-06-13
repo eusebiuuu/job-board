@@ -47,7 +47,7 @@ const deleteCandidate = async (req, res) => {
 	// return;
 	const candidate = await Candidate.findOne({ _id: candidateID });
 	if (!candidate) {
-		throw new CustomAPIError('Profile already deleted', StatusCodes.FORBIDDEN);
+		throw new CustomAPIError('Account already deleted', StatusCodes.FORBIDDEN);
 	}
 	await Application.deleteMany({ candidateID });
 	await Review.deleteMany({ candidateID });

@@ -50,7 +50,7 @@ const createApplication = async (req, res) => {
   });
   return res.status(StatusCodes.CREATED).json({
     application,
-    msg: 'Applied to job successfully',
+    msg: 'Application created successfully',
   });
 }
 
@@ -86,7 +86,7 @@ const deleteApplication = async (req, res) => {
   }
   await application.remove();
   return res.status(StatusCodes.OK).json({
-    msg: 'Application deleted successfully',
+    msg: 'Application canceled successfully',
   });
 }
 
