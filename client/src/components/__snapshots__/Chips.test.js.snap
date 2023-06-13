@@ -22,8 +22,7 @@ Object {
             class="btn"
             id="addCity"
           >
-            Add 
-            City
+            Add
           </button>
         </div>
       </div>
@@ -47,8 +46,7 @@ Object {
           class="btn"
           id="addCity"
         >
-          Add 
-          City
+          Add
         </button>
       </div>
     </div>
