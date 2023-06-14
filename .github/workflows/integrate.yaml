@@ -44,6 +44,7 @@ jobs:
       - name: Test the app
         run: npm test
       
+      # Skip Docker image build and push for now
       # - name: Set up Docker Buildx
       #   uses: docker/setup-buildx-action@v2
 

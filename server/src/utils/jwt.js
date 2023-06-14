@@ -18,13 +18,13 @@ const attachCookiesToResponse = ({ res, user, refreshToken }) => {
   res.cookie('accessToken', signedAccessToken, {
     httpOnly: true,
     maxAge: oneHour,
-    secure: true,
+    secure: false,
     signed: true,
   });
   res.cookie('refreshToken', signedRefreshToken, {
     httpOnly: true,
     expires: new Date(Date.now() + oneMonth),
-    secure: true,
+    secure: false,
     signed: true,
   });
 };

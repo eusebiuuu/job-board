@@ -103,6 +103,9 @@ export default function CandidateProfile() {
               <input type='file' id='file' name='image' accept='.jpg, .svg, .png, .jpeg'
                 className={styles.upload} onChange={handleFileChange} />
             </div>
+            <div className={styles.error}>
+              Due to unknown reasons, the upload functionality doesn't work properly in deployment. Sorry for inconvenience
+            </div>
           </div>
           <div className={styles.item}>
             {personal

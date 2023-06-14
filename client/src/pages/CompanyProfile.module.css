@@ -123,6 +123,10 @@
 .delete button:active, .save button:active {
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
+.error {
+  color: red;
+  text-align: center;
+}
 
 @media screen and (max-width: 660px) {
   .personal {

@@ -110,6 +110,7 @@ export default function CompanyProfile() {
     if (file) {
       const formData = new FormData();
       formData.append('image', file);
+      console.log(file);
       try {
         await customFetch.post('/uploads', formData, {
           headers: {
@@ -201,6 +202,9 @@ export default function CompanyProfile() {
                 className={styles.upload} accept='.jpg, .svg, .png, .jpeg' />
             </div>
             <div className={styles.average}>{company.averageRating.toFixed(2)}<AiFillStar /></div>
+            <div className={styles.error}>
+              Due to unknown reasons, the upload functionality doesn't work properly in deployment. Sorry for inconvenience
+            </div>
           </div>
           {personal
             ? <div>

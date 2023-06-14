@@ -38,6 +38,10 @@
 .msg {
   display: block;
 }
+.error {
+  color: red;
+  text-align: center;
+}
 .upload-container {
   width: 100%;
   text-align: center;
