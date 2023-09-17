@@ -13,6 +13,16 @@
   background-color: var(--clr-white);
   color: var(--clr-header);
 }
+.test {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2em;
+}
+.test a {
+  text-decoration: underline;
+  color:dodgerblue;
+  font-size: large;
+}
 .btns button:hover {
   box-shadow: none;
 }

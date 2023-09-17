@@ -4,7 +4,7 @@ import CompanyRegister from '../components/CompanyRegister';
 import { useUserContext } from '../context/user';
 import styles from './Register.module.css'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
   const [candidate, setCandidate] = useState(false);
@@ -25,6 +25,11 @@ export default function Register() {
 
   return (<div className={styles.container}>
     <h2>Register to our platform</h2>
+    <div className={styles.test}>
+      <Link to='/login'>
+        I want to see a test account
+      </Link>
+    </div>
     <div className={styles.btns}>
       <button className={candidate ? styles.default : styles.active}
         onClick={() => handleCandidateChange(false)}>Company</button>

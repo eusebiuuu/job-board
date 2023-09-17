@@ -123,10 +123,10 @@ export default function Login() {
         {loading[0] ? 'Loading...' : 'Login'}
       </button>
       <button className={styles.btn} onClick={handleTestCompanyLogin} disabled={loading[2]}>
-        {loading[2] ? 'Loading...' : 'Test company'}
+        {loading[2] ? 'Loading...' : 'Test acount - company'}
       </button>
       <button className={styles.btn} onClick={handleTestCandidateLogin} disabled={loading[1]}>
-        {loading[1] ? 'Loading...' : 'Test candidate'}
+        {loading[1] ? 'Loading...' : 'Test account - candidate'}
       </button>
     </div>
     <div className={styles.image}>
