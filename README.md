@@ -1,7 +1,6 @@
 # Welcome to Rejob!
-> I strongly recommend you to go through the README first of all in order to get a better picture of how I approached this project, what features it consists of and more.  
 
-Though, you want to see the project in action right away? Click [here](http://16.170.252.79).  
+Want to see the project in action? Click [here](http://16.170.252.79).  
 
 Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
 
@@ -17,9 +16,9 @@ Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24
   - [Code structure](#code-structure)
   - [Technical decisions](#technical-decisions)
   - [Future functionalities](#future-functionalities)
-- [Architecture and design](#architecture-and-design)
-  - [Structure diagrams and wireframe](#structure-diagrams-and-wireframe)
-  - [API docs](#api-docs)
+- [Functionalities](#functionalities)
+- [API docs](#api-docs)
+- [Database structure](#database-structure)
 - [Installation setup](#installation-and-usage-instructions)
 - [Code snippets](#code-snippets)
 - [Conclusion](#conclusion)
@@ -29,8 +28,6 @@ Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24
 ## Overview
 ### Introduction
 Welcome to one of my full-stack projects called **Rejob**. In this one, I focused on managing and optimising the process of hiring and, respectively, finding candidates.  
-
-The entire project, including this short documentation, is structured and build only by me and without any external significant help.  
 
 
 ### Purpose
@@ -45,7 +42,7 @@ Among the goals that determined me to build this project are worth mentioning:
 ### Workflow
 Throughout the building phase I focused on respecting the principles of a professional workflow. Now, at the end, I realise there is still room for improvement.  
 
-In the first steps, I created the diagrams of the app's functionality and the app's wireframe with Figma (for more information go to [architecture and design section](#architecture-and-design)).  
+In the first steps, I created the diagrams of the app's functionality and the app's wireframe with Figma.
 
 Next, I divided my work in 6 alternated stages (3 for back-end and 3 for front-end). Each stage had its established tasks and objectives, but, also, was updated in the moment when new ideas came to me.  
 
@@ -83,7 +80,7 @@ This project was made with the help of various technologies and tools present on
 
 
 ### Code structure
-Fundamentally, both parts, front-end and back-end, were structured around roles (not features).  
+Fundamentally, both parts, front-end and back-end, were structured around roles.  
 
 Front-end functionality is located mostly in pages, components, utils and redux directories.  
 
@@ -91,9 +88,9 @@ Back-end functionality respects MVC pattern and is located across muliple direct
 
 
 ### Technical decisions
-I didn't use a CSS library (like bootstrap) on purpose, because I know writing responsive and efficient custom CSS is a very important skill for front-end developers.  
+I didn't use a CSS library (like bootstrap) on purpose, because I know writing responsive and efficient custom CSS is a very important skill for developers.  
 
-I focused on using React Redux as little as possible (and using local state management as ) as I see that global state management throughout the app is handled, in modern projects, using React Query or GraphQL, technologies I haven't learnt yet.  
+I focused on using React Redux as little as possible (and using local state management as much as possible) as I see that global state management throughout the app is handled, in modern projects, using React Query or GraphQL, technologies I haven't learnt yet.  
 
 I used Docker and EC2 deployment because I see it's a more professional way of deploying full-stack web apps and it offers more options in deployment configuration.  
 
@@ -103,21 +100,22 @@ Lastly, I didn't write many tests because I wanted to focus mainly on the functi
 ### Future updates
 In the near future, if time allows me, I plan to add more features in the website like company's ability to search for candidates, email candidates, more filters and sorting functionality.  
 
-Besides this, I plan to improve project's design and general app performance.
+Besides this, I plan to improve project's design and general app performance.   
 
 
-## Architecture and design
+## Functionalities
+As I said above, before starting the actual building I created some structure diagrams that can be seen in the following images:
+* [image1]()
+* [image2]()
+* [image3]()
 
-### Structure diagrams and wireframe
-As I said above, before starting the actual building I created some structure diagrams and a wireframe. Even if the final version of the project is slighlty different from the first place, the general idea is the same.  
 
-The diagrams can be seen [here](https://www.figma.com/file/cNMMALbxdKtl9pBLf2WZeP/Job-board-structure?type=whiteboard&node-id=0-1&t=fEZUqXg70mwJJblR-0).  
-
-The wireframe can be seen [here](https://www.figma.com/file/t5cWTB9QZLxa3dTZUv0D05/Job-board-wireframe?type=design&t=fEZUqXg70mwJJblR-0).  
-
-### API Docs
+## API Docs
 Check the brief API documentation of the app [here](https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
 
+
+## Database structure
+Check the database structure [here]().   
 
 ## Installation and usage instructions
 

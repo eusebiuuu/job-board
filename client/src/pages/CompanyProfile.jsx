@@ -202,9 +202,6 @@ export default function CompanyProfile() {
                 className={styles.upload} accept='.jpg, .svg, .png, .jpeg' />
             </div>
             <div className={styles.average}>{company.averageRating.toFixed(2)}<AiFillStar /></div>
-            <div className={styles.error}>
-              Due to unknown reasons, the upload functionality doesn't work properly in deployment. Sorry for inconvenience
-            </div>
           </div>
           {personal
             ? <div>

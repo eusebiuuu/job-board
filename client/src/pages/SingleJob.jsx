@@ -44,6 +44,10 @@ export default function SingleJob() {
   }, []);
 
   async function handleApplyChange() {
+    if (!userID) {
+      navigate('/login');
+      return;
+    }
     setApplyLoading(true);
     if (apply) {
       try {
