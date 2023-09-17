@@ -105,9 +105,9 @@ Besides this, I plan to improve project's design and general app performance.
 
 ## Functionalities
 As I said above, before starting the actual building I created some structure diagrams that can be seen in the following images:
-* [image1]()
-* [image2]()
-* [image3]()
+* [image1](https://github.com/eusebiuuu/job-board/assets/107063753/d5151079-d4b1-470c-b904-15c564da80e4)
+* [image2](https://github.com/eusebiuuu/job-board/assets/107063753/374e5a23-f27c-4847-af49-ca459ca3540a)
+* [image3](https://github.com/eusebiuuu/job-board/assets/107063753/d4533aff-59e4-44cf-ab11-e78f4534d493)
 
 
 ## API Docs
@@ -115,7 +115,7 @@ Check the brief API documentation of the app [here](https://documenter.getpostma
 
 
 ## Database structure
-Check the database structure [here]().   
+Check the database structure [here](https://github.com/eusebiuuu/job-board/assets/107063753/4921c7c3-1ffe-4922-8424-815fbd1fc8ee).   
 
 ## Installation and usage instructions
 
