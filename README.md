@@ -1,6 +1,6 @@
 # Welcome to Rejob!
 
-Want to see the project in action? Click [here](http://16.170.252.79).  
+Want to see the project in action? Click [here](http://13.60.43.10/).  
 
 Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24263146/2s93sdXrCc).  
 
