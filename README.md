@@ -1,4 +1,4 @@
-# Welcome to Rejob!
+# Rejob
 
 Want to see the project in action? Click [here](http://13.60.64.50/).  
 
@@ -8,14 +8,12 @@ Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24
 
 ## Table of content
 - [Overview](#overview)
-  - [Introduction](#introduction)
-  - [Purpose](#purpose)
-  - [Workflow](#workflow)
-  - [Features](#features)
-  - [Technologies and tools](#technologies-and-tools)
-  - [Code structure](#code-structure)
-  - [Technical decisions](#technical-decisions)
-  - [Future functionalities](#future-functionalities)
+- [Workflow](#workflow)
+- [Features](#features)
+- [Technologies and tools](#technologies-and-tools)
+- [Code structure](#code-structure)
+- [Technical decisions](#technical-decisions)
+- [Future functionalities](#future-updates)
 - [Functionalities](#functionalities)
 - [API docs](#api-docs)
 - [Database structure](#database-structure)
@@ -26,20 +24,10 @@ Want to see the API Docs? Click [here](https://documenter.getpostman.com/view/24
 
 
 ## Overview
-### Introduction
-Welcome to one of my full-stack projects called **Rejob**. In this one, I focused on managing and optimising the process of hiring and, respectively, finding candidates.  
+**Rejob** is a job board website intended to help job seeker and employers alike, by managing and enriching the process of hiring and find jobs, respectively.
 
 
-### Purpose
-Among the goals that determined me to build this project are worth mentioning:
-- Improving the efficiency and clarity of writing code
-- Improving the critical and logical thinking
-- Improving the ability to handle stressful situations that can appear throughout a project
-- Learning new technologies and abilities to excel in this field
-- Improving organisational skills  
-
-
-### Workflow
+## Workflow
 Throughout the building phase I focused on respecting the principles of a professional workflow. Now, at the end, I realise there is still room for improvement.  
 
 In the first steps, I created the diagrams of the app's functionality and the app's wireframe with Figma.
@@ -49,19 +37,17 @@ Next, I divided my work in 6 alternated stages (3 for back-end and 3 for front-e
 In the last steps, I did the CI/CD, the deployment, the documentation and the final testing of the app.  
 
 
-### Features
+## Features
 The app has many functionalities, most of them depending on the type of the logged in user (unknown, company or candidate).  
 
 An unknown user have restricted permissions, but it still can search for jobs or view the profile of other companies and candidates. Once an unknown user logs in, registers (and validates its email address) or goes through a password reset, it gets more permissions depending on the account type.  
 
 A candidate user can search jobs, apply and unapply for jobs, find and review companies, upload profile images, change the email or password and much more.  
 
-A company user can add jobs, find candidates that applied for a specified job, delete candidates' applications, pay for monthly or individual subscriptions, update profile and a lot more.  
-
-If you want to discover more features visit my website by clicking [here](http://16.170.252.79).  
+A company user can, among others, add jobs, find candidates that applied for a specified job, delete candidates' applications, pay for monthly or individual subscriptions and update profile.  
 
 
-### Technologies and tools
+## Technologies and tools
 This project was made with the help of various technologies and tools present on the market at that moment.
 - I used Figma to build the wireframes and diagrams
 - The front-end was build with ReactJS and implemented with the create-react-app tool
@@ -79,7 +65,7 @@ This project was made with the help of various technologies and tools present on
 - Stripe is responsible with payments  
 
 
-### Code structure
+## Code structure
 Fundamentally, both parts, front-end and back-end, were structured around roles.  
 
 Front-end functionality is located mostly in pages, components, utils and redux directories.  
@@ -87,17 +73,15 @@ Front-end functionality is located mostly in pages, components, utils and redux 
 Back-end functionality respects MVC pattern and is located across muliple directories: models (with MongoDB models), controllers (with actual back-end functionalities), routes (with the endpoints) and middlewares (with authentication and authorisation functionalities).  
 
 
-### Technical decisions
+## Technical decisions
 I didn't use a CSS library (like bootstrap) on purpose, because I know writing responsive and efficient custom CSS is a very important skill for developers.  
 
-I focused on using React Redux as little as possible (and using local state management as much as possible) as I see that global state management throughout the app is handled, in modern projects, using React Query or GraphQL, technologies I haven't learnt yet.  
+I focused on using React Redux as little as possible (and using local state management as much as possible) as I think is a bit overkill for my goals with this project.  
 
 I used Docker and EC2 deployment because I see it's a more professional way of deploying full-stack web apps and it offers more options in deployment configuration.  
 
-Lastly, I didn't write many tests because I wanted to focus mainly on the functionality of the app. In the next projects I intend to write more tests and apply test-driven-development practices.  
 
-
-### Future updates
+## Future updates
 In the near future, if time allows me, I plan to add more features in the website like company's ability to search for candidates, email candidates, more filters and sorting functionality.  
 
 Besides this, I plan to improve project's design and general app performance.   
@@ -119,7 +103,7 @@ Check the database structure [here](https://github.com/eusebiuuu/job-board/asset
 
 ## Installation and usage instructions
 
-1. Firstly you need an IDE (I recommend VS Code) with a shell terminal integrated.
+1. Firstly you need a shell terminal
 
 1. Clone this repository locally
 
@@ -152,7 +136,7 @@ npm run build --prefix client && npm run deploy
 
 ## Code snippets
 
-Among all the written code, some parts I consider more interesting and relevant. Thus, I want to show you in order to create a better picture of the way I approached some parts of the project.
+Among all the written code, some parts I consider more interesting and relevant. Thus, I want to show you in order to create a better picture of the way I approached them.
 
 #### Filtering functionality (redux reducer)
 ```js
